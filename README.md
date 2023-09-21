@@ -26,11 +26,13 @@ This project displays the user statistics for members of the DTCH PUBG Clan.
    cd [project-directory]
    \`\`\`
 
-3. Update the `config/config.php` file with the appropriate API key and clan members.
+3. Rename the `config/config.php.rename` to `config/config.php`.
 
-4. Host the project on a PHP server (like Apache).
+4. Update the `config/config.php` file with the appropriate API key and clan members.
 
-5. Access the `user_stats.php` in your browser to view the stats.
+5. Host the project on a PHP server (like Apache).
+
+6. Access the `user_stats.php` in your browser to view the stats.
 
 ## Usage
 
