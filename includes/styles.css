@@ -1,0 +1,100 @@
+/* Reset some default styles */
+body, h1, h2, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+}
+
+nav {
+    background-color: #333;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav li:last-child {
+    margin-right: 0;
+}
+
+nav a {
+    color: white;
+    padding: 10px 15px;
+    display: block;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+header, main, footer {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: 1px solid white;
+}
+
+header h1, section h2 {
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+footer {
+    text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    nav li {
+        display: block;
+        margin-right: 0;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #555;
+}
+
+tr:hover {
+    background-color: #444;
+}
+
+.discord-logo {
+    width: 50px;  /* Reduced from 50px to 30px */
+    height: auto;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.discord-logo:hover {
+    opacity: 0.8;
+}
