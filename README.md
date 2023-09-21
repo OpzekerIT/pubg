@@ -3,7 +3,7 @@
 
 This project displays the user statistics for members of the DTCH PUBG Clan.
 
-## Features
+## Features 
 
 1. Display lifetime stats for a specific game mode (solo, duo, squad).
 2. Select a player from the DTCH clan and view their stats.
