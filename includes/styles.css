@@ -14,34 +14,40 @@ body {
     color: white;
 }
 
+
 nav {
-    background-color: #333;
+    background: linear-gradient(to right, #FF416C, #FF4B2B);  /* Gradient Background */
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1); /* Slight Shadow for Depth */
+    padding: 10px 0; /* Vertical Padding */
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
+    text-align: center; /* Center the navigation items */
 }
 
 nav li {
     display: inline-block;
-    margin-right: 10px;
-}
-
-nav li:last-child {
-    margin-right: 0;
+    margin: 0 15px; /* Spacing between items */
 }
 
 nav a {
     color: white;
-    padding: 10px 15px;
-    display: block;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    padding: 10px 20px;
+    border-radius: 25px; /* Rounded Edges */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth Transition for Hover Effect */
+    font-weight: 600; /* Slightly Bold */
+    font-size: 16px; /* Adjust as needed */
 }
 
 nav a:hover {
-    background-color: #555;
+    background: rgba(255, 255, 255, 0.1); /* Slight White Background on Hover */
+    transform: translateY(-2px); /* Slight Lift on Hover */
+}
+
+nav a:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
 
 header, main, footer {
