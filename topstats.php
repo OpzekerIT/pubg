@@ -24,7 +24,6 @@ error_reporting(E_ALL);
             include './config/config.php';
 
             $players_data = json_decode(file_get_contents('./data/player_lifetime_data.json'), true);
-
             $selected_mode = isset($_POST['game_mode']) ? $_POST['game_mode'] : 'squad';
 
             // Form to select game mode
@@ -34,30 +33,27 @@ error_reporting(E_ALL);
                     <input type='submit' name='game_mode' value='squad' class='btn'>
                   </form><br>";
 
-            // Buttons for each player
-            echo "<form method='post' action=''>";
-            foreach ($players_data[$selected_mode] as $player_name => $player_details) {
-                echo "<button type='submit' name='selected_player' value='$player_name' class='btn' >$player_name</button>";
-            }
-            echo "</form><br>";
-
-            $selected_player = $_POST['selected_player'] ?? array_key_first($players_data[$selected_mode]);
-
-            // Fetch the player stats based on game mode and selected player
-            if (isset($players_data[$selected_mode][$selected_player])) {
-                $account_id = array_key_first($players_data[$selected_mode][$selected_player]);
-                $stats = $players_data[$selected_mode][$selected_player][$account_id];
-
-                echo "<h2>" . ucfirst($selected_mode) . " Lifetime Stats for $selected_player</h2>";
+            // Displaying top 10 comparisons for each attribute
+            $attributes = ['dBNOs', 'damageDealt', 'roadKills', 'teamKills'];
+            foreach ($attributes as $attribute) {
+                echo "<h3>Top 10 $attribute</h3>";
+                uasort($players_data[$selected_mode], function ($a, $b) use ($attribute) {
+                    $account_id_a = array_key_first($a);
+                    $account_id_b = array_key_first($b);
+                    return $b[$account_id_b][$attribute] <=> $a[$account_id_a][$attribute]; // Sort in descending order
+                });
+                
                 echo "<table border='1'>";
-                echo "<tr><th>Stat Name</th><th>Value</th></tr>";
-                foreach ($stats as $stat_name => $stat_value) {
-                    echo "<tr><td>$stat_name</td><td>$stat_value</td></tr>";
+                echo "<tr><th>Player</th><th>$attribute</th></tr>";
+                $count = 0;
+                foreach ($players_data[$selected_mode] as $player_name => $player_details) {
+                    if ($count++ >= 10) break; // Limit to top 10 players
+                    $account_id = array_key_first($player_details);
+                    echo "<tr><td>$player_name</td><td>{$player_details[$account_id][$attribute]}</td></tr>";
                 }
                 echo "</table><br>";
-            } else {
-                echo "No player data available.";
             }
+
             echo "Last update " ;
             echo $players_data['updated'];
         ?>
