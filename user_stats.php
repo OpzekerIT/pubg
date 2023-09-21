@@ -4,8 +4,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ?>
 
-<?php //include './includes/ratelimiter.php'; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,71 +21,44 @@ error_reporting(E_ALL);
     <section>
         <h2>User Stats</h2>
         <?php
-include './config/config.php';
+            include './config/config.php';
 
+            $players_data = json_decode(file_get_contents('./data/player_lifetime_data.json'), true);
 
-$headers = array(
-    'Authorization: Bearer ' . $apiKey,
-    'Accept: application/vnd.api+json'
-);
+            $selected_mode = isset($_POST['game_mode']) ? $_POST['game_mode'] : 'squad';
 
-$selected_mode = isset($_POST['game_mode']) ? $_POST['game_mode'] : 'squad';
+            // Form to select game mode
+            echo "<form method='post' action=''>
+                    <input type='submit' name='game_mode' value='solo'>
+                    <input type='submit' name='game_mode' value='duo'>
+                    <input type='submit' name='game_mode' value='squad'>
+                  </form><br>";
 
-// Form to select game mode
-echo "<form method='post' action=''>
-        <input type='submit' name='game_mode' value='solo'>
-        <input type='submit' name='game_mode' value='duo'>
-        <input type='submit' name='game_mode' value='squad'>
-      </form><br>";
+            // Buttons for each player
+            echo "<form method='post' action=''>";
+            foreach ($players_data[$selected_mode] as $player_name => $player_details) {
+                echo "<button type='submit' name='selected_player' value='$player_name'>$player_name</button>";
+            }
+            echo "</form><br>";
 
-// Buttons for each player
-echo "<form method='post' action=''>";
-foreach ($clanmembers as $player) {
-    echo "<button type='submit' name='selected_player' value='$player'>$player</button>";
-}
-echo "</form><br>";
+            $selected_player = $_POST['selected_player'] ?? array_key_first($players_data[$selected_mode]);
 
-$selected_player = $_POST['selected_player'] ?? $clanmembers[0];
+            // Fetch the player stats based on game mode and selected player
+            if (isset($players_data[$selected_mode][$selected_player])) {
+                $account_id = array_key_first($players_data[$selected_mode][$selected_player]);
+                $stats = $players_data[$selected_mode][$selected_player][$account_id];
 
-// Retrieve user IDs
-$players_url = "https://api.pubg.com/shards/steam/players?filter[playerNames]=$selected_player";
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $players_url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-$players_response = curl_exec($ch);
-curl_close($ch);
-$players_data = json_decode($players_response, true);
-
-if (isset($players_data['data'])) {
-    $player = $players_data['data'][0];
-    $player_id = $player['id'];
-    $player_name = $player['attributes']['name'];
-
-    // Retrieve lifetime stats
-    $lifetime_url = "https://api.pubg.com/shards/steam/players/$player_id/seasons/lifetime?filter[gamepad]=false";
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $lifetime_url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $lifetime_response = curl_exec($ch);
-    curl_close($ch);
-    $lifetime_data = json_decode($lifetime_response, true);
-
-    if (isset($lifetime_data['data']['attributes']['gameModeStats'][$selected_mode])) {
-        $stats = $lifetime_data['data']['attributes']['gameModeStats'][$selected_mode];
-        echo "<h2>" . ucfirst($selected_mode) . " Lifetime Stats for $player_name</h2>";
-        echo "<table border='1'>";
-        echo "<tr><th>Stat Name</th><th>Value</th></tr>";
-        foreach ($stats as $stat_name => $stat_value) {
-            echo "<tr><td>$stat_name</td><td>$stat_value</td></tr>";
-        }
-        echo "</table><br>";
-    }
-} else {
-    echo "No player data available.";
-}
-?>
+                echo "<h2>" . ucfirst($selected_mode) . " Lifetime Stats for $selected_player</h2>";
+                echo "<table border='1'>";
+                echo "<tr><th>Stat Name</th><th>Value</th></tr>";
+                foreach ($stats as $stat_name => $stat_value) {
+                    echo "<tr><td>$stat_name</td><td>$stat_value</td></tr>";
+                }
+                echo "</table><br>";
+            } else {
+                echo "No player data available.";
+            }
+        ?>
     </section>
 </main>
 
