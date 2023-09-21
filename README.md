@@ -1,13 +1,12 @@
-\`\`\`markdown
 # DTCH - PUBG Clan User Stats
 
 This project displays the user statistics for members of the DTCH PUBG Clan.
+While the code is tailored for the DTCH clan, you can modify it to suit your specific clan or needs.
 
 ## Features
 
 1. Display lifetime stats for a specific game mode (solo, duo, squad).
 2. Select a player from the DTCH clan and view their stats.
-3. Display the PUBG API rate limit headers.
 
 ## Prerequisites
 
@@ -17,12 +16,12 @@ This project displays the user statistics for members of the DTCH PUBG Clan.
 ## Installation
 
 1. Clone this repository:
-   \`\`\`bash
+   \`\`\`
    git clone [repository-url]
    \`\`\`
 
 2. Navigate to the project directory:
-   \`\`\`bash
+   \`\`\`
    cd [project-directory]
    \`\`\`
 
@@ -39,11 +38,13 @@ This project displays the user statistics for members of the DTCH PUBG Clan.
 1. Select a game mode to view stats (solo, duo, squad).
 2. Choose a clan member to view their specific stats.
 3. The rate limit headers for the PUBG API are displayed at the top.
+4. Modify the PHP files to adjust them to your requirements.
 
 ## Notes
 
 - Ensure that the API key is kept confidential and not exposed to the public.
 - The project comes with a rate limiter (`ratelimiter.php`), which can be included to restrict the frequency of page access.
+- While this project is designed specifically for the DTCH clan, you will need to adjust various parts of the code to make it suitable for your clan or specific requirements.
 
 ## License
 
