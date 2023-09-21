@@ -1,7 +1,6 @@
 # DTCH - PUBG Clan User Stats
 
-This project displays the user statistics for members of the DTCH PUBG Clan.
-While the code is tailored for the DTCH clan, you can modify it to suit your specific clan or needs.
+This project displays the user statistics for members of the DTCH PUBG Clan. While the code is tailored for the DTCH clan, you can modify it to suit your specific clan or needs.
 
 ## Features
 
@@ -12,18 +11,17 @@ While the code is tailored for the DTCH clan, you can modify it to suit your spe
 
 - PHP 7.4 or higher
 - cURL extension for PHP
+- PowerShell installed on your system
 
 ## Installation
 
 1. Clone this repository:
-   \`\`\`
-   git clone [repository-url]
-   \`\`\`
+
+git clone [repository-url]
 
 2. Navigate to the project directory:
-   \`\`\`
-   cd [project-directory]
-   \`\`\`
+
+cd [project-directory]
 
 3. Rename the `config/config.php.rename` to `config/config.php`.
 
@@ -31,14 +29,11 @@ While the code is tailored for the DTCH clan, you can modify it to suit your spe
 
 5. Host the project on a PHP server (like Apache).
 
-6. Access the `user_stats.php` in your browser to view the stats.
-
 ## Usage
 
-1. Select a game mode to view stats (solo, duo, squad).
-2. Choose a clan member to view their specific stats.
-3. The rate limit headers for the PUBG API are displayed at the top.
-4. Modify the PHP files to adjust them to your requirements.
+1. Use the PowerShell scripts in the `update` folder to generate the JSON files that are used in the clan and user PHP files.
+ - `update_clan_member.ps1`: Update this once every 30 minutes. It's recommended to set up a cron job or scheduled task for this.
+ - `update_clan.ps1`: Update this once every day.
 
 ## Notes
 
@@ -49,4 +44,3 @@ While the code is tailored for the DTCH clan, you can modify it to suit your spe
 ## License
 
 This project is open-source. Feel free to modify and distribute as per your needs.
-\`\`\`

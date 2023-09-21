@@ -1,0 +1,4 @@
+<Files *.ps1>
+    Order allow,deny
+    Deny from all
+</Files>
