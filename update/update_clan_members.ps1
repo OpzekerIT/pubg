@@ -1,6 +1,11 @@
 ﻿
+if($PSScriptRoot.length -eq 0){
+    $scriptroot = Get-Location
+}else{
+    $scriptroot = $PSScriptRoot
+}
 # Read the content of the file as a single string
-$fileContent = Get-Content -Path "../config/config.php" -Raw
+$fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
 # Use regex to match the apiKey value
 if ($fileContent -match "\`$apiKey\s*=\s*\'([^\']+)\'") {
@@ -64,6 +69,7 @@ $webrequestlimiter = 0
 foreach ($playmode in $playermodes) {
     # Fetch stats for the current playmode
     if($webrequestlimiter -le 8){
+        write-output "Getting data for players $playeridstring gameode $playmode"
     $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
     $webrequestlimiter++
 }else{
@@ -80,7 +86,7 @@ foreach ($playmode in $playermodes) {
         
         # Fetch the player name for the current stat (account ID) from the dictionary
         $playerName = $playerList | Where-Object { $_.PlayerID -eq $stat } | Select-Object -ExpandProperty PlayerName
-
+        write-output "Getting data for $playerName with gamemode $playmode"
         # Fetch the specific stat data for the current stat
         $specificStat = ($stats.data | where-object {$_.relationships.player.data.id -eq $stat}).attributes.gamemodestats.$playmode
 
@@ -91,4 +97,19 @@ foreach ($playmode in $playermodes) {
         $lifetimestats[$playmode][$playerName][$stat] = $specificStat
     }
 }
-$lifetimestats | convertto-json -Depth 100 | out-file '../data/player_lifetime_data.json'
+
+
+
+# Get current date and time
+$currentDateTime = Get-Date
+
+# Get current timezone
+$currentTimezone = (Get-TimeZone).Id
+
+# Format and parse the information into a string
+$formattedString = "$currentDateTime - Time Zone: $currentTimezone"
+$lifetimestats['updated']= $formattedString
+# Output the formatted string
+
+
+$lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
