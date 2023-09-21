@@ -1,3 +1,6 @@
+/* Add Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
 /* Reset some default styles */
 body, h1, h2, p, ul, li, a {
     margin: 0;
@@ -6,8 +9,8 @@ body, h1, h2, p, ul, li, a {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: black;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     color: white;
 }
 
@@ -33,6 +36,8 @@ nav a {
     color: white;
     padding: 10px 15px;
     display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 nav a:hover {
@@ -42,8 +47,10 @@ nav a:hover {
 header, main, footer {
     max-width: 800px;
     margin: 20px auto;
-    padding: 10px 20px;
+    padding: 20px;
     border: 1px solid white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 header h1, section h2 {
@@ -56,7 +63,6 @@ footer {
     text-align: center;
 }
 
-/* Responsive Styles */
 @media (max-width: 600px) {
     nav li {
         display: block;
@@ -72,6 +78,7 @@ table {
 
 table, th, td {
     border: 1px solid white;
+    border-radius: 5px;
 }
 
 th, td {
@@ -88,13 +95,43 @@ tr:hover {
 }
 
 .discord-logo {
-    width: 50px;  /* Reduced from 50px to 30px */
+    width: 50px;
     height: auto;
     margin-top: 10px;
     cursor: pointer;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 .discord-logo:hover {
+    transform: scale(1.05);
     opacity: 0.8;
+}
+
+/* Fancy Button Styles */
+
+.btn {
+    display: inline-block;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px; /* Rounded Edges */
+    background: linear-gradient(to right, #FF416C, #FF4B2B); /* Gradient Background */
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth Transition for Hover Effect */
+    text-align: center;
+    text-decoration: none; /* In case you use it on anchor tags */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); /* Slight Shadow */
+    margin: 10px 0; /* Some Margin for Space */
+}
+
+.btn:hover {
+    transform: translateY(-3px); /* Slight Lift on Hover */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Increased Shadow on Hover */
+}
+
+.btn:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
