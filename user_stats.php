@@ -29,15 +29,15 @@ error_reporting(E_ALL);
 
             // Form to select game mode
             echo "<form method='post' action=''>
-                    <input type='submit' name='game_mode' value='solo'>
-                    <input type='submit' name='game_mode' value='duo'>
-                    <input type='submit' name='game_mode' value='squad'>
+                    <input type='submit' name='game_mode' value='solo' class='btn'>
+                    <input type='submit' name='game_mode' value='duo' class='btn'>
+                    <input type='submit' name='game_mode' value='squad' class='btn'>
                   </form><br>";
 
             // Buttons for each player
             echo "<form method='post' action=''>";
             foreach ($players_data[$selected_mode] as $player_name => $player_details) {
-                echo "<button type='submit' name='selected_player' value='$player_name'>$player_name</button>";
+                echo "<button type='submit' name='selected_player' value='$player_name' class='btn' >$player_name</button>";
             }
             echo "</form><br>";
 
