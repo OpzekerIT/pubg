@@ -34,7 +34,7 @@ error_reporting(E_ALL);
                   </form><br>";
 
             // Displaying top 10 comparisons for each attribute
-            $attributes = ['dBNOs', 'damageDealt', 'roadKills', 'teamKills'];
+            $attributes = ['dBNOs', 'damageDealt', 'roadKills', 'teamKills','headshotKills','roundMostKills','kills','wins','top10s'];
             foreach ($attributes as $attribute) {
                 echo "<h3>Top 10 $attribute</h3>";
                 uasort($players_data[$selected_mode], function ($a, $b) use ($attribute) {
