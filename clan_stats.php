@@ -4,8 +4,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 ?>
 
-<?php //include './includes/ratelimiter.php'; ?>
-#
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,31 +23,23 @@ error_reporting(E_ALL);
         <?php
             include './config/config.php';
 
-            $url = "https://api.pubg.com/shards/steam/clans/$clanid";
-            $headers = array(
-                'Authorization: Bearer ' . $apiKey,
-                'Accept: application/vnd.api+json'
-            );
-            
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            $clan = json_decode($response, true);
-            if (isset($clan['data']['attributes'])) {
-                echo "<table>";
-                echo "<tr><th>Attribute</th><th>Value</th></tr>";
-                foreach ($clan['data']['attributes'] as $key => $value) {
-                    echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
+            // Load clan data from claninfo.json
+            $clanInfoPath = './data/claninfo.json';
+            if (file_exists($clanInfoPath)) {
+                $clan = json_decode(file_get_contents($clanInfoPath), true);
+                if (isset($clan) && !empty($clan)) {
+                    echo "<table>";
+                    echo "<tr><th>Attribute</th><th>Value</th></tr>";
+                    foreach ($clan as $key => $value) {
+                        echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "<p>No clan attributes available</p>";
                 }
-                echo "</table>";
             } else {
-                echo "<p>No clan attributes available</p>";
+                echo "<p>Clan info file missing</p>";
             }
-            
-            
         ?>
     </section>
 </main>
