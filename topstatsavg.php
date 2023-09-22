@@ -12,6 +12,7 @@ error_reporting(E_ALL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DTCH - PUBG Clan - Average User Stats</title>
     <link rel="stylesheet" href="./includes/styles.css">
+    <script src="./lib/sorttable.js"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@ error_reporting(E_ALL);
             $selected_mode = isset($_POST['game_mode']) ? $_POST['game_mode'] : 'squad';
 
             // Form to select game mode
-            echo "<form method='post' action=''>
+            echo "<form method='post' action='' class='sortable'>
                     <input type='submit' name='game_mode' value='solo' class='btn'>
                     <input type='submit' name='game_mode' value='duo' class='btn'>
                     <input type='submit' name='game_mode' value='squad' class='btn'>
@@ -41,7 +42,7 @@ error_reporting(E_ALL);
                 'Top10s' => 'top10s'
             ];
 
-            echo "<table border='1'>";
+            echo "<table border='1' class='sortable'>";
             echo "<tr><th>Player</th>";
             foreach ($metrics as $display => $metric) {
                 echo "<th>Average $display</th>";
