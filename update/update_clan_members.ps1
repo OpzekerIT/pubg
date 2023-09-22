@@ -34,7 +34,7 @@ $headers = @{
     'Authorization' = "$apiKey"
 }
 $playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers
-
+$playerinfo.data | convertto-json -depth 100 | Out-File "$scriptroot/../data/player_data.json"
 $playerList = @()
 $playerinfo.data | ForEach-Object {
     $playerObject = [PSCustomObject]@{
