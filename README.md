@@ -12,7 +12,7 @@ This project displays the user statistics for members of the DTCH PUBG Clan. Whi
 - PHP 7.4 or higher
 - cURL extension for PHP
 - PowerShell installed on your system
-#
+
 ## Installation
 
 1. Clone this repository:
