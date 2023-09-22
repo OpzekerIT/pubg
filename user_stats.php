@@ -38,7 +38,9 @@ error_reporting(E_ALL);
             echo "<form method='post' action=''>";
             foreach ($players_data[$selected_mode] as $player_name => $player_details) {
                 echo "<button type='submit' name='selected_player' value='$player_name' class='btn' >$player_name</button>";
+                
             }
+            echo "<input type='hidden' name='game_mode' value='$selected_mode'>";
             echo "</form><br>";
 
             $selected_player = $_POST['selected_player'] ?? array_key_first($players_data[$selected_mode]);
