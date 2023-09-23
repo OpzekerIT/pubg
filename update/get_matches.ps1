@@ -64,4 +64,17 @@ foreach ($player in $player_data) {
 
 }
 
+$currentDateTime = Get-Date
+
+# Get current timezone
+$currentTimezone = (Get-TimeZone).Id
+
+# Format and parse the information into a string
+$formattedString = "$currentDateTime - Time Zone: $currentTimezone"
+# Output the formatted string
+
+
+
+$player_matches| Add-Member -Name "updated" -MemberType NoteProperty -Value $formattedString
+
 $player_matches | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_matches.json"
