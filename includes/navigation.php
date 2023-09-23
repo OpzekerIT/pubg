@@ -5,6 +5,7 @@
         <li><a href="user_stats.php">User Stats</a></li>
         <li><a href="topstats.php">Top10</a></li>
         <li><a href="topstatsavg.php">Match % T10</a></li>
+        <li><a href="latestmatches.php">Last 5 Matches</a></li>
 
     </ul>
 </nav>
