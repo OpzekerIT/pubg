@@ -45,15 +45,16 @@ error_reporting(E_ALL);
                         $date = new DateTime($match['createdAt']);
                         $formattedDate = $date->format('d F Y, H:i:s');
 
-                    
+                        $matchType = $match['matchType'];
                         $gameMode = $match['gameMode'];
                         $mapName = $match['mapName'];
                         $kills = $match['stats']['kills'];
                         $damage = $match['stats']['damageDealt'];
                         $timeSurvived = $match['stats']['timeSurvived'];
-                        echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td></tr>";
+                        echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$matchType</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td></tr>";
                     }
                     echo "</table><br>";
+
                 }
             }
         ?>
