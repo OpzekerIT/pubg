@@ -1,3 +1,10 @@
+
+if($PSScriptRoot.length -eq 0){
+    $scriptroot = Get-Location
+}else{
+    $scriptroot = $PSScriptRoot
+}
+
 function get-killstats {
     param (
         $player_name,
@@ -69,3 +76,22 @@ foreach ($player in $all_player_matches.playername) {
     }
 
 }
+
+$currentDateTime = Get-Date
+
+# Get current timezone
+$currentTimezone = (Get-TimeZone).Id
+
+# Format and parse the information into a string
+$formattedString = "$currentDateTime - Time Zone: $currentTimezone"
+
+# Output the formatted string
+$playerstats += [PSCustomObject]@{
+    updated = $formattedString
+ }
+
+
+
+($playerstats | convertto-json) | out-file "$scriptroot/../data/player_last_stats.json"
+
+
