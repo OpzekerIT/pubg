@@ -36,7 +36,7 @@ foreach ($player in $all_player_matches) {
     
     foreach ($match in $player.player_matches) {
 
-        write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
+       
         
         $telemetryfile = "$scriptroot/../data/telemetry_cache/$($match.telemetry_url.split("/")[-1])"
         if (!(test-path -Path $telemetryfile)) {
@@ -49,7 +49,7 @@ foreach ($player in $all_player_matches) {
             $telemetry = get-content $telemetryfile  | convertfrom-json
         }
        
-        
+        write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
         $killstats += get-killstats -player_name $player_name -telemetry $telemetry
     }       
 
