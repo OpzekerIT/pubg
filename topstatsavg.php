@@ -28,7 +28,7 @@ error_reporting(E_ALL);
             $selected_mode = isset($_POST['game_mode']) ? $_POST['game_mode'] : 'squad';
 
             // Form to select game mode
-            echo "<form method='post' action='' class='sortable'>
+            echo "<form method='post' action=''>
                     <input type='submit' name='game_mode' value='solo' class='btn'>
                     <input type='submit' name='game_mode' value='duo' class='btn'>
                     <input type='submit' name='game_mode' value='squad' class='btn'>

@@ -1,53 +1,70 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 
-// Sample data from the API
-$data = json_decode(file_get_contents('./data/player_data.json'), true); // Replace 'YOUR_JSON_DATA_HERE' with the JSON data you've provided
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTCH - PUBG Clan - Match Stats</title>
+    <link rel="stylesheet" href="./includes/styles.css">
+    <script src="./lib/sorttable.js"></script>
+</head>
+<body>
 
-// Extract details
-$mapName = $data['data']['attributes']['mapName'];
-$matchType = $data['data']['attributes']['matchType'];
+<?php include './includes/navigation.php'; ?>
 
-$participants = [];
+<main>
+    <section>
+        <h2>Match Stats</h2>
+        <?php
+            include './config/config.php';
 
-// Find all participants in the "included" section
-foreach ($data['included'] as $include) {
-    if ($include['type'] === 'participant') {
-        $participants[$include['id']] = $include['attributes']['stats'];
-    }
-}
+            $players_matches = json_decode(file_get_contents('./data/player_matches.json'), true);
 
-echo '<table border="1">';
-echo '<tr>';
-echo '<th>Name</th>';
-echo '<th>DBNOs</th>';
-echo '<th>Assists</th>';
-echo '<th>Headshot Kills</th>';
-echo '<th>Kills</th>';
-echo '<th>Revives</th>';
-echo '</tr>';
+            // Display buttons for each player
+            echo "<form method='post' action=''>";
+            foreach ($players_matches as $player_data) {
+                $player_name = $player_data['playername'];
+                echo "<button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button>";
+            }
+            echo "</form><br>";
 
-// Iterate through rosters and link players to participants
-foreach ($data['data']['relationships']['rosters']['data'] as $roster) {
-    foreach ($data['included'] as $include) {
-        if ($include['type'] === 'roster' && $include['id'] === $roster['id']) {
-            foreach ($include['relationships']['participants']['data'] as $participant) {
-                if (isset($participants[$participant['id']])) {
-                    echo '<tr>';
-                    echo '<td>' . $participants[$participant['id']]['name'] . '</td>';
-                    echo '<td>' . $participants[$participant['id']]['DBNOs'] . '</td>';
-                    echo '<td>' . $participants[$participant['id']]['assists'] . '</td>';
-                    echo '<td>' . $participants[$participant['id']]['headshotKills'] . '</td>';
-                    echo '<td>' . $participants[$participant['id']]['kills'] . '</td>';
-                    echo '<td>' . $participants[$participant['id']]['revives'] . '</td>';
-                    echo '</tr>';
+            $selected_player = $_POST['selected_player'] ?? $players_matches[0]['playername'];
+
+            // Display the player's match stats
+            foreach ($players_matches as $player_data) {
+                if ($player_data['playername'] === $selected_player) {
+                    echo "<h2>Recent Matches for $selected_player</h2>";
+                    echo "<table border='1' class='sortable'>";
+                    echo "<tr><th>Match Date</th><th>Game Mode</th><th>MatchType</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>winPlace</th></tr>";
+                    foreach ($player_data['player_matches'] as $match) {
+                        $date = new DateTime($match['createdAt']);
+                        $date->modify('+2 hours');
+                        $formattedDate = $date->format('d F Y, H:i:s');
+
+                        $matchType = $match['matchType'];
+                        $gameMode = $match['gameMode'];
+                        $mapName = $match['mapName'];
+                        $kills = $match['stats']['kills'];
+                        $damage = $match['stats']['damageDealt'];
+                        $timeSurvived = $match['stats']['timeSurvived'];
+                        $winPlace = $match['stats']['winPlace'];
+                        echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$matchType</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td><td>$winPlace</td></tr>";
+                    }
+                    echo "</table><br>";
+
                 }
             }
-        }
-    }
-}
+        ?>
+    </section>
+</main>
 
-echo '</table>';
-echo '<p>Map Name: ' . $mapName . '</p>';
-echo '<p>Match Type: ' . $matchType . '</p>';
+<?php include './includes/footer.php'; ?>
 
-?>
+</body>
+</html>
