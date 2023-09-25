@@ -12,6 +12,7 @@ error_reporting(E_ALL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DTCH - PUBG Clan - Match Stats</title>
     <link rel="stylesheet" href="./includes/styles.css">
+    <script src="./lib/sorttable.js"></script>
 </head>
 <body>
 
@@ -25,7 +26,7 @@ error_reporting(E_ALL);
 
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
-            echo "<table border='1'>";
+            echo "<table border='1' class='sortable'>";
             echo "<tr>
                 <th>Playername</th>
                 <th>Deaths</th>
