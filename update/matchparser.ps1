@@ -14,7 +14,6 @@ function get-killstats {
     foreach ($action in $telemetry) {
 
         if ($action.PSObject.Properties.name.contains('killer')) {
-            #write-output "Analyzing dBNOid $($action.dBNOId)" 
             $attacks += $action
         }
     
@@ -50,7 +49,7 @@ foreach ($player in $all_player_matches) {
         }
        
         write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
-        $killstats += get-killstats -player_name $player_name -telemetry $telemetry
+        $killstats += get-killstats -player_name $player_name -telemetry ($telemetry | where-object {$_._T -eq 'LOGPLAYERKILLV2'})
     }       
 
 }
