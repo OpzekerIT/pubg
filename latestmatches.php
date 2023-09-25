@@ -40,9 +40,10 @@ error_reporting(E_ALL);
                 if ($player_data['playername'] === $selected_player) {
                     echo "<h2>Recent Matches for $selected_player</h2>";
                     echo "<table border='1'>";
-                    echo "<tr><th>Match Date</th><th>Game Mode</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th></tr>";
+                    echo "<tr><th>Match Date</th><th>Game Mode</th><th>MatchType</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>winPlace</th></tr>";
                     foreach ($player_data['player_matches'] as $match) {
                         $date = new DateTime($match['createdAt']);
+                        $date->modify('+2 hours');
                         $formattedDate = $date->format('d F Y, H:i:s');
 
                         $matchType = $match['matchType'];
@@ -51,7 +52,8 @@ error_reporting(E_ALL);
                         $kills = $match['stats']['kills'];
                         $damage = $match['stats']['damageDealt'];
                         $timeSurvived = $match['stats']['timeSurvived'];
-                        echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$matchType</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td></tr>";
+                        $winPlace = $match['stats']['winPlace'];
+                        echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$matchType</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td><td>$winPlace</td></tr>";
                     }
                     echo "</table><br>";
 
