@@ -39,7 +39,7 @@ $player_data = get-content  "$scriptroot/../data/player_data.json" | convertfrom
 
 $player_matches = @()
 foreach ($player in $player_data) {
-    $lastMatches = $player.relationships.matches.data.id | Select-Object -First 5
+    $lastMatches = $player.relationships.matches.data.id #| Select-Object -First 10
     $playermatches = @()
     foreach ($match in $lastMatches) {
         Write-Host "Getting match for $($player.attributes.name) match: $match "
@@ -50,6 +50,8 @@ foreach ($player in $player_data) {
             gameMode = $stats.data.attributes.gameMode
             createdAt = $stats.data.attributes.createdAt
             mapName = $stats.data.attributes.mapName
+            winPlace = $stats.data.attributes.winPlace
+            telemetry_url = ($stats.included.attributes | Where-Object {$_.name -eq 'telemetry'}).URL
         }
 
     }
