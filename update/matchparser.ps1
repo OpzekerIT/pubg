@@ -67,7 +67,7 @@ foreach ($player in $all_player_matches.playername) {
         deaths     = $deaths
         kills      = $kills
         humankills = $humankills
-        matches    = ($killstats | where-object { $_.playername -eq $player }).count
+        matches    = ($all_player_matches | where-object {$_.playername -eq $player}).player_matches.count
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
 
