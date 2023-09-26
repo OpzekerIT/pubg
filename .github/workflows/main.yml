@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - dev
+
+name: Publish Website
+jobs:
+  web-deploy:
+    name: Deploy on commit DEV
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get Latest Code
+      uses: actions/checkout@v3
+    
+    - name: Sync Files
+      uses: SamKirkland/web-deploy@v1
+      with:
+        target-server: lanta.eu
+        remote-user: stats
+        private-ssh-key: ${{ secrets.SSH_KEY }}
+        destination-path: /var/www/lantaeu/DTCH_DEV/

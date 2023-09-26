@@ -72,10 +72,7 @@ foreach ($player in $all_player_matches.playername) {
         matches    = ($all_player_matches | where-object { $_.playername -eq $player }).player_matches.count
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
-
-        
     }
-
 }
 
 $currentDateTime = Get-Date
