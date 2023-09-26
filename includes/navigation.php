@@ -1,3 +1,12 @@
+<?php
+$host = $_SERVER['HTTP_HOST'];
+
+if ($host == 'dev.dtch.online') {
+    echo "You are on the development! <BR>";
+    echo 'For prod <a href="https://dtch.online">DTCH PRODUCTION</a>';
+}
+?>
+
 <nav>
     <ul>
         <li><a href="index.php">Home</a></li>

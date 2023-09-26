@@ -31,7 +31,7 @@ if (count($_SESSION['access_times']) > $allowed_refreshes) {
     <title>RustAGHH</title>
 </head>
 <body>
-    <p>RUSTAAAGGHHHH je mag de pagina niet vaker dan ' . $allowed_refreshes . 'x per ' . $allowed_time . ' seconde refreshen. Over een paar seconde word je weet terug geleid</p>
+    <p>RUSTAAAGGHHHH je mag de pagina niet vaker dan ' . $allowed_refreshes . 'x per ' . $allowed_time . ' seconde refreshen. Over een paar seconden wordt je weer teruggeleid.</p>
 </body>
 </html>
 ');
