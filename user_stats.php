@@ -47,7 +47,14 @@ error_reporting(E_ALL);
             echo "<input type='hidden' name='game_mode' value='$selected_mode'>";
             echo "</form><br>";
 
-            $selected_player = $_POST['selected_player'] ?? array_key_first($players_data[$selected_mode]);
+            if(isset($_GET['player']){
+                $player_select = $_GET['player'];
+            }
+            else{
+                $player_select = $_POST['selected_player']; 
+            }
+
+            $selected_player = $player_select ?? array_key_first($players_data[$selected_mode]);
 
             // Fetch the player stats based on game mode and selected player
             if (isset($players_data[$selected_mode][$selected_player])) {
