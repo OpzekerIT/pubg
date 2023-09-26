@@ -32,6 +32,10 @@ error_reporting(E_ALL);
                     <input type='submit' name='game_mode' value='solo' class='btn'>
                     <input type='submit' name='game_mode' value='duo' class='btn'>
                     <input type='submit' name='game_mode' value='squad' class='btn'>
+
+                    <input type='submit' name='game_mode' value='solo-fpp' class='btn'>
+                    <input type='submit' name='game_mode' value='duo-fpp' class='btn'>
+                    <input type='submit' name='game_mode' value='squad-fpp' class='btn'>
                   </form><br>";
 
             // Buttons for each player

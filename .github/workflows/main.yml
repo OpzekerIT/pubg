@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+name: Publish Website
+jobs:
+  web-deploy:
+    name: Deploy based on branch
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get Latest Code
+      uses: actions/checkout@v3
+
+    - name: Set destination path based on branch
+      id: set-destination
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "DESTINATION=/var/www/lantaeu/DTCH//" >> $GITHUB_ENV
+        else
+          echo "DESTINATION=/var/www/lantaeu/DTCH_DEV/" >> $GITHUB_ENV
+        fi
+
+
+    - name: Sync Files from ${{ github.ref }}
+      uses: SamKirkland/web-deploy@v1
+      with:
+        target-server: lanta.eu
+        remote-user: stats
+        private-ssh-key: ${{ secrets.SSH_KEY }}
+        destination-path: ${{ env.DESTINATION }}
+        rsync-options: --no-times -r --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ --exclude=config.php

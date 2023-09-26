@@ -1,21 +1,21 @@
 [
   {
     "playername": "Lanta01",
-    "deaths": 56.0,
-    "kills": 215.0,
-    "humankills": 66.0,
-    "matches": 68,
-    "KD_H": 1.1785714285714286,
-    "KD_ALL": 3.8392857142857144
+    "deaths": 62.0,
+    "kills": 241.0,
+    "humankills": 70.0,
+    "matches": 75,
+    "KD_H": 1.1290322580645162,
+    "KD_ALL": 3.8870967741935485
   },
   {
     "playername": "Petje1972",
-    "deaths": 42.0,
-    "kills": 251.0,
-    "humankills": 54.0,
-    "matches": 48,
-    "KD_H": 1.2857142857142858,
-    "KD_ALL": 5.976190476190476
+    "deaths": 45.0,
+    "kills": 278.0,
+    "humankills": 58.0,
+    "matches": 52,
+    "KD_H": 1.288888888888889,
+    "KD_ALL": 6.177777777777778
   },
   {
     "playername": "TaGMoM",
@@ -31,27 +31,27 @@
     "deaths": 0.0,
     "kills": 6.0,
     "humankills": 2.0,
-    "matches": 4,
+    "matches": 1,
     "KD_H": "Infinity",
     "KD_ALL": "Infinity"
   },
   {
     "playername": "Masistuta",
-    "deaths": 31.0,
-    "kills": 139.0,
-    "humankills": 17.0,
-    "matches": 42,
-    "KD_H": 0.5483870967741935,
-    "KD_ALL": 4.483870967741935
+    "deaths": 33.0,
+    "kills": 129.0,
+    "humankills": 15.0,
+    "matches": 44,
+    "KD_H": 0.45454545454545453,
+    "KD_ALL": 3.909090909090909
   },
   {
     "playername": "RalphNorris",
-    "deaths": 42.0,
-    "kills": 80.0,
-    "humankills": 10.0,
-    "matches": 47,
-    "KD_H": 0.23809523809523808,
-    "KD_ALL": 1.9047619047619047
+    "deaths": 49.0,
+    "kills": 86.0,
+    "humankills": 13.0,
+    "matches": 55,
+    "KD_H": 0.2653061224489796,
+    "KD_ALL": 1.7551020408163265
   },
   {
     "playername": "Jimbo_The_One",
@@ -72,6 +72,6 @@
     "KD_ALL": 1.3333333333333333
   },
   {
-    "updated": "09/25/2023 14:31:54 - Time Zone: W. Europe Standard Time"
+    "updated": "09/25/2023 15:46:45 - Time Zone: W. Europe Standard Time"
   }
 ]
