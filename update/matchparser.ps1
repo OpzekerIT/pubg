@@ -1,7 +1,8 @@
 
-if($PSScriptRoot.length -eq 0){
+if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
-}else{
+}
+else {
     $scriptroot = $PSScriptRoot
 }
 
@@ -43,13 +44,14 @@ foreach ($player in $all_player_matches) {
             $telemetry_content = (Invoke-WebRequest -Uri $match.telemetry_url).content
             $telemetry_content | out-file $telemetryfile
             $telemetry = $telemetry_content | ConvertFrom-Json
-        }else{
+        }
+        else {
             write-output "Getting from cache $telemetryfile"
             $telemetry = get-content $telemetryfile  | convertfrom-json
         }
        
         write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
-        $killstats += get-killstats -player_name $player_name -telemetry ($telemetry | where-object {$_._T -eq 'LOGPLAYERKILLV2'})
+        $killstats += get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' })
     }       
 
 }
@@ -67,13 +69,10 @@ foreach ($player in $all_player_matches.playername) {
         deaths     = $deaths
         kills      = $kills
         humankills = $humankills
-        matches    = ($killstats | where-object { $_.playername -eq $player }).count
+        matches    = ($all_player_matches | where-object { $_.playername -eq $player }).player_matches.count
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
-
-        
     }
-
 }
 
 $currentDateTime = Get-Date
@@ -87,10 +86,21 @@ $formattedString = "$currentDateTime - Time Zone: $currentTimezone"
 # Output the formatted string
 $playerstats += [PSCustomObject]@{
     updated = $formattedString
- }
+}
 
 
-
+write-output "Writing file"
 ($playerstats | convertto-json) | out-file "$scriptroot/../data/player_last_stats.json"
+write-output "Cleaning cache"
+
+$files_keep = (($all_player_matches).player_matches.telemetry_url | Select-Object -Unique) | ForEach-Object { $_.split("/")[-1] }
+$files_cache = (get-childitem "$scriptroot/../data/telemetry_cache/").name
 
 
+$difference = (Compare-Object -ReferenceObject $files_keep -DifferenceObject $files_cache | Where-Object { $_.SideIndicator -eq "=>" }).InputObject
+
+foreach ($file in $difference) {
+    write-output "removing $scriptroot/../data/telemetry_cache/$file"
+    Remove-Item -Path "$scriptroot/../data/telemetry_cache/$file"
+}
+write-output "Operation complete"

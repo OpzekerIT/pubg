@@ -59,9 +59,9 @@ $playermodes = @(
     "solo",
     "duo",
     "squad"
-    #"solo-fpp",
-    #"duo-fpp",
-    #"squad-fpp"
+    "solo-fpp",
+    "duo-fpp",
+    "squad-fpp"
 )
 # Initialize the master hashtable
 $lifetimestats = @{}
