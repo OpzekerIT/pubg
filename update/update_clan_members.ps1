@@ -58,7 +58,7 @@ $playeridstring = $playeridstring.Substring(0, $playeridstring.Length - 1)
 $playermodes = @(
     "solo",
     "duo",
-    "squad"
+    "squad",
     "solo-fpp",
     "duo-fpp",
     "squad-fpp"

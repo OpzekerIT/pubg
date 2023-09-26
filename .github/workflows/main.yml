@@ -17,9 +17,9 @@ jobs:
       id: set-destination
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-          echo "DESTINATION=/var/www/lantaeu/DTCH/" >> $GITHUB_ENV
+          echo "DESTINATION=/var/www/dtch/" >> $GITHUB_ENV
         else
-          echo "DESTINATION=/var/www/lantaeu/DTCH_DEV/" >> $GITHUB_ENV
+          echo "DESTINATION=/var/www/dtch_dev/" >> $GITHUB_ENV
         fi
 
     - name: Sync Files from ${{ github.ref }}
