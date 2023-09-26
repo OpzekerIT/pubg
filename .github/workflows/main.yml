@@ -2,21 +2,31 @@ on:
   push:
     branches:
       - dev
+      - main
 
 name: Publish Website
 jobs:
   web-deploy:
-    name: Deploy on commit DEV
+    name: Deploy based on branch
     runs-on: ubuntu-latest
     steps:
     - name: Get Latest Code
       uses: actions/checkout@v3
-    
-    - name: Sync Files
+
+    - name: Set destination path based on branch
+      id: set-destination
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "::set-output name=destination::/var/www/lantaeu/DTCH/"
+        else
+          echo "::set-output name=destination::/var/www/lantaeu/DTCH_DEV/"
+        fi
+
+    - name: Sync Files from ${{ github.ref }}
       uses: SamKirkland/web-deploy@v1
       with:
         target-server: lanta.eu
         remote-user: stats
         private-ssh-key: ${{ secrets.SSH_KEY }}
-        destination-path: /var/www/lantaeu/DTCH_DEV/
-        rsync-options: --no-times -r --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ 
+        destination-path: ${{ steps.set-destination.outputs.destination }}
+        rsync-options: --no-times -r --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ --exclude=config.php
