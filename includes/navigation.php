@@ -3,6 +3,7 @@ $host = $_SERVER['HTTP_HOST'];
 
 if ($host == 'dev.dtch.online') {
     echo "You are on the development!";
+    echo 'For prod <a href="dtch.lanta.eu">Home</a>';
 }
 ?>
 
