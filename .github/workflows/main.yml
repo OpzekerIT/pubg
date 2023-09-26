@@ -19,3 +19,4 @@ jobs:
         remote-user: stats
         private-ssh-key: ${{ secrets.SSH_KEY }}
         destination-path: /var/www/lantaeu/DTCH_DEV/
+        rsync-options: --no-times
