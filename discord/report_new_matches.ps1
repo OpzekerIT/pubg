@@ -34,30 +34,28 @@ $new_win_matches = $player_matches.new_win_matches
 $win_stats = @()
 
 foreach ($winid in $new_win_matches) {
-
-    
-
-    
+   
     if ($null -eq $winid) { continue }
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
     $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json
     $players = $winmatches.stats.name 
-
+    $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
+    $all_winners_of_match = ($match_stats.included.attributes.stats | where-object {$_.winplace -eq 1})
     send-discord -content ":chicken: :chicken: CHICKEN CHICKEN WINNER DINNER!! :chicken: :chicken:"
     send-discord -content "Gefeliciteerd $($players -join ' ')"
     send-discord -content "match Type $($winmatches[0].matchType)"
     send-discord -content "map $($winmatches[0].mapName)"
 
-    foreach ($player in $players) {
+    foreach ($player in $all_winners_of_match.name) {
 
         $win_stats += [PSCustomObject]@{ 
             playername   = $player
             dmg_h   = (($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } ).damage | Measure-Object -Sum).Sum
-            dmg     = ($winmatches.stats | Where-Object { $_.name -eq $player }).damageDealt
+            dmg     = ($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt
             k_h  = (($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' } | where-object { $_.killer.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } )).count
-            k_a    = ($winmatches.stats | Where-Object { $_.name -eq $player }).kills
-            k_t    = ($winmatches.stats | Where-Object { $_.name -eq $player }).teamKills
-            t_serv = ($winmatches.stats | Where-Object { $_.name -eq $player }).timeSurvived
+            k_a    = ($all_winners_of_match | Where-Object { $_.name -eq $player }).kills
+            k_t    = ($all_winners_of_match | Where-Object { $_.name -eq $player }).teamKills
+            t_serv = ($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived
         }
     }
 
