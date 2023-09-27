@@ -50,7 +50,7 @@ error_reporting(E_ALL);
             );
             // Display the player's match stats
             foreach ($players_matches as $player_data) {
-                if ($player_data['playername'] === $selected_player) {
+                if (isset($player_data['playername']) && $player_data['playername'] === $selected_player) {
                     echo "<h2>Recent Matches for $selected_player</h2>";
                     echo "<table border='1' class='sortable'>";
                     echo "<tr><th>Match Date</th><th>Game Mode</th><th>MatchType</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>winPlace</th></tr>";
