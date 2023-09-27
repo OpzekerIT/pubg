@@ -29,9 +29,12 @@ error_reporting(E_ALL);
             // Display buttons for each player
             echo "<form method='post' action=''>";
             foreach ($players_matches as $player_data) {
-                $player_name = $player_data['playername'];
-                echo "<button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button>";
+                if (isset($player_data['playername'])) {
+                    $player_name = $player_data['playername'];
+                    echo "<button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button>";
+                }
             }
+            
             echo "</form><br>";
 
             $selected_player = $_POST['selected_player'] ?? $players_matches[0]['playername'];
