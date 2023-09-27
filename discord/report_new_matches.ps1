@@ -60,23 +60,26 @@ foreach ($winid in $new_win_matches) {
             t_serv = ($winmatches.stats | Where-Object { $_.name -eq $player }).timeSurvived
         }
     }
+
+    $content_winstats =  '```' + ($win_stats | Format-Table | out-string) + '```'
+    send-discord -content $content_winstats
+    
+    $legenda = "
+    
+    Legenda: 
+    
+    dmg_h = Damege tegen echte spelers
+    dmg = Alle dmg zowel echte spelers als ai
+    k_h = Echte spelers die ge gekilled hebt
+    K_a = alle spelers kills
+    t_serv = time survived in secondes
+    "
+    
+    send-discord -content $legenda
+    
 }
 
-$content_winstats =  '```' + ($win_stats | Format-Table | out-string) + '```'
-send-discord -content $content_winstats
 
-$legenda = "
-
-Legenda: 
-
-dmg_h = Damege tegen echte spelers
-dmg = Alle dmg zowel echte spelers als ai
-k_h = Echte spelers die ge gekilled hebt
-K_a = alle spelers kills
-t_serv = time survived in secondes
-"
-
-send-discord -content $legenda
 
 foreach ($item in $player_matches) {
     if ($item.PSObject.Properties.Name -contains "new_win_matches") {
