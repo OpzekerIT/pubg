@@ -72,13 +72,12 @@ $playermodes = @(
 )
 # Initialize the master hashtable
 $lifetimestats = @{}
-$webrequestlimiter = 0
+
 foreach ($playmode in $playermodes) {
     # Fetch stats for the current playmode
-    if ($webrequestlimiter -le 8) {
+    
         write-output "Getting data for players $playeridstring gameode $playmode"
-        
-        
+ 
         try{
             $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
         } catch {
@@ -86,15 +85,7 @@ foreach ($playmode in $playermodes) {
             start-sleep -Seconds 61
             $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
         }
-
-        
-        
-        $webrequestlimiter++
-    }
-    else {
-        write-ouput "sleeping for 60 seconds"
-        $webrequestlimiter = 0
-    }
+   
  
     # Check if the playmode doesn't exist in the hashtable, then add it
     if (-not $lifetimestats.ContainsKey($playmode)) {
