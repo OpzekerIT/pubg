@@ -84,15 +84,15 @@ foreach ($winid in $new_win_matches) {
         $win_stats += [PSCustomObject]@{ 
             playername = $player
             dmg_h      = [math]::Round((($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } | where-object {$_.victim.teamId -ne $_.attacker.teamId } ).damage | Measure-Object -Sum).Sum, 2)
-            dmg        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt
             k_h        = (($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' } | where-object { $_.killer.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } )).count
+            dmg        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt
             k_a        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).kills
             k_t        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).teamKills
             t_serv     = ($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived
         }
-        $win_stats
+       
     }
-    $content_winstats
+    
     $content_winstats = '```' + ($win_stats | Format-Table | out-string) + '```'
     send-discord -content $content_winstats
     
