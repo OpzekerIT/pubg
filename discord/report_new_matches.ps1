@@ -8,6 +8,22 @@ else {
 
 Start-Transcript "$scriptroot/debug.txt" -Append
 
+$fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
+
+# Use regex to match the apiKey value
+if ($fileContent -match "\`$apiKey\s*=\s*\'([^\']+)\'") {
+    $apiKey = $matches[1]
+}
+else {
+    Write-Output "API Key not found"
+}
+
+$headers = @{
+    'accept'        = 'application/vnd.api+json'
+    'Authorization' = "$apiKey"
+}
+
+
 $fileContent = Get-Content -Path "$scriptroot/../discord/config.php" -Raw
 
 # Use regex to match the apiKey value
@@ -15,7 +31,7 @@ if ($fileContent -match "\`$webhookurl\s*=\s*\'([^\']+)\'") {
     $webhookurl = $matches[1]
 }
 else {
-    Write-Output "API Key not found"
+    Write-Output "No web url found"
 }
 
 function send-discord {
