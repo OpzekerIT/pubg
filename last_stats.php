@@ -48,6 +48,8 @@ error_reporting(E_ALL);
                 $matches = $player_data['matches'];
                 $KD_H = ($player_data['KD_H'] == "Infinity") ? "∞" : number_format($player_data['KD_H'], 2, ',', '');
                 $KD_ALL = ($player_data['KD_ALL'] == "Infinity") ? "∞" : number_format($player_data['KD_ALL'], 2, ',', '');
+                echo $KD_H;
+                echo $KD_ALL;
 
                 echo "<tr>
                     <td>$player_name</td>
