@@ -68,7 +68,7 @@ foreach ($winid in $new_win_matches) {
         write-output "creating tble for player $player"
         $win_stats += [PSCustomObject]@{ 
             playername   = $player
-            dmg_h   = (($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } ).damage | Measure-Object -Sum).Sum
+            dmg_h   = [math]::Round((($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } ).damage | Measure-Object -Sum).Sum, 4)
             dmg     = ($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt
             k_h  = (($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' } | where-object { $_.killer.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } )).count
             k_a    = ($all_winners_of_match | Where-Object { $_.name -eq $player }).kills
