@@ -1,3 +1,4 @@
+
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
@@ -5,6 +6,7 @@ else {
     $scriptroot = $PSScriptRoot
 }
 
+Start-Transcript "$scriptroot/debug.txt" -Append
 
 $fileContent = Get-Content -Path "$scriptroot/../discord/config.php" -Raw
 
@@ -43,11 +45,11 @@ foreach ($winid in $new_win_matches) {
     $all_winners_of_match = ($match_stats.included.attributes.stats | where-object {$_.winplace -eq 1})
     send-discord -content ":chicken: :chicken: CHICKEN CHICKEN WINNER DINNER!! :chicken: :chicken:"
     send-discord -content "Gefeliciteerd $($players -join ' ')"
-    send-discord -content "match Type $($winmatches[0].matchType)"
+    send-discord -content "match mode $($winmatches[0].gameMode)"
     send-discord -content "map $($winmatches[0].mapName)"
 
     foreach ($player in $all_winners_of_match.name) {
-
+        write-output "creating tble for player $player"
         $win_stats += [PSCustomObject]@{ 
             playername   = $player
             dmg_h   = (($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } ).damage | Measure-Object -Sum).Sum
@@ -57,8 +59,9 @@ foreach ($winid in $new_win_matches) {
             k_t    = ($all_winners_of_match | Where-Object { $_.name -eq $player }).teamKills
             t_serv = ($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived
         }
+        $win_stats
     }
-
+    $content_winstats
     $content_winstats =  '```' + ($win_stats | Format-Table | out-string) + '```'
     send-discord -content $content_winstats
     
@@ -71,6 +74,7 @@ foreach ($winid in $new_win_matches) {
     k_h = Echte spelers die ge gekilled hebt
     K_a = alle spelers kills
     t_serv = time survived in secondes
+    k_t = team kills
     "
     
     send-discord -content $legenda
@@ -90,3 +94,5 @@ $newJson = $player_matches | ConvertTo-Json -Depth 100
 
 # Display the updated JSON
 $newJson | out-file "$scriptroot/../data/player_matches.json"
+
+Stop-Transcript
