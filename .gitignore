@@ -1,3 +1,4 @@
 config/config.php
 data/telemetry_cache/*
 temp/*
+discord/config.php
