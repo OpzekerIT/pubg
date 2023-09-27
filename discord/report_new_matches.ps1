@@ -48,7 +48,7 @@ function send-discord {
 }
 
 $map_map = @{
-    "Baltic_Main" = "Erangel (Remastered)"
+    "Baltic_Main" = "Erangel"
     "Chimera_Main" = "Paramo"
     "Desert_Main" = "Miramar"
     "DihorOtok_Main" = "Vikendi"
