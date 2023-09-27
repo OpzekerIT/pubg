@@ -47,6 +47,20 @@ function send-discord {
     Invoke-RestMethod -Uri $webhookurl -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
 }
 
+$map_map = @{
+    "Baltic_Main" = "Erangel (Remastered)"
+    "Chimera_Main" = "Paramo"
+    "Desert_Main" = "Miramar"
+    "DihorOtok_Main" = "Vikendi"
+    "Erangel_Main" = "Erangel"
+    "Heaven_Main" = "Haven"
+    "Kiki_Main" = "Deston"
+    "Range_Main" = "Camp Jackal"
+    "Savage_Main" = "Sanhok"
+    "Summerland_Main" = "Karakin"
+    "Tiger_Main" = "Taego"
+}
+
 $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
 $new_win_matches = $player_matches.new_win_matches
 $win_stats = @()
@@ -63,7 +77,7 @@ foreach ($winid in $new_win_matches) {
     send-discord -content "Gefeliciteerd $($players -join ' ')"
     send-discord -content "match mode $($winmatches[0].gameMode)"
     send-discord -content "match type $($winmatches[0].matchType)"
-    send-discord -content "map $($winmatches[0].mapName)"
+    send-discord -content "map $($map_map[$winmatches[0].mapName])"
 
     foreach ($player in $all_winners_of_match.name) {
         write-output "creating tble for player $player"
@@ -82,18 +96,16 @@ foreach ($winid in $new_win_matches) {
     $content_winstats = '```' + ($win_stats | Format-Table | out-string) + '```'
     send-discord -content $content_winstats
     
-    $legenda = "
-    
-    Legenda: 
-    
-    dmg_h: Schade aangericht aan echte spelers
-    dmg: Totale schade (aan zowel echte spelers als AI)
-    k_h: Aantal echte spelers die je hebt geëlimineerd
-    K_a: Totale aantal eliminaties (inclusief AI)
-    t_serv: Overleefde tijd (in seconden)
-    k_t: Team eliminaties
-
-    "
+    $legenda = '
+```
+dmg_h   = Schade aangericht aan echte spelers
+dmg     = Totale schade (aan zowel echte spelers als AI)
+k_h     = Aantal echte spelers die je hebt geelimineerd
+K_a     = Totale aantal eliminaties (inclusief AI)
+t_serv  = Overleefde tijd (in seconden)
+k_t     = Team eliminaties
+```
+        '
     
     send-discord -content $legenda
     
