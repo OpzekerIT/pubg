@@ -82,18 +82,16 @@ foreach ($winid in $new_win_matches) {
     $content_winstats = '```' + ($win_stats | Format-Table | out-string) + '```'
     send-discord -content $content_winstats
     
-    $legenda = "
-    
-    Legenda: 
-    
-    dmg_h: Schade aangericht aan echte spelers
-    dmg: Totale schade (aan zowel echte spelers als AI)
-    k_h: Aantal echte spelers die je hebt geëlimineerd
-    K_a: Totale aantal eliminaties (inclusief AI)
-    t_serv: Overleefde tijd (in seconden)
-    k_t: Team eliminaties
-
-    "
+    $legenda = '
+```
+dmg_h   = Schade aangericht aan echte spelers
+dmg     = Totale schade (aan zowel echte spelers als AI)
+k_h     = Aantal echte spelers die je hebt geelimineerd
+K_a     = Totale aantal eliminaties (inclusief AI)
+t_serv  = Overleefde tijd (in seconden)
+k_t     = Team eliminaties
+```
+        '
     
     send-discord -content $legenda
     
