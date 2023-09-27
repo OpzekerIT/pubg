@@ -35,7 +35,19 @@ error_reporting(E_ALL);
             echo "</form><br>";
 
             $selected_player = $_POST['selected_player'] ?? $players_matches[0]['playername'];
-
+            $mapNames = array(
+                "Baltic_Main" => "Erangel (Remastered)",
+                "Chimera_Main" => "Paramo",
+                "Desert_Main" => "Miramar",
+                "DihorOtok_Main" => "Vikendi",
+                "Erangel_Main" => "Erangel",
+                "Heaven_Main" => "Haven",
+                "Kiki_Main" => "Deston",
+                "Range_Main" => "Camp Jackal",
+                "Savage_Main" => "Sanhok",
+                "Summerland_Main" => "Karakin",
+                "Tiger_Main" => "Taego"
+            );
             // Display the player's match stats
             foreach ($players_matches as $player_data) {
                 if ($player_data['playername'] === $selected_player) {
@@ -49,7 +61,7 @@ error_reporting(E_ALL);
 
                         $matchType = $match['matchType'];
                         $gameMode = $match['gameMode'];
-                        $mapName = $match['mapName'];
+                        $mapName = isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
                         $kills = $match['stats']['kills'];
                         $damage = $match['stats']['damageDealt'];
                         $timeSurvived = $match['stats']['timeSurvived'];
