@@ -36,7 +36,7 @@ error_reporting(E_ALL);
 
             $selected_player = $_POST['selected_player'] ?? $players_matches[0]['playername'];
             $mapNames = array(
-                "Baltic_Main" => "Erangel (Remastered)",
+                "Baltic_Main" => "Erangel",
                 "Chimera_Main" => "Paramo",
                 "Desert_Main" => "Miramar",
                 "DihorOtok_Main" => "Vikendi",
