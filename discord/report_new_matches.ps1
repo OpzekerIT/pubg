@@ -6,7 +6,7 @@ else {
     $scriptroot = $PSScriptRoot
 }
 
-Start-Transcript "$scriptroot/debug.txt" -Append
+
 
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
@@ -59,7 +59,7 @@ foreach ($winid in $new_win_matches) {
     $players = $winmatches.stats.name 
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     $all_winners_of_match = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
-    send-discord -content ":chicken: :chicken: CHICKEN CHICKEN WINNER DINNER!! :chicken: :chicken:"
+    send-discord -content ":chicken: :chicken: **CHICKEN CHICKEN WINNER DINNER!!** :chicken: :chicken:"
     send-discord -content "Gefeliciteerd $($players -join ' ')"
     send-discord -content "match mode $($winmatches[0].gameMode)"
     send-discord -content "match type $($winmatches[0].matchType)"
@@ -92,7 +92,7 @@ foreach ($winid in $new_win_matches) {
     K_a: Totale aantal eliminaties (inclusief AI)
     t_serv: Overleefde tijd (in seconden)
     k_t: Team eliminaties
-    
+
     "
     
     send-discord -content $legenda
@@ -112,5 +112,3 @@ $newJson = $player_matches | ConvertTo-Json -Depth 100
 
 # Display the updated JSON
 $newJson | out-file "$scriptroot/../data/player_matches.json"
-
-Stop-Transcript
