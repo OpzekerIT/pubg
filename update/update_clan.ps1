@@ -23,8 +23,13 @@ $headers = @{
     'accept'        = 'application/vnd.api+json'
     'Authorization' = "$apiKey"
 }
-$claninfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/clans/$clanid" -Method GET -Headers $headers
-
+try {
+    $claninfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/clans/$clanid" -Method GET -Headers $headers
+} catch {
+    write-output "sleeping for 61 sec"
+    start-sleep -Seconds 61
+    $claninfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/clans/$clanid" -Method GET -Headers $headers
+}
 # Get current date and time
 $currentDateTime = Get-Date
 
