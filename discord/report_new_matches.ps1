@@ -34,10 +34,7 @@ $new_win_matches = $player_matches.new_win_matches
 $win_stats = @()
 
 foreach ($winid in $new_win_matches) {
-
-    
-
-    
+   
     if ($null -eq $winid) { continue }
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
     $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json
