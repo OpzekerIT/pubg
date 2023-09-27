@@ -1,7 +1,8 @@
 ﻿
-if($PSScriptRoot.length -eq 0){
+if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
-}else{
+}
+else {
     $scriptroot = $PSScriptRoot
 }
 # Read the content of the file as a single string
@@ -33,7 +34,13 @@ $headers = @{
     'accept'        = 'application/vnd.api+json'
     'Authorization' = "$apiKey"
 }
-$playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers
+try { 
+    $playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers 
+} catch {
+    write-output 'Sleeping for 61 seconds'
+    start-sleep -Seconds 61
+    $playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers
+}
 $playerinfo.data | convertto-json -depth 100 | Out-File "$scriptroot/../data/player_data.json"
 $playerList = @()
 $playerinfo.data | ForEach-Object {
@@ -49,7 +56,7 @@ $playerList
 
 
 $playeridstring = ""
-foreach ($playerid in $playerinfo.data.id){
+foreach ($playerid in $playerinfo.data.id) {
     $playeridstring += "$playerid,"
 }
 $playeridstring = $playeridstring.Substring(0, $playeridstring.Length - 1)
@@ -68,14 +75,26 @@ $lifetimestats = @{}
 $webrequestlimiter = 0
 foreach ($playmode in $playermodes) {
     # Fetch stats for the current playmode
-    if($webrequestlimiter -le 8){
+    if ($webrequestlimiter -le 8) {
         write-output "Getting data for players $playeridstring gameode $playmode"
-    $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
-    $webrequestlimiter++
-}else{
-    write-ouput "sleeping for 60 seconds"
-    $webrequestlimiter = 0
-}
+        
+        
+        try{
+            $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
+        } catch {
+            write-output 'sleeping for 61 seconds'
+            start-sleep -Seconds 61
+            $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
+        }
+
+        
+        
+        $webrequestlimiter++
+    }
+    else {
+        write-ouput "sleeping for 60 seconds"
+        $webrequestlimiter = 0
+    }
  
     # Check if the playmode doesn't exist in the hashtable, then add it
     if (-not $lifetimestats.ContainsKey($playmode)) {
@@ -88,7 +107,7 @@ foreach ($playmode in $playermodes) {
         $playerName = $playerList | Where-Object { $_.PlayerID -eq $stat } | Select-Object -ExpandProperty PlayerName
         write-output "Getting data for $playerName with gamemode $playmode"
         # Fetch the specific stat data for the current stat
-        $specificStat = ($stats.data | where-object {$_.relationships.player.data.id -eq $stat}).attributes.gamemodestats.$playmode
+        $specificStat = ($stats.data | where-object { $_.relationships.player.data.id -eq $stat }).attributes.gamemodestats.$playmode
 
         # Create a new hashtable entry for the player and insert the specific stat data
         if (-not $lifetimestats[$playmode].ContainsKey($playerName)) {
@@ -108,7 +127,7 @@ $currentTimezone = (Get-TimeZone).Id
 
 # Format and parse the information into a string
 $formattedString = "$currentDateTime - Time Zone: $currentTimezone"
-$lifetimestats['updated']= $formattedString
+$lifetimestats['updated'] = $formattedString
 # Output the formatted string
 
 
