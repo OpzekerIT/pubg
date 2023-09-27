@@ -33,7 +33,7 @@ jobs:
     - name: LINK TO WEBSITE
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-          echo "Visit the production site at: https://lanta.eu/DTCH/"
+          echo "Visit the production site at: https://dtch.online"
         else
-          echo "Visit the dev site at: https://lanta.eu/DTCH_DEV/"
+          echo "Visit the dev site at: https://dev.dtch.online"
         fi

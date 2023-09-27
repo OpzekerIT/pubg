@@ -3,13 +3,13 @@
     "type": "player",
     "id": "account.3e75bc1560664817900f3747e2270659",
     "attributes": {
-      "patchVersion": "",
       "banType": "Innocent",
       "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
       "name": "Lanta01",
       "stats": null,
       "titleId": "pubg",
-      "shardId": "steam"
+      "shardId": "steam",
+      "patchVersion": ""
     },
     "relationships": {
       "assets": {
@@ -17,6 +17,38 @@
       },
       "matches": {
         "data": [
+          {
+            "type": "match",
+            "id": "31725296-d259-43d8-ad99-9b57a71fbe4b"
+          },
+          {
+            "type": "match",
+            "id": "e010dbd6-ac3c-475e-84d3-7674613b4454"
+          },
+          {
+            "type": "match",
+            "id": "8c1f5639-c42e-4941-80b4-5592b447a3de"
+          },
+          {
+            "type": "match",
+            "id": "6e9b5a63-a33c-4c0c-a2ff-6762ca798e33"
+          },
+          {
+            "type": "match",
+            "id": "23672423-cbf6-4ff6-83bf-563b8016c0aa"
+          },
+          {
+            "type": "match",
+            "id": "d994e2c5-de88-4225-9f67-b5464b218953"
+          },
+          {
+            "type": "match",
+            "id": "158112a8-49cc-4c4b-bc7b-989a986fb654"
+          },
+          {
+            "type": "match",
+            "id": "edd0fdc7-4130-474f-ab66-bac52ec4a836"
+          },
           {
             "type": "match",
             "id": "bbf981b7-c33e-446a-a1ef-9500bb833621"
@@ -296,33 +328,13 @@
           {
             "type": "match",
             "id": "ba1d8044-4c68-4d26-913c-2c941d4e664a"
-          },
-          {
-            "type": "match",
-            "id": "c28effbc-c886-4763-9ec7-556f29319f78"
-          },
-          {
-            "type": "match",
-            "id": "c95a0c9a-359a-4b22-a65d-e809b24ea6ad"
-          },
-          {
-            "type": "match",
-            "id": "b1364290-c180-4b00-8846-342bd96eafda"
-          },
-          {
-            "type": "match",
-            "id": "63e93f32-72dd-494a-97dc-dce43832b18e"
-          },
-          {
-            "type": "match",
-            "id": "05f81d57-7bec-4b79-bb77-bddfd4532911"
           }
         ]
       }
     },
     "links": {
-      "self": "https://api.pubg.com/shards/steam/players/account.3e75bc1560664817900f3747e2270659",
-      "schema": ""
+      "schema": "",
+      "self": "https://api.pubg.com/shards/steam/players/account.3e75bc1560664817900f3747e2270659"
     }
   },
   {
@@ -338,8 +350,51 @@
       "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776"
     },
     "relationships": {
+      "assets": {
+        "data": []
+      },
       "matches": {
         "data": [
+          {
+            "type": "match",
+            "id": "8c1f5639-c42e-4941-80b4-5592b447a3de"
+          },
+          {
+            "type": "match",
+            "id": "6e9b5a63-a33c-4c0c-a2ff-6762ca798e33"
+          },
+          {
+            "type": "match",
+            "id": "23672423-cbf6-4ff6-83bf-563b8016c0aa"
+          },
+          {
+            "type": "match",
+            "id": "d994e2c5-de88-4225-9f67-b5464b218953"
+          },
+          {
+            "type": "match",
+            "id": "158112a8-49cc-4c4b-bc7b-989a986fb654"
+          },
+          {
+            "type": "match",
+            "id": "edd0fdc7-4130-474f-ab66-bac52ec4a836"
+          },
+          {
+            "type": "match",
+            "id": "92aa8c54-b2ef-4995-a335-6df528073a4d"
+          },
+          {
+            "type": "match",
+            "id": "3cf6e407-1e9b-4fe9-aecc-182136aa83a3"
+          },
+          {
+            "type": "match",
+            "id": "0a4a2b7e-bd57-426a-8f74-76e662815711"
+          },
+          {
+            "type": "match",
+            "id": "a5cea16d-5329-4de7-92d4-4fa969e3521a"
+          },
           {
             "type": "match",
             "id": "206202ac-789a-4cf3-8c71-993de77abba8"
@@ -549,9 +604,6 @@
             "id": "ba1d8044-4c68-4d26-913c-2c941d4e664a"
           }
         ]
-      },
-      "assets": {
-        "data": []
       }
     },
     "links": {
@@ -563,13 +615,13 @@
     "type": "player",
     "id": "account.4622686b9d9f44209d64503b18d96a1d",
     "attributes": {
+      "name": "TaGMoM",
+      "stats": null,
       "titleId": "pubg",
       "shardId": "steam",
       "patchVersion": "",
       "banType": "Innocent",
-      "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
-      "name": "TaGMoM",
-      "stats": null
+      "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776"
     },
     "relationships": {
       "assets": {
@@ -577,6 +629,18 @@
       },
       "matches": {
         "data": [
+          {
+            "type": "match",
+            "id": "7653f62b-f897-4c83-82d9-8f1711cfd7e8"
+          },
+          {
+            "type": "match",
+            "id": "0729906e-a5d8-4b5c-a27e-0a07b85a3aae"
+          },
+          {
+            "type": "match",
+            "id": "a5cea16d-5329-4de7-92d4-4fa969e3521a"
+          },
           {
             "type": "match",
             "id": "f625262b-b789-40e2-9c88-5220a354452b"
@@ -645,13 +709,13 @@
     "type": "player",
     "id": "account.b39f1fc9e49b471f8cd9ccce15ad9676",
     "attributes": {
+      "stats": null,
+      "titleId": "pubg",
       "shardId": "steam",
       "patchVersion": "",
       "banType": "Innocent",
       "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
-      "name": "r00tger",
-      "stats": null,
-      "titleId": "pubg"
+      "name": "r00tger"
     },
     "relationships": {
       "assets": {
@@ -675,13 +739,13 @@
     "type": "player",
     "id": "account.2322e3d471a5418696b6f14271afd83a",
     "attributes": {
-      "stats": null,
-      "titleId": "pubg",
-      "shardId": "steam",
       "patchVersion": "",
       "banType": "Innocent",
       "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
-      "name": "Masistuta"
+      "name": "Masistuta",
+      "stats": null,
+      "titleId": "pubg",
+      "shardId": "steam"
     },
     "relationships": {
       "assets": {
@@ -689,6 +753,26 @@
       },
       "matches": {
         "data": [
+          {
+            "type": "match",
+            "id": "31725296-d259-43d8-ad99-9b57a71fbe4b"
+          },
+          {
+            "type": "match",
+            "id": "e010dbd6-ac3c-475e-84d3-7674613b4454"
+          },
+          {
+            "type": "match",
+            "id": "8c1f5639-c42e-4941-80b4-5592b447a3de"
+          },
+          {
+            "type": "match",
+            "id": "6e9b5a63-a33c-4c0c-a2ff-6762ca798e33"
+          },
+          {
+            "type": "match",
+            "id": "23672423-cbf6-4ff6-83bf-563b8016c0aa"
+          },
           {
             "type": "match",
             "id": "4929ee06-5e9c-4ebb-a021-3c94ebae0ae9"
@@ -860,17 +944,13 @@
           {
             "type": "match",
             "id": "1b841795-28a8-4a56-a86e-fe23b28c7333"
-          },
-          {
-            "type": "match",
-            "id": "3287ea91-9545-4bde-ac07-c1871330545b"
           }
         ]
       }
     },
     "links": {
-      "self": "https://api.pubg.com/shards/steam/players/account.2322e3d471a5418696b6f14271afd83a",
-      "schema": ""
+      "schema": "",
+      "self": "https://api.pubg.com/shards/steam/players/account.2322e3d471a5418696b6f14271afd83a"
     }
   },
   {
@@ -891,6 +971,34 @@
       },
       "matches": {
         "data": [
+          {
+            "type": "match",
+            "id": "6e9b5a63-a33c-4c0c-a2ff-6762ca798e33"
+          },
+          {
+            "type": "match",
+            "id": "23672423-cbf6-4ff6-83bf-563b8016c0aa"
+          },
+          {
+            "type": "match",
+            "id": "d994e2c5-de88-4225-9f67-b5464b218953"
+          },
+          {
+            "type": "match",
+            "id": "158112a8-49cc-4c4b-bc7b-989a986fb654"
+          },
+          {
+            "type": "match",
+            "id": "dcdf06f2-4a80-43dd-b193-ae2abf0c9645"
+          },
+          {
+            "type": "match",
+            "id": "0a4a2b7e-bd57-426a-8f74-76e662815711"
+          },
+          {
+            "type": "match",
+            "id": "7653f62b-f897-4c83-82d9-8f1711cfd7e8"
+          },
           {
             "type": "match",
             "id": "16fdb69f-a891-4a90-8b2e-709c89368c31"
@@ -1066,50 +1174,6 @@
           {
             "type": "match",
             "id": "f2475dd2-18e3-4cce-84f7-a2f9496c4c5a"
-          },
-          {
-            "type": "match",
-            "id": "e579a31c-f9b7-46a9-8195-1d4b6f92a90d"
-          },
-          {
-            "type": "match",
-            "id": "d964b25e-c5c3-46d3-adf5-aac3a9d6bdd2"
-          },
-          {
-            "type": "match",
-            "id": "317735c4-851e-4b08-beb5-a2ebd2619d6a"
-          },
-          {
-            "type": "match",
-            "id": "a268d2e3-6382-41a3-ae51-e60e0dc350ee"
-          },
-          {
-            "type": "match",
-            "id": "c9eb62f8-574e-42b6-ad15-72241d8b1066"
-          },
-          {
-            "type": "match",
-            "id": "67e76bec-9cb3-4d69-82fc-680ef5b4379a"
-          },
-          {
-            "type": "match",
-            "id": "c28effbc-c886-4763-9ec7-556f29319f78"
-          },
-          {
-            "type": "match",
-            "id": "c95a0c9a-359a-4b22-a65d-e809b24ea6ad"
-          },
-          {
-            "type": "match",
-            "id": "b1364290-c180-4b00-8846-342bd96eafda"
-          },
-          {
-            "type": "match",
-            "id": "63e93f32-72dd-494a-97dc-dce43832b18e"
-          },
-          {
-            "type": "match",
-            "id": "05f81d57-7bec-4b79-bb77-bddfd4532911"
           }
         ]
       }
@@ -1123,13 +1187,13 @@
     "type": "player",
     "id": "account.0026f9f08725424fa477ba986991e064",
     "attributes": {
-      "banType": "Innocent",
-      "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
-      "name": "Jimbo_The_One",
       "stats": null,
       "titleId": "pubg",
       "shardId": "steam",
-      "patchVersion": ""
+      "patchVersion": "",
+      "banType": "Innocent",
+      "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
+      "name": "Jimbo_The_One"
     },
     "relationships": {
       "assets": {
@@ -1137,6 +1201,30 @@
       },
       "matches": {
         "data": [
+          {
+            "type": "match",
+            "id": "e010dbd6-ac3c-475e-84d3-7674613b4454"
+          },
+          {
+            "type": "match",
+            "id": "8c1f5639-c42e-4941-80b4-5592b447a3de"
+          },
+          {
+            "type": "match",
+            "id": "6e9b5a63-a33c-4c0c-a2ff-6762ca798e33"
+          },
+          {
+            "type": "match",
+            "id": "23672423-cbf6-4ff6-83bf-563b8016c0aa"
+          },
+          {
+            "type": "match",
+            "id": "d994e2c5-de88-4225-9f67-b5464b218953"
+          },
+          {
+            "type": "match",
+            "id": "158112a8-49cc-4c4b-bc7b-989a986fb654"
+          },
           {
             "type": "match",
             "id": "2b9c4668-e2de-41d0-ab5a-db39ded3ad4c"
@@ -1308,6 +1396,10 @@
           {
             "type": "match",
             "id": "696d9324-fa2c-461c-b35f-1c68d2bb6492"
+          },
+          {
+            "type": "match",
+            "id": "696d9324-fa2c-461c-b35f-1c68d2bb6497"
           }
         ]
       }
@@ -1321,13 +1413,13 @@
     "type": "player",
     "id": "account.56ea56d593e440a48c3eaa5613b7eaa0",
     "attributes": {
+      "patchVersion": "",
       "banType": "Innocent",
       "clanId": "clan.d67f3a9805414aa7b78a1f122a7de776",
       "name": "Shepherders",
       "stats": null,
       "titleId": "pubg",
-      "shardId": "steam",
-      "patchVersion": ""
+      "shardId": "steam"
     },
     "relationships": {
       "assets": {
@@ -1351,8 +1443,8 @@
       }
     },
     "links": {
-      "schema": "",
-      "self": "https://api.pubg.com/shards/steam/players/account.56ea56d593e440a48c3eaa5613b7eaa0"
+      "self": "https://api.pubg.com/shards/steam/players/account.56ea56d593e440a48c3eaa5613b7eaa0",
+      "schema": ""
     }
   }
 ]
