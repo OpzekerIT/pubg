@@ -86,12 +86,13 @@ foreach ($winid in $new_win_matches) {
     
     Legenda: 
     
-    dmg_h = Damege tegen echte spelers
-    dmg = Alle dmg zowel echte spelers als ai
-    k_h = Echte spelers die ge gekilled hebt
-    K_a = alle spelers kills
-    t_serv = time survived in secondes
-    k_t = team kills
+    dmg_h: Schade aangericht aan echte spelers
+    dmg: Totale schade (aan zowel echte spelers als AI)
+    k_h: Aantal echte spelers die je hebt geëlimineerd
+    K_a: Totale aantal eliminaties (inclusief AI)
+    t_serv: Overleefde tijd (in seconden)
+    k_t: Team eliminaties
+    
     "
     
     send-discord -content $legenda
