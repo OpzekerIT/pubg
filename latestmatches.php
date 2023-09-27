@@ -57,7 +57,7 @@ error_reporting(E_ALL);
                     foreach ($player_data['player_matches'] as $match) {
                         $date = new DateTime($match['createdAt']);
                         $date->modify('+2 hours');
-                        $formattedDate = $date->format('d F Y, H:i:s');
+                        $formattedDate = $date->format('Y-m-d H:i:s');
 
                         $matchType = $match['matchType'];
                         $gameMode = $match['gameMode'];
