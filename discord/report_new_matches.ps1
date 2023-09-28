@@ -87,13 +87,20 @@ map             $($map_map[$winmatches[0].mapName])
         write-output "creating table for player $player"
         $win_stats += [PSCustomObject]@{ 
             Name   = $player
-            'Human dmg'  = "$([math]::Round((($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } | where-object {$_.victim.teamId -ne $_.attacker.teamId } ).damage | Measure-Object -Sum).Sum))"
-            'Human Kills'    = "$((($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' } | where-object { $_.killer.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } )).count)"
+            'Human dmg'  = "$([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))"
+            'Human Kills'    = "$(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERKILLV2' -and $_.killer.name -eq $player -and $_.victim.accountId -notlike "ai.*" }).count)"
             'Dmg'    = "$([math]::Round(($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt))"
             'Kills'   = "$(($all_winners_of_match | Where-Object { $_.name -eq $player }).kills)"
             'alive minutes' = "$([math]::Round((($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived /60 )))"
         }
-        $teamdmg = $telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.victim.teamId -eq $_.attacker.teamId } | where-object { $_.victim.accountId -notlike "ai.*" } | where-object { $_.victim.name -ne $_.attacker.name } | where-object { $_.attacker.name -eq $player }
+        $teamdmg = $telemetry | Where-Object {
+            $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and 
+            $_.victim.teamId -eq $_.attacker.teamId -and
+            $_.victim.accountId -notlike "ai.*" -and 
+            $_.victim.name -ne $_.attacker.name -and
+            $_.attacker.name -eq $player
+        }
+        
         if ($teamdmg.count -ge 1) {
             foreach ($victim in ($teamdmg.victim.name | Select-Object -Unique)) {
                 $victims += [PSCustomObject]@{
