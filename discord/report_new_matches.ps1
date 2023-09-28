@@ -74,11 +74,15 @@ foreach ($winid in $new_win_matches) {
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     $all_winners_of_match = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
     send-discord -content ":chicken: :chicken: **CHICKEN CHICKEN WINNER DINNER!!** :chicken: :chicken:"
-    send-discord -content "Gefeliciteerd $($players -join ' ')"
-    send-discord -content "match mode $($winmatches[0].gameMode)"
-    send-discord -content "match type $($winmatches[0].matchType)"
-    send-discord -content "map $($map_map[$winmatches[0].mapName])"
-
+    send-discord -content ":partying_face::partying_face::partying_face: Gefeliciteerd   $($players -join ', ') :partying_face::partying_face::partying_face:"
+    $match_settings = @"
+``````
+match mode      $($winmatches[0].gameMode)
+match type      $($winmatches[0].matchType)
+map             $($map_map[$winmatches[0].mapName])
+``````
+"@
+send-discord -content $match_settings
     foreach ($player in $all_winners_of_match.name) {
         write-output "creating tble for player $player"
         $win_stats += [PSCustomObject]@{ 
