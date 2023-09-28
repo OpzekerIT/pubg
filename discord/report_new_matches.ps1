@@ -6,8 +6,6 @@ else {
     $scriptroot = $PSScriptRoot
 }
 
-
-
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
 # Use regex to match the apiKey value
@@ -48,28 +46,30 @@ function send-discord {
 }
 
 $map_map = @{
-    "Baltic_Main" = "Erangel"
-    "Chimera_Main" = "Paramo"
-    "Desert_Main" = "Miramar"
-    "DihorOtok_Main" = "Vikendi"
-    "Erangel_Main" = "Erangel"
-    "Heaven_Main" = "Haven"
-    "Kiki_Main" = "Deston"
-    "Range_Main" = "Camp Jackal"
-    "Savage_Main" = "Sanhok"
+    "Baltic_Main"     = "Erangel"
+    "Chimera_Main"    = "Paramo"
+    "Desert_Main"     = "Miramar"
+    "DihorOtok_Main"  = "Vikendi"
+    "Erangel_Main"    = "Erangel"
+    "Heaven_Main"     = "Haven"
+    "Kiki_Main"       = "Deston"
+    "Range_Main"      = "Camp Jackal"
+    "Savage_Main"     = "Sanhok"
     "Summerland_Main" = "Karakin"
-    "Tiger_Main" = "Taego"
+    "Tiger_Main"      = "Taego"
 }
 
 $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
 $new_win_matches = $player_matches.new_win_matches
-$win_stats = @()
+
 
 foreach ($winid in $new_win_matches) {
-   
+
+    $win_stats = @()
+    $victims = @()
     if ($null -eq $winid) { continue }
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
-    $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json
+    $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }
     $players = $winmatches.stats.name 
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     $all_winners_of_match = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
@@ -82,23 +82,41 @@ match type      $($winmatches[0].matchType)
 map             $($map_map[$winmatches[0].mapName])
 ``````
 "@
-send-discord -content $match_settings
+    send-discord -content $match_settings
     foreach ($player in $all_winners_of_match.name) {
-        write-output "creating tble for player $player"
+        write-output "creating table for player $player"
         $win_stats += [PSCustomObject]@{ 
-            playername = $player
-            dmg_h      = [math]::Round((($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } | where-object {$_.victim.teamId -ne $_.attacker.teamId } ).damage | Measure-Object -Sum).Sum, 2)
-            k_h        = (($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' } | where-object { $_.killer.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } )).count
-            dmg        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt
-            k_a        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).kills
-            k_t        = ($all_winners_of_match | Where-Object { $_.name -eq $player }).teamKills
-            t_serv     = ($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived
+            Name   = $player
+            'Human dmg'  = "$([math]::Round((($telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.attacker.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } | where-object {$_.victim.teamId -ne $_.attacker.teamId } ).damage | Measure-Object -Sum).Sum))"
+            'Human Kills'    = "$((($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' } | where-object { $_.killer.name -eq $player } | where-object { $_.victim.accountId -notlike "ai.*" } )).count)"
+            'Dmg'    = "$([math]::Round(($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt))"
+            'Kills'   = "$(($all_winners_of_match | Where-Object { $_.name -eq $player }).kills)"
+            'alive minutes' = "$([math]::Round((($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived /60 )))"
         }
-       
-    }
+        $teamdmg = $telemetry | where-object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' } | where-object { $_.victim.teamId -eq $_.attacker.teamId } | where-object { $_.victim.accountId -notlike "ai.*" } | where-object { $_.victim.name -ne $_.attacker.name } | where-object { $_.attacker.name -eq $player }
+        if ($teamdmg.count -ge 1) {
+            foreach ($victim in ($teamdmg.victim.name | Select-Object -Unique)) {
+                $victims += [PSCustomObject]@{
+                    attacker = $player
+                    victim   = $victim
+                    Damage   = "$([math]::Round((($teamdmg | Where-Object { $_.victim.name -eq $victim }).damage | Measure-Object -Sum).Sum))"
+                }
+            }
     
+        }
+
+    }
+
+
     $content_winstats = '```' + ($win_stats | Format-Table | out-string) + '```'
     send-discord -content $content_winstats
+
+    if($victims.count -ge 1){
+        send-discord -content ":skull::skull: Helaas hebben we deze keer ook team killers :skull::skull: "
+    $content_victims =  '```' + ($victims | Format-Table | out-string) + '```'
+        send-discord -content $content_victims
+    }
+
     
     $legenda = '
 ```
@@ -106,7 +124,7 @@ dmg_h   = Schade aangericht aan echte spelers
 dmg     = Totale schade (aan zowel echte spelers als AI)
 k_h     = Aantal echte spelers die je hebt geelimineerd
 K_a     = Totale aantal eliminaties (inclusief AI)
-t_serv  = Overleefde tijd (in seconden)
+t_serv  = Overleefde tijd (in minuten)
 k_t     = Team eliminaties
 ```
         '
@@ -114,8 +132,6 @@ k_t     = Team eliminaties
     send-discord -content $legenda
     
 }
-
-
 
 foreach ($item in $player_matches) {
     if ($item.PSObject.Properties.Name -contains "new_win_matches") {
