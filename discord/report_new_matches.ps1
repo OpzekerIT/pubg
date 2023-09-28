@@ -129,7 +129,7 @@ k_t     = Team eliminaties
 ```
         '
     
-    send-discord -content $legenda
+    #send-discord -content $legenda
     
 }
 
