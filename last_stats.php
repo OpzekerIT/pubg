@@ -43,24 +43,26 @@ error_reporting(E_ALL);
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-                    if($player_data['matches'] == 0){
-                        continue;
-                    }
+                   // if ($player_data['matches'] == 0) {
+                    //    continue;
+                    //}
                     $player_name = $player_data['playername'];
                     $deaths = number_format($player_data['deaths'], 2, ',', '');
                     $kills = number_format($player_data['kills'], 2, ',', '');
                     $humankills = number_format($player_data['humankills'], 2, ',', '');
                     $matches = $player_data['matches'];
-                    $KD_H = ($player_data['KD_H'] == "Infinity")
-                        ? "∞"
-                        : (is_null($player_data['KD_H'])
-                            ? "null"
+                    $KD_H =
+                        !isset($player_data['KD_H']) || $player_data['KD_H'] === null
+                        ? "null"
+                        : ($player_data['KD_H'] == "Infinity"
+                            ? "∞"
                             : number_format($player_data['KD_H'], 2, ',', ''));
 
-                    $KD_ALL = ($player_data['KD_ALL'] == "Infinity")
-                        ? "∞"
-                        : (is_null($player_data['KD_ALL'])
-                            ? "null"
+                    $KD_ALL =
+                        !isset($player_data['KD_ALL']) || $player_data['KD_ALL'] === null
+                        ? "null"
+                        : ($player_data['KD_ALL'] == "Infinity"
+                            ? "∞"
                             : number_format($player_data['KD_ALL'], 2, ',', ''));
 
 
