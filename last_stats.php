@@ -29,6 +29,10 @@ error_reporting(E_ALL);
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
             foreach ($players_matches as $key => $player_datas) {
+                 if ($key == 'updated') {
+                    continue;
+                }
+                echo "<br>";
                 echo "Stats for $key";
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
@@ -44,9 +48,7 @@ error_reporting(E_ALL);
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-                    // if ($player_data['matches'] == 0) {
-                    //    continue;
-                    //}
+
                     $player_name = $player_data['playername'];
                     $deaths = number_format($player_data['deaths'], 2, ',', '');
                     $kills = number_format($player_data['kills'], 2, ',', '');
