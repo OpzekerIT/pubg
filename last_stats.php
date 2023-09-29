@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
-            foreach ($players_matches as $player_datas) {
+            foreach ($players_matches as $key => $player_datas) {
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Playername</th>
@@ -43,7 +43,7 @@ error_reporting(E_ALL);
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-                   // if ($player_data['matches'] == 0) {
+                    // if ($player_data['matches'] == 0) {
                     //    continue;
                     //}
                     $player_name = $player_data['playername'];
@@ -56,14 +56,20 @@ error_reporting(E_ALL);
                         ? "null"
                         : ($player_data['KD_H'] == "Infinity"
                             ? "∞"
-                            : number_format($player_data['KD_H'], 2, ',', ''));
+                            : (is_numeric($player_data['KD_H'])
+                                ? number_format((float) $player_data['KD_H'], 2, ',', '')
+                                : "Invalid Value")); // or any other default string for non-numerical values
+            
 
                     $KD_ALL =
                         !isset($player_data['KD_ALL']) || $player_data['KD_ALL'] === null
                         ? "null"
                         : ($player_data['KD_ALL'] == "Infinity"
                             ? "∞"
-                            : number_format($player_data['KD_ALL'], 2, ',', ''));
+                            : (is_numeric($player_data['KD_ALL'])
+                                ? number_format((float) $player_data['KD_ALL'], 2, ',', '')
+                                : "Invalid Value")); // or any other default string for non-numerical values
+            
 
 
                     echo "<tr>
