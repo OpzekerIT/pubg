@@ -28,19 +28,19 @@ error_reporting(E_ALL);
 
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
-            echo "<table border='1' class='sortable'>";
-            echo "<tr>
-                <th>Playername</th>
-                <th>Deaths</th>
-                <th>Kills</th>
-                <th>Human Kills</th>
-                <th>Matches</th>
-                <th>K/D (Human)</th>
-                <th>K/D (All)</th>
-            </tr>";
+            echo 2222222;
 
             foreach ($players_matches as $player_datas) {
-
+                echo "<table border='1' class='sortable'>";
+                echo "<tr>
+                    <th>Playername</th>
+                    <th>Deaths</th>
+                    <th>Kills</th>
+                    <th>Human Kills</th>
+                    <th>Matches</th>
+                    <th>K/D (Human)</th>
+                    <th>K/D (All)</th>
+                </tr>";
                 foreach ($player_datas as $player_data) {
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
