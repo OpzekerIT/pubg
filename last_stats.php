@@ -89,14 +89,14 @@ error_reporting(E_ALL);
                 echo "</table>";
             }
 
-
-            echo "Last update: ";
-            foreach ($players_matches as $player_data) {
-                if (isset($player_data['updated'])) {
-                    echo $player_data['updated'];
-                    break; // Once found, exit the loop
+            foreach ($players_matches as $key => $update) {
+                if ($key == 'updated'){
+                echo "Last update: ";
+                echo $update['updated'];
                 }
             }
+
+
 
 
 
