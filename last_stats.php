@@ -40,8 +40,8 @@ error_reporting(E_ALL);
             </tr>";
 
             foreach ($players_matches as $player_datas) {
-                
-
+                $keys = array_keys($player_datas);
+                    print($keys);
                 foreach ($player_datas as $player_data) {
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
