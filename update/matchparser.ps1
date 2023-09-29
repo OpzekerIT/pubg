@@ -152,11 +152,11 @@ $formattedString = "$currentDateTime - Time Zone: $currentTimezone"
 # Output the formatted string
 
 $playerstats = [PSCustomObject]@{
-    event_ibr = $playerstats_event_ibr
-    all       = $playerstats_all
-    airoyale  = $playerstats_airoyale
-    official  = $playerstats_official
-    updated   = $formattedString
+    all      = $playerstats_all
+    Intense  = $playerstats_event_ibr
+    Casual   = $playerstats_airoyale
+    official = $playerstats_official
+    updated  = $formattedString
 }
 
 write-output "Writing file"
