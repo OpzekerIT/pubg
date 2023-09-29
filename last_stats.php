@@ -29,6 +29,7 @@ error_reporting(E_ALL);
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
             foreach ($players_matches as $key => $player_datas) {
+                echo "Stats for $key";
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Playername</th>
@@ -58,7 +59,7 @@ error_reporting(E_ALL);
                             ? "∞"
                             : (is_numeric($player_data['KD_H'])
                                 ? number_format((float) $player_data['KD_H'], 2, ',', '')
-                                : "Invalid Value")); // or any other default string for non-numerical values
+                                : "0")); // or any other default string for non-numerical values
             
 
                     $KD_ALL =
@@ -68,7 +69,7 @@ error_reporting(E_ALL);
                             ? "∞"
                             : (is_numeric($player_data['KD_ALL'])
                                 ? number_format((float) $player_data['KD_ALL'], 2, ',', '')
-                                : "Invalid Value")); // or any other default string for non-numerical values
+                                : "0")); // or any other default string for non-numerical values
             
 
 
