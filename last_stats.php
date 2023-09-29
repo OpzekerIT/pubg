@@ -59,8 +59,8 @@ error_reporting(E_ALL);
                     <td>$kills</td>
                     <td>$humankills</td>
                     <td>$matches</td>
-                    <td>$KD_H</td>
-                    <td>$KD_ALL</td>
+                    <td></td>
+                    <td></td>
                 </tr>";
                 }
 
