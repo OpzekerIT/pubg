@@ -5,7 +5,6 @@ if ($PSScriptRoot.length -eq 0) {
 else {
     $scriptroot = $PSScriptRoot
 }
-$matches = 5
 function get-killstats {
     param (
         $player_name,
@@ -42,7 +41,7 @@ foreach ($player in $all_player_matches) {
     $i++
     $j = 0
     write-output "$($all_player_matches.count) / $i"
-    foreach ($match in $player.player_matches | select-object -First $matches) {
+    foreach ($match in $player.player_matches) {
         $j++
         write-output "$($player.player_matches.count)/ $j"
        
