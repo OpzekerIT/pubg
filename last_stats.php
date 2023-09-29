@@ -91,8 +91,8 @@ error_reporting(E_ALL);
 
             foreach ($players_matches as $key => $update) {
                 if ($key == 'updated'){
-                echo "Last update: ";
-                echo $update['updated'];
+                echo "Last update: $update ";
+               
                 }
             }
 
