@@ -28,8 +28,6 @@ error_reporting(E_ALL);
 
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
-            echo 2222222;
-
             foreach ($players_matches as $player_datas) {
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
@@ -50,8 +48,18 @@ error_reporting(E_ALL);
                     $kills = number_format($player_data['kills'], 2, ',', '');
                     $humankills = number_format($player_data['humankills'], 2, ',', '');
                     $matches = $player_data['matches'];
-                    //$KD_H = ($player_data['KD_H'] == "Infinity") ? "∞" : number_format($player_data['KD_H'], 2, ',', '');
-                    //$KD_ALL = ($player_data['KD_ALL'] == "Infinity") ? "∞" : number_format($player_data['KD_ALL'], 2, ',', '');
+                    $KD_H = ($player_data['KD_H'] == "Infinity")
+                        ? "∞"
+                        : (is_null($player_data['KD_H'])
+                            ? "null"
+                            : number_format($player_data['KD_H'], 2, ',', ''));
+
+                    $KD_ALL = ($player_data['KD_ALL'] == "Infinity")
+                        ? "∞"
+                        : (is_null($player_data['KD_ALL'])
+                            ? "null"
+                            : number_format($player_data['KD_ALL'], 2, ',', ''));
+
 
                     echo "<tr>
                     <td>$player_name</td>
@@ -59,8 +67,8 @@ error_reporting(E_ALL);
                     <td>$kills</td>
                     <td>$humankills</td>
                     <td>$matches</td>
-                    <td></td>
-                    <td></td>
+                    <td>$KD_H</td>
+                    <td>$KD_ALL</td>
                 </tr>";
                 }
 
