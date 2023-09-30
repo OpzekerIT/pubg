@@ -1,3 +1,6 @@
+. .\..\includes\ps1\lockfile.ps1 
+  
+new-lock
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -151,3 +154,5 @@ $newJson = $player_matches | ConvertTo-Json -Depth 100
 
 # Display the updated JSON
 $newJson | out-file "$scriptroot/../data/player_matches.json"
+
+remove-lock
