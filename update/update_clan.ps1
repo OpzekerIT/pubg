@@ -1,4 +1,6 @@
-﻿
+﻿. .\..\includes\ps1\lockfile.ps1
+
+new-lock
 if($PSScriptRoot.length -eq 0){
     $scriptroot = Get-Location
 }else{
@@ -46,3 +48,4 @@ $clandata | Add-Member -Name "updated" -MemberType NoteProperty -Value $formatte
 $clandata | convertto-json -Depth 100 | out-file "$scriptroot/../data/claninfo.json"
 
 $clandata | convertto-json -Depth 100
+remove-lock
