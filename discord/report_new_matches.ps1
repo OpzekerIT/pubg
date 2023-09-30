@@ -94,7 +94,7 @@ map             $($map_map[$winmatches[0].mapName])
             'Human Kills'    = "$(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERKILLV2' -and $_.killer.name -eq $player -and $_.victim.accountId -notlike "ai.*" }).count)"
             'Dmg'    = "$([math]::Round(($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt))"
             'Kills'   = "$(($all_winners_of_match | Where-Object { $_.name -eq $player }).kills)"
-            'alive minutes' = "$([math]::Round((($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived /60 )))"
+            'alive' = "$([math]::Round((($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived /60 )))"
         }
         $teamdmg = $telemetry | Where-Object {
             $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and 
