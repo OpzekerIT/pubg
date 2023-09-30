@@ -1,4 +1,6 @@
-﻿
+﻿. .\..\includes\ps1\lockfile.ps1
+
+new-lock
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
@@ -123,3 +125,4 @@ $lifetimestats['updated'] = $formattedString
 
 
 $lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
+remove-lock

@@ -1,3 +1,6 @@
+. .\..\includes\ps1\lockfile.ps1
+
+new-lock
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -5,6 +8,9 @@ if ($PSScriptRoot.length -eq 0) {
 else {
     $scriptroot = $PSScriptRoot
 }
+
+
+
 # Read the content of the file as a single string
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
@@ -93,3 +99,5 @@ $playermatches += [PSCustomObject]@{
 }
 
 $player_matches | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_matches.json"
+
+remove-lock
