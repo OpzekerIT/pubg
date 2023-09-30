@@ -1,3 +1,6 @@
+. .\..\includes\ps1\lockfile.ps1
+
+new-lock
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -173,3 +176,4 @@ foreach ($file in $difference) {
     Remove-Item -Path "$scriptroot/../data/telemetry_cache/$file"
 }
 write-output "Operation complete"
+remove-lock
