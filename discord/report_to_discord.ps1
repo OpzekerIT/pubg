@@ -1,4 +1,7 @@
 
+. .\..\includes\ps1\lockfile.ps1 
+  
+new-lock
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -96,3 +99,4 @@ $payload = [PSCustomObject]@{
 }
 
 Invoke-RestMethod -Uri $webhookurl -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
+remove-lock
