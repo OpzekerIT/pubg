@@ -40,6 +40,9 @@ $killstats = @()
 $i = 0
 
 foreach ($player in $all_player_matches) {
+    if($player.psobject.properties.name -eq 'new_win_matches'){
+        continue
+    }
     $player_name = $player.playername
     $i++
     $j = 0
