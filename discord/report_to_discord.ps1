@@ -9,8 +9,10 @@ if ($PSScriptRoot.length -eq 0) {
 else {
     $scriptroot = $PSScriptRoot
 }
-
-
+function IsValidEntry($entry) {
+    return ($entry.KD_H -ne 'NaN' -and $entry.KD_ALL -ne 'NaN') -and 
+           ($entry.KD_H -ne 'Infinity' -and $entry.KD_ALL -ne 'Infinity')
+}
 $fileContent = Get-Content -Path "$scriptroot/../discord/config.php" -Raw
 
 # Use regex to match the apiKey value
@@ -23,39 +25,34 @@ else {
 
 $stats = get-content "$scriptroot/../data/player_last_stats.json" | convertfrom-json
 
-foreach ($player in $stats) {
-    if ($player.KD_H -eq "Infinity") {
-        $player.KD_H = 0
-    }
 
-    if ($player.KD_ALL -eq "Infinity") {
-        $player.KD_ALL = 0
-    }
+$filteredData = @{
+    all = $stats.all | Where-Object { IsValidEntry $_ }
 }
 
 $most_kills = @{
-    'name' = (($stats | Sort-Object kills -Descending)[0].playername)
-    'stat' = (($stats | Sort-Object kills -Descending)[0].kills)
+    'name' = (($filteredData.all | Sort-Object kills -Descending)[0].playername)
+    'stat' = (($filteredData.all | Sort-Object kills -Descending)[0].kills)
 }
 $most_deaths = @{
-    'name' = (($stats | Sort-Object deaths -Descending)[0].playername)
-    'stat' = (($stats | Sort-Object deaths -Descending)[0].deaths)
+    'name' = (($filteredData.all | Sort-Object deaths -Descending)[0].playername)
+    'stat' = (($filteredData.all | Sort-Object deaths -Descending)[0].deaths)
 }
 $most_humankills = @{
-    'name' = (($stats | Sort-Object humankills -Descending)[0].playername)
-    'stat' = (($stats | Sort-Object humankills -Descending)[0].humankills)
+    'name' = (($filteredData.all | Sort-Object humankills -Descending)[0].playername)
+    'stat' = (($filteredData.all | Sort-Object humankills -Descending)[0].humankills)
 }
 $most_KD_H = @{
-    'name' = (($stats | Sort-Object KD_H -Descending)[0].playername)
-    'stat' = (($stats | Sort-Object KD_H -Descending)[0].KD_H)
+    'name' = (($filteredData.all | Sort-Object KD_H -Descending)[0].playername)
+    'stat' = (($filteredData.all | Sort-Object KD_H -Descending)[0].KD_H)
 }
 $most_KD_ALL = @{
-    'name' = (($stats | Sort-Object KD_ALL -Descending)[0].playername)
-    'stat' = (($stats | Sort-Object KD_ALL -Descending)[0].KD_ALL)
+    'name' = (($filteredData.all | Sort-Object KD_ALL -Descending)[0].playername)
+    'stat' = (($filteredData.all | Sort-Object KD_ALL -Descending)[0].KD_ALL)
 }
 $most_matches = @{
-    'name' = (($stats | Sort-Object matches -Descending)[0].playername)
-    'stat' = (($stats | Sort-Object matches -Descending)[0].matches)
+    'name' = (($filteredData.all | Sort-Object matches -Descending)[0].playername)
+    'stat' = (($filteredData.all | Sort-Object matches -Descending)[0].matches)
 }
 
 $content = "
