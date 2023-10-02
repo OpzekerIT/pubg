@@ -37,14 +37,15 @@ error_reporting(E_ALL);
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Playername</th>
-                    <th>Deaths</th>
+                    <th>Win Ratio</th>
+                    <th>K/D (Human)</th>
+                    <th>K/D (All)</th>
                     <th>Kills</th>
                     <th>Human Kills</th>
                     <th>Matches</th>
-                    <th>K/D (Human)</th>
-                    <th>K/D (All)</th>
                     <th>Wins</th>
-                    <th>Win Ratio</th>
+                    <th>Deaths</th>
+                    
                 </tr>";
                 foreach ($player_datas as $player_data) {
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
@@ -80,14 +81,15 @@ error_reporting(E_ALL);
 
                     echo "<tr>
                     <td>$player_name</td>
-                    <td>$deaths</td>
+                    <td>$winratio</td>
+                    <td>$KD_H</td>
+                    <td>$KD_ALL</td>
                     <td>$kills</td>
                     <td>$humankills</td>
                     <td>$matches</td>
-                    <td>$KD_H</td>
-                    <td>$KD_ALL</td>
                     <td>$wins</td>
-                    <td>$winratio</td>
+                    <td>$deaths</td>
+                    
                 </tr>";
                 }
 
