@@ -43,6 +43,8 @@ error_reporting(E_ALL);
                     <th>Matches</th>
                     <th>K/D (Human)</th>
                     <th>K/D (All)</th>
+                    <th>Wins</th>
+                    <th>Win Ratio</th>
                 </tr>";
                 foreach ($player_datas as $player_data) {
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
@@ -72,7 +74,8 @@ error_reporting(E_ALL);
                             : (is_numeric($player_data['KD_ALL'])
                                 ? number_format((float) $player_data['KD_ALL'], 2, ',', '')
                                 : "0")); // or any other default string for non-numerical values
-            
+                    $wins = number_format($player_data['wins'], 2, ',', '');
+                    $winratio = number_format($player_data['winratio'], 2, ',', '');
 
 
                     echo "<tr>
@@ -83,6 +86,8 @@ error_reporting(E_ALL);
                     <td>$matches</td>
                     <td>$KD_H</td>
                     <td>$KD_ALL</td>
+                    <td>$wins</td>
+                    <td>$winratio</td>
                 </tr>";
                 }
 
