@@ -55,16 +55,21 @@ function get-killstats {
     }
 }
 # Get the latest file in the directory by last modification time
-try { $latestFile = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop | Sort-Object LastWriteTime -Descending | Select-Object -First 1 } catch { 
+try { $latestFile = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+Write-Output "Found file $($latestFile.FullName)"
+
+} catch { 
     $latestFile = @()
     
 }
 
 # Display the result
 if ($latestFile.FullName) {
+    write-host "getting info from $($latestFile.FullName)" 
     $oldstats = get-content $latestFile.FullName  | ConvertFrom-Json
 }
 else {
+    write-output 'setting old stats var empty'
     $oldstats = @()
 }
 
