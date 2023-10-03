@@ -79,9 +79,10 @@ error_reporting(E_ALL);
                                 : "0")); // or any other default string for non-numerical values
                     $wins = number_format($player_data['wins'], 2, ',', '');
                     $winratio = number_format($player_data['winratio'], 2, ',', '');
+                    $originalChange = $player_data['change'];
                     $change = number_format($player_data['change'], 2, ',', '');
 
-                    if ($change < 0) {
+                    if ($originalChange < 0) {
                         $imagePath = 'images\red.png';
                     } elseif ($change > 0) {
                         $imagePath = 'images\green.png';
