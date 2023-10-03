@@ -120,10 +120,12 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
-
+    $change = get-change -winratio_old $winratio_old -winratio $winratio
+    write-output 'all'
     write-output "Calculating for player $player"
     write-output "new winratio $winratio"
     write-output "Old winratio $winratio_old"
+    write-output $change
 
 
     $playerstats_all += [PSCustomObject]@{ 
@@ -136,7 +138,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = $winratio
         wins       = $player_wins
-        change     = get-change -winratio_old $winratio_old -winratio $winratio
+        change     = $change
 
     }
 }
@@ -154,6 +156,13 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'event' -and $_.gameMode -eq 'ibr' }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
+    $change = get-change -winratio_old $winratio_old -winratio $winratio
+
+    write-output 'event'
+    write-output "Calculating for player $player"
+    write-output "new winratio $winratio"
+    write-output "Old winratio $winratio_old"
+    write-output $change
 
     $playerstats_event_ibr += [PSCustomObject]@{ 
         playername = $player
@@ -165,7 +174,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = ($player_wins / $player_matches) * 100
         wins       = $player_wins
-        change     = get-change -winratio_old $winratio_old -winratio $winratio
+        change     = $change
     }
 }
 $playerstats_event_ibr = $playerstats_event_ibr | Sort-Object winratio -Descending
@@ -181,6 +190,14 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'airoyale' }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
+    $change = get-change -winratio_old $winratio_old -winratio $winratio
+
+    write-output 'airoyale'
+    write-output "Calculating for player $player"
+    write-output "new winratio $winratio"
+    write-output "Old winratio $winratio_old"
+    write-output $change
+
 
     $playerstats_airoyale += [PSCustomObject]@{ 
         playername = $player
@@ -192,7 +209,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = ($player_wins / $player_matches) * 100
         wins       = $player_wins
-        change     = get-change -winratio_old $winratio_old -winratio $winratio
+        change     = $change
     }
 }
 $playerstats_airoyale = $playerstats_airoyale | Sort-Object winratio -Descending
@@ -207,6 +224,12 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'official' }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
+    $change = get-change -winratio_old $winratio_old -winratio $winratio
+    write-output 'official'
+    write-output "Calculating for player $player"
+    write-output "new winratio $winratio"
+    write-output "Old winratio $winratio_old"
+    write-output $change
 
     $playerstats_official += [PSCustomObject]@{ 
         playername = $player
@@ -218,7 +241,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = ($player_wins / $player_matches) * 100
         wins       = $player_wins
-        change     = get-change -winratio_old $winratio_old -winratio $winratio
+        change     = $change
     }
 }
 $playerstats_official = $playerstats_official | Sort-Object winratio -Descending
