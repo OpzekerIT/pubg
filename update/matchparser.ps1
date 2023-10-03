@@ -23,7 +23,7 @@ function get-change {
             $change = [double]::PositiveInfinity
         }
     } else {
-        $change =[math]::Round((($winratio - $winratio_old) / $winratio_old * 100) , 2)
+        $change =[math]::Round(((($winratio - $winratio_old) / $winratio_old) * 100) , 2)
     }
 
     return $change
