@@ -82,14 +82,11 @@ error_reporting(E_ALL);
                     $change = number_format($player_data['change'], 2, ',', '');
 
                     if ($change < 0) {
-                        $fontColor = "red";
                         $imagePath = 'images\red.png';
                     } elseif ($change > 0) {
-                        $fontColor = "green";
                         $imagePath = 'images\green.png';
                     } else {
-                        $fontColor = 'black';
-                        $imagePath = "images\equal.png";
+                        $imagePath = 'images\equal.png';
                     }
 
 
@@ -104,7 +101,7 @@ error_reporting(E_ALL);
                     <td>$matches</td>
                     <td>$wins</td>
                     <td>$deaths</td>
-                    <td style='color: $fontColor;'>$change<img src='$imagePath' alt='Change Indicator' style='vertical-align: right;' width='25' height='25'/> </td>
+                    <td>$change<img src='$imagePath' alt='Change Indicator' style='vertical-align: right;' width='25' height='25'/> </td>
                     
                 </tr>";
                 }
