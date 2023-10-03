@@ -20,10 +20,10 @@ function get-change {
             $change = 0
         } else {
             # Decide how you want to handle this scenario
-            $change = [double]::PositiveInfinity
+            $change = 0
         }
     } else {
-        $change =[math]::Round(((($winratio - $winratio_old) / $winratio_old) * 100) , 2)
+        $change = [math]::Round(($winratio - $winratio_old) , 2)
     }
 
     return $change
