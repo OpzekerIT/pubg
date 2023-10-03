@@ -101,7 +101,7 @@ error_reporting(E_ALL);
                     <td>$matches</td>
                     <td>$wins</td>
                     <td>$deaths</td>
-                    <td>$change <img src='$imagePath' alt='Change Indicator' style='vertical-align: right;' width='25' height='25'/> </td>
+                    <td><img src='$imagePath' alt='Change Indicator' style='vertical-align: right;' width='25' height='25'/> $change </td>
                     
                 </tr>";
                 }
