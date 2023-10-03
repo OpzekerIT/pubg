@@ -79,8 +79,8 @@ error_reporting(E_ALL);
                                 : "0")); // or any other default string for non-numerical values
                     $wins = number_format($player_data['wins'], 2, ',', '');
                     $winratio = number_format($player_data['winratio'], 2, ',', '');
-                    $originalChange = $player_data['change'];
-                    $change = number_format($player_data['change'], 2, ',', '');
+                    $originalChange = str_replace(',', '.', $player_data['change']); // replace comma with period
+                    $change = floatval($originalChange);
 
                     if ($originalChange < 0) {
                         $imagePath = 'images\red.png';
