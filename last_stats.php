@@ -29,7 +29,7 @@ error_reporting(E_ALL);
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
             foreach ($players_matches as $key => $player_datas) {
-                 if ($key == 'updated') {
+                if ($key == 'updated') {
                     continue;
                 }
                 echo "<br>";
@@ -45,6 +45,8 @@ error_reporting(E_ALL);
                     <th>Matches</th>
                     <th>Wins</th>
                     <th>Deaths</th>
+                    <th>WinRatio change</th>
+
                     
                 </tr>";
                 foreach ($player_datas as $player_data) {
@@ -77,6 +79,19 @@ error_reporting(E_ALL);
                                 : "0")); // or any other default string for non-numerical values
                     $wins = number_format($player_data['wins'], 2, ',', '');
                     $winratio = number_format($player_data['winratio'], 2, ',', '');
+                    $change = number_format($player_data['change'], 2, ',', '');
+
+                    if ($change < 0) {
+                        $fontColor = "red";
+                        $imagePath = "images\red.png";
+                    } elseif ($change > 0) {
+                        $fontColor = "green";
+                        $imagePath = "images\green.png";
+                    } else {
+                        $fontColor = "black";
+                        $imagePath = "images\equal.jpg";
+                    }
+
 
 
                     echo "<tr>
@@ -89,6 +104,7 @@ error_reporting(E_ALL);
                     <td>$matches</td>
                     <td>$wins</td>
                     <td>$deaths</td>
+                    <td style='color: $fontColor;'>$change<img src='$imagePath' alt='Change Indicator' style='vertical-align: middle;' /> </td>
                     
                 </tr>";
                 }
@@ -97,9 +113,9 @@ error_reporting(E_ALL);
             }
 
             foreach ($players_matches as $key => $update) {
-                if ($key == 'updated'){
-                echo "Last update: $update ";
-               
+                if ($key == 'updated') {
+                    echo "Last update: $update ";
+
                 }
             }
 
