@@ -19,13 +19,13 @@ function get-change {
         if ($winratio -eq 0) {
             $change = 0
         } else {
-            # Decide how you want to handle this scenario
+o
             $change = 0
         }
     } else {
         $change = [math]::Round(($winratio - $winratio_old) , 2)
     }
-
+    
     return $change
 }
 function get-killstats {
@@ -121,7 +121,10 @@ foreach ($player in $all_player_matches.playername) {
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
 
-    
+    write-output "Calculating for player $player"
+    write-output "new winratio $winratio"
+    write-output "Old winratio $winratio_old"
+
 
     $playerstats_all += [PSCustomObject]@{ 
         playername = $player
