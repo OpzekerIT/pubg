@@ -89,7 +89,7 @@ error_reporting(E_ALL);
                         $imagePath = "images\green.png";
                     } else {
                         $fontColor = "black";
-                        $imagePath = "images\equal.jpg";
+                        $imagePath = "images\equal.png";
                     }
 
 
@@ -104,7 +104,7 @@ error_reporting(E_ALL);
                     <td>$matches</td>
                     <td>$wins</td>
                     <td>$deaths</td>
-                    <td style='color: $fontColor;'>$change<img src='$imagePath' alt='Change Indicator' style='vertical-align: middle;' /> </td>
+                    <td style='color: $fontColor;'>$change<img src='$imagePath' alt='Change Indicator' style='vertical-align: middle;' width='50' height='50'/> </td>
                     
                 </tr>";
                 }
