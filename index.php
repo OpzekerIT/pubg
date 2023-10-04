@@ -18,7 +18,7 @@ usort($allMatches, function($a, $b) {
 });
 
 // Get the last 5 matches
-$lastMatches = array_slice($allMatches, 0, 7);
+$lastMatches = array_slice($allMatches, 0, 8);
 
 ?>
 
