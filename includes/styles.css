@@ -51,7 +51,7 @@ nav a:active {
 }
 
 header, main, footer {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid white;
