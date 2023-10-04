@@ -12,6 +12,9 @@ body {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     color: white;
+    min-height: 100vh; /* 100% of the viewport's height */
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -51,7 +54,7 @@ nav a:active {
 }
 
 header, main, footer {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid white;
