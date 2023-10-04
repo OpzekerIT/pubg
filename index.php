@@ -45,7 +45,7 @@ $lastMatches = array_slice($allMatches, 0, 7);
         <table border="1">
     <thead>
         <tr>
-            <th>Match Date</th>
+            <!-- <th>Match Date</th> -->
             <th>Player Name</th>
             <th>Game Mode</th>
             <th>MatchType</th>
@@ -75,7 +75,7 @@ $lastMatches = array_slice($allMatches, 0, 7);
         foreach($lastMatches as $match) {
             ?>
             <tr>
-                <td><?php echo date("Y-m-d", strtotime($match['createdAt'])); ?></td>
+            <!--    <td><?php echo date("Y-m-d", strtotime($match['createdAt'])); ?></td> -->
                 <td><?php echo $match['playername']; ?></td>
                 <td><?php echo $match['gameMode']; ?></td>
                 <td><?php echo $match['matchType']; ?></td>
