@@ -8,17 +8,10 @@ body, h1, h2, p, ul, li, a {
     text-decoration: none;
 }
 
-html {
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    height: 100%;
-    overflow-x: auto;
-}
-
 body {
     font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     color: white;
-    min-height: 100%;
-    margin: 0; /* Ensure there's no default margin */
 }
 
 
