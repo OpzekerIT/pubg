@@ -18,7 +18,8 @@ usort($allMatches, function($a, $b) {
 });
 
 // Get the last 5 matches
-$lastMatches = array_slice($allMatches, 0, 5);
+$lastMatches = array_slice($allMatches, 0, 7);
+
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +58,20 @@ $lastMatches = array_slice($allMatches, 0, 5);
     </thead>
     <tbody>
         <?php
+        $mapNames = array(
+            "Baltic_Main" => "Erangel",
+            "Chimera_Main" => "Paramo",
+            "Desert_Main" => "Miramar",
+            "DihorOtok_Main" => "Vikendi",
+            "Erangel_Main" => "Erangel",
+            "Heaven_Main" => "Haven",
+            "Kiki_Main" => "Deston",
+            "Range_Main" => "Camp Jackal",
+            "Savage_Main" => "Sanhok",
+            "Summerland_Main" => "Karakin",
+            "Tiger_Main" => "Taego"
+        );
+
         foreach($lastMatches as $match) {
             ?>
             <tr>
@@ -64,7 +79,7 @@ $lastMatches = array_slice($allMatches, 0, 5);
                 <td><?php echo $match['playername']; ?></td>
                 <td><?php echo $match['gameMode']; ?></td>
                 <td><?php echo $match['matchType']; ?></td>
-                <td><?php echo $match['mapName']; ?></td>
+                <td><?php echo isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']; ?></td>
                 <td><?php echo $match['stats']['kills']; ?></td>
                 <td><?php echo $match['stats']['damageDealt']; ?></td>
                 <td><?php echo gmdate("H:i:s", $match['stats']['timeSurvived']); ?></td>
