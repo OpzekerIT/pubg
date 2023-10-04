@@ -40,7 +40,7 @@ $lastMatches = array_slice($allMatches, 0, 7);
     
 <main>
     <section>
-        <h2>Welcome to DTCH - PUBG Clan</h2>
+        <h2>Latest Matches</h2>
 
         <table border="1">
     <thead>
