@@ -19,8 +19,7 @@ function get-change {
         if ($winratio -eq 0) {
             $change = 0
         } else {
-o
-            $change = 0
+            $change =  [math]::Round(($winratio), 2)
         }
     } else {
         $change = [math]::Round(($winratio - $winratio_old) , 2)
