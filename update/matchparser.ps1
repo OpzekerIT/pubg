@@ -9,25 +9,17 @@ else {
     $scriptroot = $PSScriptRoot
 }
 
-function get-change {
+function Get-Change {
     param (
-        $winratio_old,
-        $winratio
-
+        [double]$OldWinRatio,
+        [double]$NewWinRatio
     )
-    if ($winratio_old -eq 0) {
-        if ($winratio -eq 0) {
-            $change = 0
-        } else {
-o
-            $change = 0
-        }
-    } else {
-        $change = [math]::Round(($winratio - $winratio_old) , 2)
-    }
+
+    $change = ($OldWinRatio -eq 0) ? (($NewWinRatio -eq 0) ? 0 : $NewWinRatio) : ($NewWinRatio - $OldWinRatio)
     
-    return $change
+    return [math]::Round($change, 2)
 }
+
 function get-killstats {
     param (
         $player_name,
@@ -122,7 +114,7 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
-    $change = get-change -winratio_old $winratio_old -winratio $winratio
+    $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
     write-output 'all'
     write-output "Calculating for player $player"
     write-output "new winratio $winratio"
@@ -160,7 +152,7 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'event' -and $_.gameMode -eq 'ibr' }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.Intense | Where-Object { $_.playername -eq $player }).winratio)
-    $change = get-change -winratio_old $winratio_old -winratio $winratio
+    $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
 
     write-output 'event'
     write-output "Calculating for player $player"
@@ -196,7 +188,7 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'airoyale' }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.Casual | Where-Object { $_.playername -eq $player }).winratio)
-    $change = get-change -winratio_old $winratio_old -winratio $winratio
+    $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
 
     write-output 'airoyale'
     write-output "Calculating for player $player"
@@ -232,7 +224,7 @@ foreach ($player in $all_player_matches.playername) {
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'official' }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.official | Where-Object { $_.playername -eq $player }).winratio)
-    $change = get-change -winratio_old $winratio_old -winratio $winratio
+    $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
     write-output 'official'
     write-output "Calculating for player $player"
     write-output "new winratio $winratio"
