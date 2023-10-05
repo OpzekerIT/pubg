@@ -47,13 +47,13 @@ $lastMatches = array_slice($allMatches, 0, 8);
         <tr>
             <!-- <th>Match Date</th> -->
             <th>Player Name</th>
-            <th>Game Mode</th>
-            <th>MatchType</th>
+            <th>Mode</th>
+            <th>Type</th>
             <th>Map</th>
             <th>Kills</th>
-            <th>Damage Dealt</th>
+            <th>Damage</th>
             <th>Time Survived</th>
-            <th>Win Place</th>
+            <th>Place</th>
         </tr>
     </thead>
     <tbody>
