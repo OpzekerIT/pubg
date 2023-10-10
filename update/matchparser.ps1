@@ -30,10 +30,8 @@ function get-killstats {
     $attacks = @()
     foreach ($action in $telemetry) {
 
-        if ($action.PSObject.Properties.name.contains('killer')) {
-            $attacks += $action
-        }
-    
+        $attacks += $action
+        
     }
     $kills = $attacks | where-object { $_.killer.name -eq $player_name }
     return @{
@@ -43,6 +41,8 @@ function get-killstats {
         deaths     = ($attacks | where-object { $_.victim.name -eq $player_name }).count
         gameMode   = $gameMode
         matchType  = $matchType
+        dbno       = ($attacks | where-object { $_.dBNOMaker.name -eq $player_name }).count
+        
 
     }
 }
@@ -109,6 +109,7 @@ foreach ($player in $all_player_matches.playername) {
     }
     $deaths = (($killstats | where-object { $_.playername -eq $player }).deaths | Measure-Object -sum).sum
     $kills = (($killstats | where-object { $_.playername -eq $player }).kills | Measure-Object -sum).sum
+    $dbno = (($killstats | where-object { $_.playername -eq $player }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats | where-object { $_.playername -eq $player }).humankills | Measure-Object -sum).sum
     $player_matches = ($all_player_matches | where-object { $_.playername -eq $player }).player_matches.count
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 }).count
@@ -132,6 +133,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = $winratio
         wins       = $player_wins
+        dbno       = $dbno
         change     = $change
 
     }
@@ -147,6 +149,7 @@ foreach ($player in $all_player_matches.playername) {
     }
     $deaths = (($killstats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).deaths | Measure-Object -sum).sum
     $kills = (($killstats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).kills | Measure-Object -sum).sum
+    $dbno = (($killstats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).humankills | Measure-Object -sum).sum
     $player_matches = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'event' -and $_.gameMode -eq 'ibr' }).count)
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'event' -and $_.gameMode -eq 'ibr' }).count
@@ -170,6 +173,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = ($player_wins / $player_matches) * 100
         wins       = $player_wins
+        dbno       = $dbno
         change     = $change
     }
 }
@@ -183,6 +187,7 @@ foreach ($player in $all_player_matches.playername) {
     }
     $deaths = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).deaths | Measure-Object -sum).sum
     $kills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).kills | Measure-Object -sum).sum
+    $dbno = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).humankills | Measure-Object -sum).sum
     $player_matches = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'airoyale' }).count)
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'airoyale' }).count
@@ -207,6 +212,7 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = ($player_wins / $player_matches) * 100
         wins       = $player_wins
+        dbno       = $dbno
         change     = $change
     }
 }
@@ -219,6 +225,7 @@ foreach ($player in $all_player_matches.playername) {
     }
     $deaths = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).deaths | Measure-Object -sum).sum
     $kills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).kills | Measure-Object -sum).sum
+    $dbno = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).humankills | Measure-Object -sum).sum
     $player_matches = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'official' }).count)
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'official' }).count
@@ -241,10 +248,49 @@ foreach ($player in $all_player_matches.playername) {
         KD_ALL     = $kills / $deaths
         winratio   = ($player_wins / $player_matches) * 100
         wins       = $player_wins
+        dbno       = $dbno
         change     = $change
     }
 }
 $playerstats_official = $playerstats_official | Sort-Object winratio -Descending
+
+##CUSTOM GAMES
+
+$playerstats_custom = @()
+foreach ($player in $all_player_matches.playername) {
+    if ($null -eq $player) {
+        continue
+    }
+    $deaths = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).deaths | Measure-Object -sum).sum
+    $kills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).kills | Measure-Object -sum).sum
+    $dbno = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).dbno | Measure-Object -sum).sum
+    $humankills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).humankills | Measure-Object -sum).sum
+    $player_matches = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'custom' }).count)
+    $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'custom' }).count
+    $winratio = ($player_wins / $player_matches) * 100
+    $winratio_old = (($oldstats.official | Where-Object { $_.playername -eq $player }).winratio)
+    $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
+    write-output 'custom'
+    write-output "Calculating for player $player"
+    write-output "new winratio $winratio"
+    write-output "Old winratio $winratio_old"
+    write-output $change
+
+    $playerstats_custom += [PSCustomObject]@{ 
+        playername = $player
+        deaths     = $deaths
+        kills      = $kills
+        humankills = $humankills
+        matches    = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'custom' }).count)
+        KD_H       = $humankills / $deaths
+        KD_ALL     = $kills / $deaths
+        winratio   = ($player_wins / $player_matches) * 100
+        wins       = $player_wins
+        dbno       = $dbno
+        change     = $change
+    }
+}
+$playerstats_custom = $playerstats_custom | Sort-Object winratio -Descending
 
 $currentDateTime = Get-Date
 
@@ -261,6 +307,7 @@ $playerstats = [PSCustomObject]@{
     Intense  = $playerstats_event_ibr
     Casual   = $playerstats_airoyale
     official = $playerstats_official
+    custom   = $playerstats_custom
     updated  = $formattedString
 }
 
