@@ -246,6 +246,42 @@ foreach ($player in $all_player_matches.playername) {
 }
 $playerstats_official = $playerstats_official | Sort-Object winratio -Descending
 
+##CUSTOM GAMES
+
+$playerstats_custom = @()
+foreach ($player in $all_player_matches.playername) {
+    if ($null -eq $player) {
+        continue
+    }
+    $deaths = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).deaths | Measure-Object -sum).sum
+    $kills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).kills | Measure-Object -sum).sum
+    $humankills = (($killstats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).humankills | Measure-Object -sum).sum
+    $player_matches = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'custom' }).count)
+    $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'custom' }).count
+    $winratio = ($player_wins / $player_matches) * 100
+    $winratio_old = (($oldstats.official | Where-Object { $_.playername -eq $player }).winratio)
+    $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
+    write-output 'custom'
+    write-output "Calculating for player $player"
+    write-output "new winratio $winratio"
+    write-output "Old winratio $winratio_old"
+    write-output $change
+
+    $playerstats_custom += [PSCustomObject]@{ 
+        playername = $player
+        deaths     = $deaths
+        kills      = $kills
+        humankills = $humankills
+        matches    = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'custom' }).count)
+        KD_H       = $humankills / $deaths
+        KD_ALL     = $kills / $deaths
+        winratio   = ($player_wins / $player_matches) * 100
+        wins       = $player_wins
+        change     = $change
+    }
+}
+$playerstats_custom = $playerstats_custom | Sort-Object winratio -Descending
+
 $currentDateTime = Get-Date
 
 # Get current timezone
@@ -261,6 +297,7 @@ $playerstats = [PSCustomObject]@{
     Intense  = $playerstats_event_ibr
     Casual   = $playerstats_airoyale
     official = $playerstats_official
+    custom   = $playerstats_custom
     updated  = $formattedString
 }
 
