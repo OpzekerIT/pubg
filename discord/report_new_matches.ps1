@@ -73,9 +73,11 @@ foreach ($winid in $new_win_matches) {
     if ($null -eq $winid) { continue }
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
     $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }
+    $winners = @(($winmatches | where-object {$_.stats.winPlace -eq 1}).stats.name)
     $2D_replay_url = $winmatches.telemetry_url[0] -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
     $2D_replay_url = $2D_replay_url -replace '-telemetry.json', ''
-    $winners = ($winmatches | where-object {$_.stats.winPlace -eq 1}).stats.name
+    $2D_replay_url = $2D_replay_url + "?follow=$($winners[0])"
+
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     if($winmatches[0].matchType -eq 'custom'){
         $players_to_report = $match_stats.included.attributes.stats
@@ -138,7 +140,7 @@ id              $($winmatches[0].id)
         send-discord -content $content_victims
     }
 
-    send-discord -content "2D replay URL: [2D replay](<$2D_replay_url>) "
+    send-discord -content "2D replay URL: [2D replay](<$2D_replay_url>)"
 
     $legenda = '
 ```
