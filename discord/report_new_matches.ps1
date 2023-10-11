@@ -73,17 +73,19 @@ foreach ($winid in $new_win_matches) {
     if ($null -eq $winid) { continue }
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
     $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }
-    $players = ($winmatches | where-object {$_.stats.winPlace -eq 1}).stats.name
+    $2D_replay_url = $winmatches.telemetry_url[0] -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
+    $2D_replay_url = $2D_replay_url -replace '-telemetry.json', ''
+    $winners = ($winmatches | where-object {$_.stats.winPlace -eq 1}).stats.name
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     if($winmatches[0].matchType -eq 'custom'){
-        $all_winners_of_match = $match_stats.included.attributes.stats
+        $players_to_report = $match_stats.included.attributes.stats
     }else{
-        $all_winners_of_match = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
+        $players_to_report = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
     }
     
 
     send-discord -content ":chicken: :chicken: **WINNER WINNER CHICKEN DINNER!!** :chicken: :chicken:"
-    send-discord -content ":partying_face::partying_face::partying_face: Gefeliciteerd   $($players -join ', ') :partying_face::partying_face::partying_face:"
+    send-discord -content ":partying_face::partying_face::partying_face: Gefeliciteerd   $($winners -join ', ') :partying_face::partying_face::partying_face:"
     $match_settings = @"
 ``````
 match mode      $($winmatches[0].gameMode)
@@ -93,16 +95,17 @@ id              $($winmatches[0].id)
 ``````
 "@
     send-discord -content $match_settings
-    foreach ($player in $all_winners_of_match.name) {
+
+    foreach ($player in $players_to_report.name) {
         if($null -eq $player){continue}
         write-output "creating table for player $player"
         $win_stats += [PSCustomObject]@{ 
             Name   = $player
             'Human dmg'  = "$([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))"
             'Human Kills'    = "$(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERKILLV2' -and $_.killer.name -eq $player -and $_.victim.accountId -notlike "ai.*" }).count)"
-            'Dmg'    = "$([math]::Round(($all_winners_of_match | Where-Object { $_.name -eq $player }).damageDealt))"
-            'Kills'   = "$(($all_winners_of_match | Where-Object { $_.name -eq $player }).kills)"
-            'alive' = "$([math]::Round((($all_winners_of_match | Where-Object { $_.name -eq $player }).timeSurvived /60 )))"
+            'Dmg'    = "$([math]::Round(($players_to_report | Where-Object { $_.name -eq $player }).damageDealt))"
+            'Kills'   = "$(($players_to_report | Where-Object { $_.name -eq $player }).kills)"
+            'alive' = "$([math]::Round((($players_to_report | Where-Object { $_.name -eq $player }).timeSurvived /60 )))"
         }
         $teamdmg = $telemetry | Where-Object {
             $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and 
@@ -135,7 +138,8 @@ id              $($winmatches[0].id)
         send-discord -content $content_victims
     }
 
-    
+    send-discord -content "2D replay URL: [2D replay](<$2D_replay_url>) "
+
     $legenda = '
 ```
 dmg_h   = Schade aangericht aan echte spelers
