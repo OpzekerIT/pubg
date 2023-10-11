@@ -74,7 +74,7 @@ foreach ($winid in $new_win_matches) {
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
     $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }
     $winners = @(($winmatches | where-object {$_.stats.winPlace -eq 1}).stats.name)
-    $2D_replay_url = $winmatches.telemetry_url[0] -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
+    $2D_replay_url = @($winmatches.telemetry_url)[0] -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
     $2D_replay_url = $2D_replay_url -replace '-telemetry.json', ''
     $2D_replay_url = $2D_replay_url + "?follow=$($winners[0])"
 
