@@ -140,7 +140,7 @@ id              $($winmatches[0].id)
         send-discord -content $content_victims
     }
 
-    send-discord -content "2D replay URL: [2D replay](<$2D_replay_url>)"
+    send-discord -content "[2D replay](<$2D_replay_url>)"
 
     $legenda = '
 ```
