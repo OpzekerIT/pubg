@@ -268,7 +268,7 @@ foreach ($player in $all_player_matches.playername) {
     $player_matches = ((($all_player_matches | where-object { $_.playername -eq $player }).player_matches | Where-Object { $_.matchType -eq 'custom' }).count)
     $player_wins = ($all_player_matches | where-object { $_.playername -eq $player } | ForEach-Object { $_.player_matches } | where-object { $_.stats.winPlace -eq 1 } | Where-Object { $_.matchType -eq 'custom' }).count
     $winratio = ($player_wins / $player_matches) * 100
-    $winratio_old = (($oldstats.official | Where-Object { $_.playername -eq $player }).winratio)
+    $winratio_old = (($oldstats.custom | Where-Object { $_.playername -eq $player }).winratio)
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
     write-output 'custom'
     write-output "Calculating for player $player"
