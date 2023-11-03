@@ -102,7 +102,7 @@ footer {
     }
     th, td {
         padding: 5px; /* Reduce padding */
-        font-size: 12px; /* Reduce font size */
+        font-size: 8px; /* Reduce font size */
     }
     /* Other styles can be added here as needed for mobile optimization */
 }
