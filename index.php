@@ -35,7 +35,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
 <?php include './includes/navigation.php'; ?>
 
     <header>
-        <h1>Welcome to DTCH - PUBG Clan</h1>
+        <h1>Welcome to DTCH - PUBG Clan </h1>
     </header>
     
 <main>
