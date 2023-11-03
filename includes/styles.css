@@ -104,9 +104,14 @@ footer {
     }
     th, td {
         padding: 5px; /* Reduce padding */
-        font-size: 8px; /* Reduce font size */
+        font-size: 10px; /* Reduce font size */
+        letter-spacing: -0.5px; /* Reduce space between letters */
     }
     /* Other styles can be added here as needed for mobile optimization */
+    table {
+        font-size: 12px; /* Decrease font size for the whole table */
+        margin-top: 5px;
+    }
 }
 
 table {
