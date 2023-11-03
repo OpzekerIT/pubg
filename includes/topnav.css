@@ -31,7 +31,7 @@
   /* Add a grey background color on mouse-over */
   .topnav a:hover {
     background-color: #000000;
-    color: rgb(255, 255, 255);
+    color: #33ff33;
   }
   
   /* Style the active link (or home/logo) */
