@@ -38,10 +38,10 @@ error_reporting(E_ALL);
                     <th>K/D (All)</th>
                     <th>Kills</th>
                     <th>Human Kills</th>
-                    <th>Matches</th>
+                    <th>Mtchs</th>
                     <th>Wins</th>
                     <th>Deaths</th>
-                    <th>WinRatio change</th>
+                    <th>Win Ratio change</th>
 
                     
                 </tr>";
@@ -53,9 +53,9 @@ error_reporting(E_ALL);
                         continue;
                     }
                     $player_name = $player_data['playername'];
-                    $deaths = number_format($player_data['deaths'], 2, ',', '');
-                    $kills = number_format($player_data['kills'], 2, ',', '');
-                    $humankills = number_format($player_data['humankills'], 2, ',', '');
+                    $deaths = number_format($player_data['deaths'], 0, ',', '');
+                    $kills = number_format($player_data['kills'], 0, ',', '');
+                    $humankills = number_format($player_data['humankills'], 0, ',', '');
                     $matches = $player_data['matches'];
                     $KD_H =
                         !isset($player_data['KD_H']) || $player_data['KD_H'] === null
