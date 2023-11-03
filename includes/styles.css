@@ -81,17 +81,27 @@ footer {
 }
 
 @media (max-width: 600px) {
-    nav li {
-        display: block;
-        margin-right: 0;
-    }
     header .banner {
-        max-width: 600px; /* Ensures the image is never larger than its container */
-        height: auto;
-        display: block; /* Prevents inline default spacing */
-        margin: 0 auto; /* Centers the image within the header */
-        width: auto; /* Adjusts the width to maintain the aspect ratio */
+        max-height: 100px; /* Resize the maximum height for mobile */
+        width: 100%; /* Take full width of the container */
     }
+
+    /* You may also want to adjust other elements to fit mobile layout better */
+    header, main, footer {
+        min-width: 0; /* Allow the width to shrink below 800px */
+        padding: 10px; /* Reduce padding for mobile devices */
+        margin: 10px auto; /* Less margin for tighter mobile layout */
+    }
+    
+    nav {
+        min-width: 0; /* Allow the nav to be responsive below 800px */
+    }
+    
+    nav ul {
+        text-align: left; /* Align nav items to the left on mobile for better spacing */
+    }
+    
+    /* Other styles can be added here as needed for mobile optimization */
 }
 
 table {
