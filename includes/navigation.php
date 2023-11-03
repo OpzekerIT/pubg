@@ -6,7 +6,7 @@ if ($host == 'dev.dtch.online') {
 }
 ?>
 <div class="topnav">
-    <a href="index.php" class="active">Logo</a>
+    <a href="index.php" class="active">Home</a>
 
     <div id="myLinks">
         <a href="clan_stats.php">Clan Stats</a>
