@@ -50,6 +50,14 @@ nav a:active {
     transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
 
+header .banner {
+    max-width: 100%; /* Ensures the image is never larger than its container */
+    height: auto; /* Maintains the aspect ratio */
+    display: block; /* Prevents inline default spacing */
+    margin: 0 auto; /* Centers the image within the header */
+  }
+
+  
 header, main, footer {
     max-width: 800px;
     margin: 20px auto;
