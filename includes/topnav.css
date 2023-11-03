@@ -30,12 +30,12 @@
   
   /* Add a grey background color on mouse-over */
   .topnav a:hover {
-    background-color: #ddd;
+    background-color: rgb(129, 94, 58);
     color: black;
   }
   
   /* Style the active link (or home/logo) */
   .active {
-    background-color: #04AA6D;
+    background-color: #000000;
     color: white;
   }
