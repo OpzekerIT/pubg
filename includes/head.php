@@ -7,5 +7,7 @@
     <link rel="stylesheet" href="./includes/styles.css">
     <link rel="stylesheet" href="./includes/topnav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+
     <script src="./lib/sorttable.js"></script>
 </head>
