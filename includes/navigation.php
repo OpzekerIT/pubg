@@ -20,7 +20,7 @@ if ($host == 'dev.dtch.online') {
         <i class="fa fa-bars"></i>
     </a>
 </div>
-
+<script>
 function myFunction() {
   var x = document.getElementById("myLinks");
   if (x.style.display === "block") {
@@ -29,3 +29,4 @@ function myFunction() {
     x.style.display = "block";
   }
 }
+</script>
