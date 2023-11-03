@@ -31,11 +31,11 @@
   /* Add a grey background color on mouse-over */
   .topnav a:hover {
     background-color: #000000;
-    color: #33ff33;
+    color: #ffffff;
   }
   
   /* Style the active link (or home/logo) */
   .active {
-    background-color: #333;
-    color: white;
+    background-color: #0f0f0f;
+    color: #33ff33;
   }
