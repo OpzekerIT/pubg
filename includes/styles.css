@@ -111,6 +111,7 @@ footer {
     table {
         font-size: 12px; /* Decrease font size for the whole table */
         margin-top: 5px;
+        border-spacing: 0;
     }
 }
 
