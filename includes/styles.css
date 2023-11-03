@@ -85,6 +85,13 @@ footer {
         display: block;
         margin-right: 0;
     }
+    header .banner {
+        max-width: 600px; /* Ensures the image is never larger than its container */
+        height: auto;
+        display: block; /* Prevents inline default spacing */
+        margin: 0 auto; /* Centers the image within the header */
+        width: auto; /* Adjusts the width to maintain the aspect ratio */
+    }
 }
 
 table {
