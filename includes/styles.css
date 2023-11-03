@@ -91,6 +91,8 @@ footer {
         min-width: 0; /* Allow the width to shrink below 800px */
         padding: 10px; /* Reduce padding for mobile devices */
         margin: 10px auto; /* Less margin for tighter mobile layout */
+        max-width: 800px;
+        min-width: 500px;
     }
     
     nav {
