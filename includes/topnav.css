@@ -21,7 +21,7 @@
   
   /* Style the hamburger menu */
   .topnav a.icon {
-    color: #33ff33;
+    color: #e69109;
     background: black;
     display: block;
     position: absolute;
@@ -38,5 +38,5 @@
   /* Style the active link (or home/logo) */
   .active {
     background-color: #0f0f0f;
-    color: #33ff33;
+    color: #e69109;
   }
