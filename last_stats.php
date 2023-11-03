@@ -34,7 +34,7 @@ error_reporting(E_ALL);
                 }
 
                 echo "<br>";
-                echo "Stats for $key (minimal 10 matches)";
+                echo "Stats for $key (minimal 8 matches)";
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Playername</th>
@@ -54,7 +54,7 @@ error_reporting(E_ALL);
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-                    if ($player_data['matches'] < 10){
+                    if ($player_data['matches'] < 8){
                         continue;
                     }
                     $player_name = $player_data['playername'];
