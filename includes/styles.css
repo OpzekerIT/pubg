@@ -115,32 +115,7 @@ tr:hover {
     opacity: 0.8;
 }
 
-/* Fancy Button Styles */
 
-.btn {
-    display: inline-block;
-    font-size: 16px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px; /* Rounded Edges */
-    background: linear-gradient(to right, #FF416C, #FF4B2B); /* Gradient Background */
-    color: white;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth Transition for Hover Effect */
-    text-align: center;
-    text-decoration: none; /* In case you use it on anchor tags */
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); /* Slight Shadow */
-    margin: 10px 0; /* Some Margin for Space */
-}
-
-.btn:hover {
-    transform: translateY(-3px); /* Slight Lift on Hover */
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Increased Shadow on Hover */
-}
-
-.btn:active {
-    transform: translateY(1px); /* Slight Pressed-In effect on Click */
-}
 
 /* Hacker theme styles */
 body {
@@ -167,4 +142,32 @@ nav {
 a {
     color: #6699ff; /* Blue color for links */
     text-decoration: underline; /* Underline links for better visibility */
+}
+
+/* Specific button styles for .btn class to match the hacker theme */
+.btn {
+    font-family: 'Courier New', monospace;
+    background: #222; /* Dark background for buttons */
+    color: #33ff33; /* Bright green text */
+    border: 1px solid #33ff33; /* Border to match text color */
+    padding: 10px 20px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background: #33ff33; /* Bright green background on hover */
+    color: #000; /* Dark text on hover */
+    cursor: pointer;
+}
+
+/* Responsive button sizing for mobile for .btn class*/
+@media (max-width: 768px) {
+    .btn {
+        padding: 8px 16px;
+        font-size: 14px; /* Adjust font size for mobile readability */
+    }
+}
+.btn:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
