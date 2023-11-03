@@ -61,7 +61,7 @@ header .banner {
   
 header, main, footer {
     max-width: 1200px;
-    min-width: 1000px;
+    min-width: 800px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid white;
