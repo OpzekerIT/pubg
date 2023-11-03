@@ -46,7 +46,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
             <th>Map</th>
             <th>Kills</th>
             <th>Damage</th>
-            <th>Time Survived</th>
             <th>Place</th>
         </tr>
     </thead>
@@ -76,7 +75,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 <td><?php echo isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']; ?></td>
                 <td><?php echo $match['stats']['kills']; ?></td>
                 <td><?php echo number_format($match['stats']['damageDealt'], 0, '.', ''); ?></td>
-                <td><?php echo gmdate("H:i:s", $match['stats']['timeSurvived']); ?></td>
                 <td><?php echo $match['stats']['winPlace']; ?></td>
             </tr>
             <?php
