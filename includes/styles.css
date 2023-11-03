@@ -19,6 +19,7 @@ nav {
     background: linear-gradient(to right, #FF416C, #FF4B2B);  /* Gradient Background */
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1); /* Slight Shadow for Depth */
     padding: 10px 0; /* Vertical Padding */
+    min-width: 800px;
 }
 
 nav ul {
