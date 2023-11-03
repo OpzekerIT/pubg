@@ -79,3 +79,49 @@ td {
 /* Media Queries for responsiveness */
 /* Custom media queries can go here */
 
+
+@media only screen and (max-width: 768px) {
+    /* Fonts */
+    body, h1, h2, h3, h4, h5, h6, p, ul, li, a, button, input, textarea {
+        font-size: 90%; /* Slightly smaller fonts for mobile */
+    }
+
+    /* Navigation menu adjustments */
+    nav ul {
+        padding: 0;
+        display: block; /* Stack the navigation items */
+        text-align: left; /* Align text to the left on small screens */
+    }
+
+    nav li {
+        display: block; /* Each nav item takes the full width */
+        margin: 5px 0; /* Reduced margin for small screens */
+    }
+
+    nav a {
+        display: block; /* Block level links for easier touch access */
+        padding: 10px; /* Larger padding for easier touch */
+    }
+
+    /* Button adjustments */
+    button, input[type="submit"], input[type="button"], .button {
+        padding: 12px 18px; /* Larger padding for easier touch */
+        font-size: 100%; /* Keep button text readable */
+    }
+
+    /* Table adjustments */
+    table {
+        width: 100%;
+        display: block; /* Allow table to be scrollable horizontally */
+        overflow-x: auto; /* Scrollable if content is wider than the screen */
+    }
+
+    th, td {
+        padding: 8px; /* Adjust padding in table cells */
+    }
+}
+
+/* Larger screens */
+@media only screen and (min-width: 769px) {
+    /* Any specific styles for larger screens can go here */
+}
