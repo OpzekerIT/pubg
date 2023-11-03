@@ -146,7 +146,7 @@ body {
 /* Override other elements as needed for the hacker theme */
 nav {
     background: #121212; /* Dark background for navigation */
-    border-bottom: 1px solid #33ff33; /* Bright green border for accent */
+   /*  border-bottom: 1px solid #33ff33;  Bright green border for accent */
 }
 
 /* Ensure links stand out */
