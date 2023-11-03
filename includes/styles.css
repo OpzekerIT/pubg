@@ -95,8 +95,8 @@ footer {
     /* You may also want to adjust other elements to fit mobile layout better */
     header, main, footer {
         min-width: 0; /* Allow the width to shrink below 800px */
-        padding: 10px; /* Reduce padding for mobile devices */
-        margin: 10px auto; /* Less margin for tighter mobile layout */
+        padding: 5px; /* Reduce padding for mobile devices */
+        margin: 5px 5px; /* Less margin for tighter mobile layout */
         max-width: 800px;
         min-width: 200px;
     }
