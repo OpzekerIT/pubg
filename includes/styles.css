@@ -103,7 +103,7 @@ footer {
         text-align: left; /* Align nav items to the left on mobile for better spacing */
     }
     th, td {
-        padding: 5px; /* Reduce padding */
+        padding: 1px; /* Reduce padding */
         font-size: 10px; /* Reduce font size */
         letter-spacing: -0.5px; /* Reduce space between letters */
     }
