@@ -180,3 +180,31 @@ a {
 .btn:active {
     transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
+/* Container for tables to manage overflow */
+.table-container {
+    overflow-x: auto;
+    margin: 0 auto; /* Center the table container if necessary */
+}
+
+/* Styles for the table */
+table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: auto; /* Let the table layout be automatic */
+}
+
+/* Ensure table cells do not cause overflow */
+td, th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+    td, th {
+        padding: 8px; /* Adjust cell padding for smaller screens */
+    }
+}
