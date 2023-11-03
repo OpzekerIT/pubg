@@ -32,8 +32,8 @@ error_reporting(E_ALL);
                 echo "Stats for $key (minimal 8 matches)";
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
-                    <th>Playername</th>
-                    <th>Win Ratio</th>
+                    <th>Player</th>
+                    <th>Win %</th>
                     <th>K/D (Human)</th>
                     <th>K/D (All)</th>
                     <th>Kills</th>
@@ -41,7 +41,7 @@ error_reporting(E_ALL);
                     <th>Mtchs</th>
                     <th>Wins</th>
                     <th>Deaths</th>
-                    <th>Win Ratio change</th>
+                    <th>Win % change</th>
 
                     
                 </tr>";
@@ -75,7 +75,7 @@ error_reporting(E_ALL);
                             : (is_numeric($player_data['KD_ALL'])
                                 ? number_format((float) $player_data['KD_ALL'], 2, ',', '')
                                 : "0")); // or any other default string for non-numerical values
-                    $wins = number_format($player_data['wins'], 2, ',', '');
+                    $wins = number_format($player_data['wins'], 0, ',', '');
                     $winratio = number_format($player_data['winratio'], 2, ',', '');
                     $originalChange = str_replace(',', '.', $player_data['change']); // replace comma with period
                     $change = floatval($originalChange);
