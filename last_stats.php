@@ -34,8 +34,8 @@ error_reporting(E_ALL);
                 echo "<tr>
                     <th>Player</th>
                     <th>Win %</th>
-                    <th>K/D (Human)</th>
-                    <th>K/D (All)</th>
+                    <th>K/D Human</th>
+                    <th>K/D All</th>
                     <th>Kills</th>
                     <th>Human Kills</th>
                     <th>Mtchs</th>
