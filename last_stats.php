@@ -7,19 +7,14 @@ error_reporting(E_ALL);
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTCH - PUBG Clan - Match Stats</title>
-    <link rel="stylesheet" href="./includes/styles.css">
-    <script src="./lib/sorttable.js"></script>
-</head>
+<?php include './includes/head.php'; ?>
 
 <body>
 
     <?php include './includes/navigation.php'; ?>
-
+    <header>
+    <img src="./images/banner2.png" alt="banner" class="banner">
+    </header>
     <main>
         <section>
             <h2>Player Stats past 14 days</h2>
@@ -34,19 +29,19 @@ error_reporting(E_ALL);
                 }
 
                 echo "<br>";
-                echo "Stats for $key (minimal 10 matches)";
+                echo "Stats for $key (minimal 8 matches)";
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
-                    <th>Playername</th>
-                    <th>Win Ratio</th>
-                    <th>K/D (Human)</th>
-                    <th>K/D (All)</th>
+                    <th>Player</th>
+                    <th>Win %</th>
+                    <th>K/D Human</th>
+                    <th>K/D All</th>
                     <th>Kills</th>
                     <th>Human Kills</th>
-                    <th>Matches</th>
+                    <th>Mtchs</th>
                     <th>Wins</th>
                     <th>Deaths</th>
-                    <th>WinRatio change</th>
+                    <th>Win % change</th>
 
                     
                 </tr>";
@@ -54,13 +49,13 @@ error_reporting(E_ALL);
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-                    if ($player_data['matches'] < 10){
+                    if ($player_data['matches'] < 8){
                         continue;
                     }
                     $player_name = $player_data['playername'];
-                    $deaths = number_format($player_data['deaths'], 2, ',', '');
-                    $kills = number_format($player_data['kills'], 2, ',', '');
-                    $humankills = number_format($player_data['humankills'], 2, ',', '');
+                    $deaths = number_format($player_data['deaths'], 0, ',', '');
+                    $kills = number_format($player_data['kills'], 0, ',', '');
+                    $humankills = number_format($player_data['humankills'], 0, ',', '');
                     $matches = $player_data['matches'];
                     $KD_H =
                         !isset($player_data['KD_H']) || $player_data['KD_H'] === null
@@ -80,7 +75,7 @@ error_reporting(E_ALL);
                             : (is_numeric($player_data['KD_ALL'])
                                 ? number_format((float) $player_data['KD_ALL'], 2, ',', '')
                                 : "0")); // or any other default string for non-numerical values
-                    $wins = number_format($player_data['wins'], 2, ',', '');
+                    $wins = number_format($player_data['wins'], 0, ',', '');
                     $winratio = number_format($player_data['winratio'], 2, ',', '');
                     $originalChange = str_replace(',', '.', $player_data['change']); // replace comma with period
                     $change = floatval($originalChange);
