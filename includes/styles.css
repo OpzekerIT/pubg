@@ -125,3 +125,8 @@ td {
 @media only screen and (min-width: 769px) {
     /* Any specific styles for larger screens can go here */
 }
+.discord-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain; /* This will ensure that the image's aspect ratio is preserved */
+}
