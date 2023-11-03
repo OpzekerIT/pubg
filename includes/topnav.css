@@ -21,6 +21,7 @@
   
   /* Style the hamburger menu */
   .topnav a.icon {
+    color: green;
     background: black;
     display: block;
     position: absolute;
