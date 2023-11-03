@@ -1,29 +1,31 @@
-/* Add Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+/* Change to a monospaced font and update colors for the retro look */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;700&display=swap');
 
 /* Reset some default styles */
-body, h1, h2, p, ul, li, a {
+body, h1, h2, h3, h4, h5, h6, p, ul, li, a, button, input, textarea, table {
     margin: 0;
     padding: 0;
     text-decoration: none;
+    font-family: 'Source Code Pro', monospace;
+    color: #33ff33; /* Classic green text color */
+    background-color: black; /* Black background */
+    border: none;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    color: white;
+/* Specific container or section styles can go here */
+.container, .section {
+    padding: 20px;
 }
 
-
+/* Navigation Styles */
 nav {
-    background: linear-gradient(to right, #FF416C, #FF4B2B);  /* Gradient Background */
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1); /* Slight Shadow for Depth */
-    padding: 10px 0; /* Vertical Padding */
+    background: #1a1a1a; /* Dark background for nav */
+    box-shadow: none; /* No shadow for a flat look */
 }
 
 nav ul {
     list-style-type: none;
-    padding: 0;
     text-align: center; /* Center the navigation items */
 }
 
@@ -33,111 +35,47 @@ nav li {
 }
 
 nav a {
-    color: white;
     padding: 10px 20px;
-    border-radius: 25px; /* Rounded Edges */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth Transition for Hover Effect */
-    font-weight: 600; /* Slightly Bold */
-    font-size: 16px; /* Adjust as needed */
+    border-radius: 0; /* No rounded edges for a flat look */
+    transition: background-color 0.3s, color 0.3s; /* Transition for color changes */
 }
 
-nav a:hover {
-    background: rgba(255, 255, 255, 0.1); /* Slight White Background on Hover */
-    transform: translateY(-2px); /* Slight Lift on Hover */
+/* Button Styles */
+button, input[type="submit"], input[type="button"], .button {
+    background-color: #262626; /* Darker background for buttons */
+    color: #33ff33;
+    padding: 10px 15px;
+    border: 1px solid #33ff33; /* Green border */
+    transition: background-color 0.3s, color 0.3s;
 }
 
-nav a:active {
-    transform: translateY(1px); /* Slight Pressed-In effect on Click */
+button:hover, input[type="submit"]:hover, input[type="button"]:hover, .button:hover {
+    background-color: #33ff33; /* Green background on hover */
+    color: black; /* Text color changes on hover */
 }
 
-header, main, footer {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-header h1, section h2 {
-    border-bottom: 1px solid white;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-}
-
-footer {
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    nav li {
-        display: block;
-        margin-right: 0;
-    }
-}
-
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table, th, td {
-    border: 1px solid white;
-    border-radius: 5px;
 }
 
 th, td {
     padding: 10px;
-    text-align: left;
+    border: 1px solid #33ff33; /* Green border for cells */
 }
 
 th {
-    background-color: #555;
+    background-color: #1a1a1a; /* Dark background for table headers */
 }
 
-tr:hover {
-    background-color: #444;
+td {
+    background-color: #000; /* Black background for table cells */
 }
 
-.discord-logo {
-    width: 50px;
-    height: auto;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: opacity 0.3s, transform 0.3s;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
+/* Scrollbars */
+/* Add custom scrollbar styles if needed */
 
-.discord-logo:hover {
-    transform: scale(1.05);
-    opacity: 0.8;
-}
+/* Media Queries for responsiveness */
+/* Custom media queries can go here */
 
-/* Fancy Button Styles */
-
-.btn {
-    display: inline-block;
-    font-size: 16px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px; /* Rounded Edges */
-    background: linear-gradient(to right, #FF416C, #FF4B2B); /* Gradient Background */
-    color: white;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth Transition for Hover Effect */
-    text-align: center;
-    text-decoration: none; /* In case you use it on anchor tags */
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); /* Slight Shadow */
-    margin: 10px 0; /* Some Margin for Space */
-}
-
-.btn:hover {
-    transform: translateY(-3px); /* Slight Lift on Hover */
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Increased Shadow on Hover */
-}
-
-.btn:active {
-    transform: translateY(1px); /* Slight Pressed-In effect on Click */
-}
