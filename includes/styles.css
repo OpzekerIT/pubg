@@ -124,7 +124,7 @@ table {
 
 table, th, td {
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: 1px;
 }
 
 th, td {
