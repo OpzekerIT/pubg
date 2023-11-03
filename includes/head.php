@@ -7,5 +7,5 @@
     <link rel="stylesheet" href="./includes/styles.css">
     <link rel="stylesheet" href="./includes/topnav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="./lib/sorttable.js"></script>
+    <!-- <script src="./lib/sorttable.js"></script> -->
 </head>
