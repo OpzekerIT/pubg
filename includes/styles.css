@@ -1,31 +1,29 @@
-
-/* Change to a monospaced font and update colors for the retro look */
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;700&display=swap');
+/* Add Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 /* Reset some default styles */
-body, h1, h2, h3, h4, h5, h6, p, ul, li, a, button, input, textarea, table {
+body, h1, h2, p, ul, li, a {
     margin: 0;
     padding: 0;
     text-decoration: none;
-    font-family: 'Source Code Pro', monospace;
-    color: #33ff33; /* Classic green text color */
-    background-color: black; /* Black background */
-    border: none;
 }
 
-/* Specific container or section styles can go here */
-.container, .section {
-    padding: 20px;
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
 }
 
-/* Navigation Styles */
+
 nav {
-    background: #1a1a1a; /* Dark background for nav */
-    box-shadow: none; /* No shadow for a flat look */
+    background: linear-gradient(to right, #FF416C, #FF4B2B);  /* Gradient Background */
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1); /* Slight Shadow for Depth */
+    padding: 10px 0; /* Vertical Padding */
 }
 
 nav ul {
     list-style-type: none;
+    padding: 0;
     text-align: center; /* Center the navigation items */
 }
 
@@ -35,98 +33,138 @@ nav li {
 }
 
 nav a {
+    color: white;
     padding: 10px 20px;
-    border-radius: 0; /* No rounded edges for a flat look */
-    transition: background-color 0.3s, color 0.3s; /* Transition for color changes */
+    border-radius: 25px; /* Rounded Edges */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth Transition for Hover Effect */
+    font-weight: 600; /* Slightly Bold */
+    font-size: 16px; /* Adjust as needed */
 }
 
-/* Button Styles */
-button, input[type="submit"], input[type="button"], .button {
-    background-color: #262626; /* Darker background for buttons */
-    color: #33ff33;
-    padding: 10px 15px;
-    border: 1px solid #33ff33; /* Green border */
-    transition: background-color 0.3s, color 0.3s;
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1); /* Slight White Background on Hover */
+    transform: translateY(-2px); /* Slight Lift on Hover */
 }
 
-button:hover, input[type="submit"]:hover, input[type="button"]:hover, .button:hover {
-    background-color: #33ff33; /* Green background on hover */
-    color: black; /* Text color changes on hover */
+nav a:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
 
-/* Table Styles */
+header, main, footer {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+header h1, section h2 {
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+footer {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    nav li {
+        display: block;
+        margin-right: 0;
+    }
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid white;
+    border-radius: 5px;
 }
 
 th, td {
     padding: 10px;
-    border: 1px solid #33ff33; /* Green border for cells */
+    text-align: left;
 }
 
 th {
-    background-color: #1a1a1a; /* Dark background for table headers */
+    background-color: #555;
 }
 
-td {
-    background-color: #000; /* Black background for table cells */
+tr:hover {
+    background-color: #444;
 }
 
-/* Scrollbars */
-/* Add custom scrollbar styles if needed */
-
-/* Media Queries for responsiveness */
-/* Custom media queries can go here */
-
-
-@media only screen and (max-width: 768px) {
-    /* Fonts */
-    body, h1, h2, h3, h4, h5, h6, p, ul, li, a, button, input, textarea {
-        font-size: 90%; /* Slightly smaller fonts for mobile */
-    }
-
-    /* Navigation menu adjustments */
-    nav ul {
-        padding: 0;
-        display: block; /* Stack the navigation items */
-        text-align: left; /* Align text to the left on small screens */
-    }
-
-    nav li {
-        display: block; /* Each nav item takes the full width */
-        margin: 5px 0; /* Reduced margin for small screens */
-    }
-
-    nav a {
-        display: block; /* Block level links for easier touch access */
-        padding: 10px; /* Larger padding for easier touch */
-    }
-
-    /* Button adjustments */
-    button, input[type="submit"], input[type="button"], .button {
-        padding: 12px 18px; /* Larger padding for easier touch */
-        font-size: 100%; /* Keep button text readable */
-    }
-
-    /* Table adjustments */
-    table {
-        width: 100%;
-        display: block; /* Allow table to be scrollable horizontally */
-        overflow-x: auto; /* Scrollable if content is wider than the screen */
-    }
-
-    th, td {
-        padding: 8px; /* Adjust padding in table cells */
-    }
-}
-
-/* Larger screens */
-@media only screen and (min-width: 769px) {
-    /* Any specific styles for larger screens can go here */
-}
 .discord-logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain; /* This will ensure that the image's aspect ratio is preserved */
+    width: 50px;
+    height: auto;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.discord-logo:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+/* Fancy Button Styles */
+
+.btn {
+    display: inline-block;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px; /* Rounded Edges */
+    background: linear-gradient(to right, #FF416C, #FF4B2B); /* Gradient Background */
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth Transition for Hover Effect */
+    text-align: center;
+    text-decoration: none; /* In case you use it on anchor tags */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); /* Slight Shadow */
+    margin: 10px 0; /* Some Margin for Space */
+}
+
+.btn:hover {
+    transform: translateY(-3px); /* Slight Lift on Hover */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Increased Shadow on Hover */
+}
+
+.btn:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
+}
+
+/* Hacker theme styles */
+body {
+    font-family: 'Courier New', monospace;
+    background: #0f0f0f; /* Dark background for hacker aesthetic */
+    color: #33ff33; /* Bright green text, reminiscent of old terminals */
+}
+
+/* Ensure elements scale well on mobile */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Adjust font size for mobile readability */
+    }
+    /* Add additional mobile scaling styles as needed */
+}
+
+/* Override other elements as needed for the hacker theme */
+nav {
+    background: #121212; /* Dark background for navigation */
+    border-bottom: 1px solid #33ff33; /* Bright green border for accent */
+}
+
+/* Ensure links stand out */
+a {
+    color: #6699ff; /* Blue color for links */
+    text-decoration: underline; /* Underline links for better visibility */
 }
