@@ -49,17 +49,17 @@ error_reporting(E_ALL);
                 if (isset($player_data['playername']) && $player_data['playername'] === $selected_player) {
                     echo "<h2>Recent Matches for $selected_player</h2>";
                     echo "<table border='1' class='sortable'>";
-                    echo "<tr><th>Match Date</th><th>Game Mode</th><th>MatchType</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>winPlace</th></tr>";
+                    echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
                     foreach ($player_data['player_matches'] as $match) {
                         $date = new DateTime($match['createdAt']);
                         $date->modify('+2 hours');
-                        $formattedDate = $date->format('Y-m-d H:i:s');
+                        $formattedDate = $date->format('m-d H:i:s');
 
                         $matchType = $match['matchType'];
                         $gameMode = $match['gameMode'];
                         $mapName = isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
                         $kills = $match['stats']['kills'];
-                        $damage = $match['stats']['damageDealt'];
+                        $damage = number_format($match['stats']['damageDealt'], 0, '.', '');
                         $timeSurvived = $match['stats']['timeSurvived'];
                         $winPlace = $match['stats']['winPlace'];
                         echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$matchType</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td><td>$winPlace</td></tr>";
