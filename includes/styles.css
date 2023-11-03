@@ -52,7 +52,7 @@ nav a:active {
 
 header .banner {
     max-width: 100%; /* Ensures the image is never larger than its container */
-    height: auto; /* Maintains the aspect ratio */
+    height: 200; /* Maintains the aspect ratio */
     display: block; /* Prevents inline default spacing */
     margin: 0 auto; /* Centers the image within the header */
   }
