@@ -12,7 +12,9 @@ error_reporting(E_ALL);
 <body>
 
     <?php include './includes/navigation.php'; ?>
-
+    <header>
+    <img src="./images/banner2.png" alt="banner" class="banner">
+    </header>
     <main>
         <section>
             <h2>Player Stats past 14 days</h2>
