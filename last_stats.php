@@ -55,7 +55,7 @@ error_reporting(E_ALL);
                         continue; // Skip this iteration and move to the next
                     }
                     if ($player_data['matches'] < 10){
-                        continue
+                        continue;
                     }
                     $player_name = $player_data['playername'];
                     $deaths = number_format($player_data['deaths'], 2, ',', '');
