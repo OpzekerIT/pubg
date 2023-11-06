@@ -100,11 +100,11 @@ foreach ($player in $all_player_matches) {
         write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
         $killstat = get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }) -gameMode $match.gameMode -matchType $match.matchType
         $killstats += $killstat
-        if ($save) {
+        if ($true) {
             $savekillstats = @{
                 matchid = $match.id
                 created = $match.createdAt
-                stats   = $killstats
+                stats   = $killstat
             }
             $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id).json"
         }
