@@ -84,34 +84,38 @@ foreach ($player in $all_player_matches) {
         $j++
         write-output "$($player.player_matches.count)/ $j"
        
-        
-        $telemetryfile = "$scriptroot/../data/telemetry_cache/$($match.telemetry_url.split("/")[-1])"
-        if (!(test-path -Path $telemetryfile)) {
-            write-output "Saving $telemetryfile"
-            $telemetry_content = (Invoke-WebRequest -Uri $match.telemetry_url).content
-            $telemetry_content | out-file $telemetryfile
-            $telemetry = $telemetry_content | ConvertFrom-Json
-        }
-        else {
-            write-output "Getting from cache $telemetryfile"
-            $telemetry = get-content $telemetryfile  | convertfrom-json
-        }
+        if (!(Test-Path -path "$scriptroot/../data/killstats/$($match.id)_$player_name.json" )) {
+            $telemetryfile = "$scriptroot/../data/telemetry_cache/$($match.telemetry_url.split("/")[-1])"
+            if (!(test-path -Path $telemetryfile)) {
+                write-output "Saving $telemetryfile"
+                $telemetry_content = (Invoke-WebRequest -Uri $match.telemetry_url).content
+                $telemetry_content | out-file $telemetryfile
+                $telemetry = $telemetry_content | ConvertFrom-Json
+            }
+            else {
+                write-output "Getting from cache $telemetryfile"
+                $telemetry = get-content $telemetryfile  | convertfrom-json
+            }
        
-        write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
-        $killstat = get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }) -gameMode $match.gameMode -matchType $match.matchType
-        $killstats += $killstat
-        if ($true) {
+            write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
+            $killstat = get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }) -gameMode $match.gameMode -matchType $match.matchType
+        
+        
             $savekillstats = @{
                 matchid = $match.id
                 created = $match.createdAt
                 stats   = $killstat
+                winplace = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object {$_.id -eq $match.id}).stats.winplace
             }
-            $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id).json"
+            $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id)_$player_name.json"
+            $killstats += $killstat
+        } else{
+            write-output "match $($match.id) already in cache"
+            $killstats += (get-content "$scriptroot/../data/killstats/$($match.id)_$player_name.json" | ConvertFrom-Json).stats
         }
-    }       
 
+    }
 }
-
 
 $playerstats_all = @()
 foreach ($player in $all_player_matches.playername) {
