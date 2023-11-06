@@ -47,10 +47,12 @@ function get-killstats {
     }
 }
 # Get the latest file in the directory by last modification time
-try { $latestFile = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-Write-Output "Found file $($latestFile.FullName)"
+try {
+    $latestFile = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    Write-Output "Found file $($latestFile.FullName)"
 
-} catch { 
+}
+catch { 
     $latestFile = @()
     
 }
@@ -70,7 +72,7 @@ $all_player_matches = get-content  "$scriptroot/../data/player_matches.json" | c
 $killstats = @()
 $i = 0
 
-foreach ($player in ($all_player_matches)) {
+foreach ($player in $all_player_matches) {
     if ($player.psobject.properties.name -eq 'new_win_matches') {
         continue
     }
@@ -96,7 +98,16 @@ foreach ($player in ($all_player_matches)) {
         }
        
         write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
-        $killstats += get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }) -gameMode $match.gameMode -matchType $match.matchType
+        $killstat = get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }) -gameMode $match.gameMode -matchType $match.matchType
+        $killstats += $killstat
+        if ($true) {
+            $savekillstats = @{
+                matchid = $match.id
+                created = $match.createdAt
+                stats   = $killstat
+            }
+            $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id).json"
+        }
     }       
 
 }
