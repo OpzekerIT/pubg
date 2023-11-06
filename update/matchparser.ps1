@@ -78,7 +78,7 @@ else {
     write-output 'setting old stats var empty'
     $oldstats = @()
 }
-start-sleep -Seconds 10
+
 
 $all_player_matches = get-content  "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
 
