@@ -85,7 +85,11 @@ section h2 {
     margin-bottom: 10px;
     padding-bottom: 5px;
     font-family: 'Bungee Spice';
+    text-align: center; /* Centers the text horizontally */
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 
 footer {
