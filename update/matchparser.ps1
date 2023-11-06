@@ -46,7 +46,7 @@ function get-killstats {
 
     }
 }
-# Get the latest file in the directory by last modification time
+
 try {
     $filesarray = @()
     $files = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop
@@ -55,18 +55,15 @@ try {
         $format = 'yyyy-MM-ddTHH-mm-ss\Z'
         $culture = [Globalization.CultureInfo]::InvariantCulture
         $dateTime = [datetime]::ParseExact($dateinfile, $format, $culture)
-        $filesarray += [PSCustomObject]@{name = $file.Name; date = $dateTime }
-        
+        $filesarray += [PSCustomObject]@{name = $file.Name; date = $dateTime }   
     }
-    
-    $latestFile = ($filesarray | where-object { ($_.date -gt (get-date).AddDays(-2)) -and ($_.date -lt (get-date).AddDays(-1))} | Sort-Object date)[-1]
+    $latestFile = ($filesarray | where-object { ($_.date -gt (get-date).AddDays(-2)) -and ($_.date -lt (get-date).AddDays(-1))} | Sort-Object date)[0]
     $latestFile = Get-Item -Path "$scriptroot/../data/archive/$($latestFile.name)"
     Write-Output "Found file $($latestFile.FullName)"
 
 }
 catch { 
     $latestFile = @()
-    
 }
 
 # Display the result
