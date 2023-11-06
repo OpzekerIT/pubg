@@ -48,7 +48,17 @@ function get-killstats {
 }
 # Get the latest file in the directory by last modification time
 try {
-    $latestFile = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    $filesarray = @()
+    $files = Get-ChildItem -Path "$scriptroot/../data/archive/" -File -ErrorAction Stop
+    foreach ($file in $files) {
+        $dateinfile = $file.Name.split('_')[0]
+        $format = 'yyyy-MM-ddTHH-mm-ss\Z'
+        $culture = [Globalization.CultureInfo]::InvariantCulture
+        $dateTime = [datetime]::ParseExact($dateinfile, $format, $culture)
+        $filesarray += [PSCustomObject]@{name = $file.Name; date = $dateTime }
+        
+    }
+    $latestFile = ($filesarray | where-object { $_.date -gt (get-date).AddDays(-1) } | Sort-Object date)[-1]
     Write-Output "Found file $($latestFile.FullName)"
 
 }
@@ -102,14 +112,15 @@ foreach ($player in $all_player_matches) {
         
         
             $savekillstats = @{
-                matchid = $match.id
-                created = $match.createdAt
-                stats   = $killstat
-                winplace = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object {$_.id -eq $match.id}).stats.winplace
+                matchid  = $match.id
+                created  = $match.createdAt
+                stats    = $killstat
+                winplace = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object { $_.id -eq $match.id }).stats.winplace
             }
             $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id)_$player_name.json"
            
-        } else{
+        }
+        else {
             Write-Output "$($match.id) already in cache"
         }
     }
@@ -118,11 +129,12 @@ foreach ($player in $all_player_matches) {
 $killstats = @()
 $matchfiles = Get-ChildItem "$scriptroot/../data/killstats/" -File -Filter *.json
 $last_month = (get-date).AddMonths(-1)
-foreach($file in $matchfiles){
+foreach ($file in $matchfiles) {
     $json = get-content $file | ConvertFrom-Json
-    if($json.created -gt $last_month){
+    if ($json.created -gt $last_month) {
         $killstats += $json.stats
-    }else{
+    }
+    else {
         write-output "Archiveing $($file.name)"
         Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive" -Force
     }
