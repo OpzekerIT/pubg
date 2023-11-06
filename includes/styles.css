@@ -70,13 +70,23 @@ header, main, footer {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-header h1, section h2 {
+header h1 {
     border-bottom: 1px solid white;
     margin-bottom: 10px;
     padding-bottom: 5px;
-    font-family: 'Bungee Spice'
-
+    font-family: 'Bungee Spice';
+    text-align: center; /* Centers the text horizontally */
+    margin-left: auto;
+    margin-right: auto;
 }
+
+section h2 {
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-family: 'Bungee Spice';
+}
+
 
 footer {
     text-align: center;
