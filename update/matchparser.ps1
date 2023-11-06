@@ -69,7 +69,7 @@ else {
 
 
 $all_player_matches = get-content  "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
-$killstats = @()
+
 $i = 0
 
 foreach ($player in $all_player_matches) {
@@ -108,12 +108,23 @@ foreach ($player in $all_player_matches) {
                 winplace = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object {$_.id -eq $match.id}).stats.winplace
             }
             $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id)_$player_name.json"
-            $killstats += $killstat
+           
         } else{
-            write-output "match $($match.id) already in cache"
-            $killstats += (get-content "$scriptroot/../data/killstats/$($match.id)_$player_name.json" | ConvertFrom-Json).stats
+            Write-Output "$($match.id) already in cache"
         }
+    }
+}
 
+$killstats = @()
+$matchfiles = Get-ChildItem "$scriptroot/../data/killstats/" -File -Filter *.json
+$last_month = (get-date).AddMonths(-1)
+foreach($file in $matchfiles){
+    $json = get-content $file | ConvertFrom-Json
+    if($json.created -gt $last_month){
+        $killstats += $json.stats
+    }else{
+        write-output "Archiveing $($file.name)"
+        Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive" -Force
     }
 }
 

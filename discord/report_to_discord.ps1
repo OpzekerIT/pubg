@@ -56,7 +56,7 @@ $most_matches = @{
 }
 
 $content = "
-:rocket: Het 2 wekelijkse raportje :rocket:
+:rocket: Het maandelijks raportje :rocket:
 
 Hey toppers!
 

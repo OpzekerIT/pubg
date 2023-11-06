@@ -17,7 +17,7 @@ error_reporting(E_ALL);
     </header>
     <main>
         <section>
-            <h2>Player Stats past 14 days</h2>
+            <h2>Player Stats past 30 days</h2>
             <?php
             include './config/config.php';
 
