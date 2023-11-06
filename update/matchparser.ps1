@@ -58,7 +58,9 @@ try {
         $filesarray += [PSCustomObject]@{name = $file.Name; date = $dateTime }
         
     }
-    $latestFile = ($filesarray | where-object { $_.date -gt (get-date).AddDays(-1) } | Sort-Object date)[-1]
+    
+    $latestFile = ($filesarray | where-object { ($_.date -gt (get-date).AddDays(-2)) -and ($_.date -lt (get-date).AddDays(-1))} | Sort-Object date)[-1]
+    $latestFile = Get-Item -Path "$scriptroot/../data/archive/$($latestFile.name)"
     Write-Output "Found file $($latestFile.FullName)"
 
 }
@@ -76,7 +78,7 @@ else {
     write-output 'setting old stats var empty'
     $oldstats = @()
 }
-
+start-sleep -Seconds 10
 
 $all_player_matches = get-content  "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
 
