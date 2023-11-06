@@ -182,7 +182,7 @@ tr:hover {
 
 /* Hacker theme styles */
 body {
-    font-family: 'Dosis', monospace;
+    font-family: 'Noto Sans', monospace;
     background: #0f0f0f; /* Dark background for hacker aesthetic */
     color: #e69109; /* Bright green text, reminiscent of old terminals */
 }
