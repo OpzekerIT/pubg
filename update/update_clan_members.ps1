@@ -36,7 +36,7 @@ $headers = @{
     'accept'        = 'application/vnd.api+json'
     'Authorization' = "$apiKey"
 }
-try { 
+try {
     $playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers 
 } catch {
     write-output 'Sleeping for 61 seconds'
