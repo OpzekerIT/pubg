@@ -90,7 +90,7 @@ window.onload = function () {
 
     var chart = new CanvasJS.Chart("chartContainer", {
         title: {
-            text: "Win rate by Player"
+            text: "Win place by Player / per day"
         },
         axisY: {
             title: "Win Place"
