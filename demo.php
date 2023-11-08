@@ -19,10 +19,10 @@ window.onload = function () {
  
 var chart = new CanvasJS.Chart("chartContainer", {
 	title: {
-		text: "Push-ups Over a Week"
+		text: "Winrato last month"
 	},
 	axisY: {
-		title: "Number of Push-ups"
+		title: "wins"
 	},
 	data: [{
 		type: "line",
