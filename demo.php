@@ -59,9 +59,24 @@ if ($handle = opendir($directory)) {
 // $playerData = $dataPointsPerPlayer['Lanta01'];
 
 // Output the array for debugging purposes
-echo '<pre>';
-print_r($dataPointsPerPlayer);
-echo '</pre>';
+// At the end of your PHP script, where you previously printed the array
+// Instead, we will encode the $dataPointsPerPlayer array into JSON
+$chartData = [];
+foreach ($dataPointsPerPlayer as $player => $dataPoints) {
+    $chartData[] = [
+        'type' => 'line',
+        'showInLegend' => true,
+        'legendText' => $player,
+        'dataPoints' => $dataPoints
+    ];
+}
+
+// Store the JSON encoded data in a PHP variable
+$encodedChartData = json_encode($chartData, JSON_NUMERIC_CHECK);
+
+// You can then pass this to your JavaScript code like this
+echo "<script>var playerData = $encodedChartData;</script>";
+
 
 ?>
 
@@ -72,23 +87,33 @@ echo '</pre>';
 <head>
 <script>
 window.onload = function () {
- 
-var chart = new CanvasJS.Chart("chartContainer", {
-	title: {
-		text: "Winrato last month"
-	},
-	axisY: {
-		title: "wins"
-	},
-	data: [{
-		type: "line",
-		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-	}]
-});
-chart.render();
- 
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        title: {
+            text: "Win rate by Player"
+        },
+        axisY: {
+            title: "Win Place"
+        },
+        legend: {
+            cursor: "pointer",
+            itemclick: function (e) {
+                // Toggle data series visibility on legend item click
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+        },
+        data: playerData // This will be an array of data series, one per player
+    });
+    chart.render();
+
 }
 </script>
+
 </head>
 <body>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
