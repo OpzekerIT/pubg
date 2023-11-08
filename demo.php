@@ -13,8 +13,8 @@ $dataPoints = array(
 ?>
 <?php
 
-$dataPoints = array();
-$directory = './data/killstats';
+$dataPointsPerPlayer = [];
+$directory = 'data/killstats';
 
 // Check if the directory exists
 if (!is_dir($directory)) {
@@ -33,12 +33,19 @@ if ($handle = opendir($directory)) {
             // Decode JSON data to PHP array
             $jsonArray = json_decode($content, true);
             
+            // Extract playername
+            $playername = $jsonArray['stats']['playername'];
             // Process the date
             $date = new DateTime($jsonArray['created']);
             $label = $date->format('m-d'); // Month-Day format
             
-            // Add to dataPoints
-            $dataPoints[] = array(
+            // Initialize player array if not existing
+            if (!isset($dataPointsPerPlayer[$playername])) {
+                $dataPointsPerPlayer[$playername] = [];
+            }
+            
+            // Add to dataPoints for this player
+            $dataPointsPerPlayer[$playername][] = array(
                 "y" => $jsonArray['winplace'],
                 "label" => $label
             );
@@ -47,9 +54,17 @@ if ($handle = opendir($directory)) {
     closedir($handle);
 }
 
-// Output the array
-print_r($dataPoints);
+// Now, $dataPointsPerPlayer is an array that contains an array of data points for each player
+// You can access the data for a specific player like this:
+// $playerData = $dataPointsPerPlayer['Lanta01'];
+
+// Output the array for debugging purposes
+echo '<pre>';
+print_r($dataPointsPerPlayer);
+echo '</pre>';
+
 ?>
+
 
 
 <!DOCTYPE HTML>
