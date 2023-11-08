@@ -11,6 +11,47 @@ $dataPoints = array(
 );
  
 ?>
+<?php
+
+$dataPoints = array();
+$directory = './data/killstats';
+
+// Check if the directory exists
+if (!is_dir($directory)) {
+    die("The directory $directory does not exist");
+}
+
+// Open the directory
+if ($handle = opendir($directory)) {
+    // Loop through the directory
+    while (false !== ($entry = readdir($handle))) {
+        if ($entry !== '.' && $entry !== '..') {
+            // Read each file
+            $filepath = $directory . '/' . $entry;
+            $content = file_get_contents($filepath);
+            
+            // Decode JSON data to PHP array
+            $jsonArray = json_decode($content, true);
+            
+            // Process the date
+            $date = new DateTime($jsonArray['created']);
+            $label = $date->format('m-d'); // Month-Day format
+            
+            // Add to dataPoints
+            $dataPoints[] = array(
+                "y" => $jsonArray['winplace'],
+                "label" => $label
+            );
+        }
+    }
+    closedir($handle);
+}
+
+// Output the array
+print_r($dataPoints);
+?>
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
