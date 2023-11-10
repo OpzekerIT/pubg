@@ -31,7 +31,7 @@ if ($fileContent -match "\`$clanmembers\s*=\s*array\(([^)]+)\)") {
 else {
     Write-Output "Clan members not found"
 }
-if ($clanMembersArray.count -ge 10 ) {
+if ($clanMembersArray.count -gt 10 ) {
     write-output "Currently not able to process more then 10 players"
     exit
 }
