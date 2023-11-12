@@ -1,3 +1,4 @@
+Start-Transcript -Path '/var/log/dtch/matchparser.log' -Append
 . .\..\includes\ps1\lockfile.ps1
 
 new-lock
@@ -20,6 +21,19 @@ function Get-Change {
     return [math]::Round($change, 2)
 }
 
+function Get-winratio {
+    param (
+        [int]$player_wins,
+        [int]$player_matches
+    )
+    if ($player_wins -eq 0 -or $player_matches -eq 0) {
+        $winratio = 0
+    }
+    else {
+        $winratio = ($player_wins / $player_matches) * 100
+    }
+    return $winratio
+}
 function get-killstats {
     param (
         $player_name,
@@ -58,8 +72,8 @@ try {
         $filesarray += [PSCustomObject]@{name = $file.Name; date = $dateTime }   
     }
 
-    try{ $latestFile = ($filesarray | where-object { ($_.date -gt (get-date).AddDays(-2)) -and ($_.date -lt (get-date).AddDays(-1))} | Sort-Object date)[0]}
-    catch {$latestFile = ($filesarray | sort-object date )[-1]}
+    try { $latestFile = ($filesarray | where-object { ($_.date -gt (get-date).AddDays(-2)) -and ($_.date -lt (get-date).AddDays(-1)) } | Sort-Object date)[0] }
+    catch { $latestFile = ($filesarray | sort-object date )[-1] }
     $latestFile = Get-Item -Path "$scriptroot/../data/archive/$($latestFile.name)"
     Write-Output "Found file $($latestFile.FullName)"
 
@@ -144,8 +158,8 @@ foreach ($player in $all_player_matches.playername) {
     $kills = (($killstats.stats | where-object { $_.playername -eq $player }).kills | Measure-Object -sum).sum
     $dbno = (($killstats.stats | where-object { $_.playername -eq $player }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats.stats | where-object { $_.playername -eq $player }).humankills | Measure-Object -sum).sum
-    $player_matches = ($killstats.stats | where-object { $_.playername -eq $player}).count
-    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1}).count
+    $player_matches = ($killstats.stats | where-object { $_.playername -eq $player }).count
+    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 }).count
     $winratio = ($player_wins / $player_matches) * 100
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
@@ -184,11 +198,8 @@ foreach ($player in $all_player_matches.playername) {
     $kills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).kills | Measure-Object -sum).sum
     $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).humankills | Measure-Object -sum).sum
-
     $player_matches = ($killstats.stats | where-object { $_.playername -eq $player -and $_.gameMode -eq 'ibr' -and $_.matchType -eq 'event' }).count
-    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.gameMode -eq 'ibr' -and $_.stats.matchType -eq 'event'}).count
-
-    $winratio = ($player_wins / $player_matches) * 100
+    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.gameMode -eq 'ibr' -and $_.stats.matchType -eq 'event' }).count
     $winratio_old = (($oldstats.Intense | Where-Object { $_.playername -eq $player }).winratio)
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
 
@@ -206,7 +217,7 @@ foreach ($player in $all_player_matches.playername) {
         matches    = $player_matches
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
-        winratio   = ($player_wins / $player_matches) * 100
+        winratio   = Get-winratio -player_wins $player_wins -player_matches $player_matches
         wins       = $player_wins
         dbno       = $dbno
         change     = $change
@@ -225,8 +236,7 @@ foreach ($player in $all_player_matches.playername) {
     $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).humankills | Measure-Object -sum).sum
     $player_matches = ($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'airoyale' }).count
-    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.matchType -eq 'airoyale'}).count
-    $winratio = ($player_wins / $player_matches) * 100
+    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.matchType -eq 'airoyale' }).count
     $winratio_old = (($oldstats.Casual | Where-Object { $_.playername -eq $player }).winratio)
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
 
@@ -245,7 +255,7 @@ foreach ($player in $all_player_matches.playername) {
         matches    = $player_matches
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
-        winratio   = ($player_wins / $player_matches) * 100
+        winratio   = Get-winratio -player_wins $player_wins -player_matches $player_matches
         wins       = $player_wins
         dbno       = $dbno
         change     = $change
@@ -263,8 +273,7 @@ foreach ($player in $all_player_matches.playername) {
     $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).humankills | Measure-Object -sum).sum
     $player_matches = ($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'official' }).count
-    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.matchType -eq 'official'}).count
-    $winratio = ($player_wins / $player_matches) * 100
+    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.matchType -eq 'official' }).count
     $winratio_old = (($oldstats.official | Where-Object { $_.playername -eq $player }).winratio)
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
     write-output 'official'
@@ -281,7 +290,7 @@ foreach ($player in $all_player_matches.playername) {
         matches    = $player_matches
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
-        winratio   = ($player_wins / $player_matches) * 100
+        winratio   = Get-winratio -player_wins $player_wins -player_matches $player_matches
         wins       = $player_wins
         dbno       = $dbno
         change     = $change
@@ -301,8 +310,7 @@ foreach ($player in $all_player_matches.playername) {
     $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).dbno | Measure-Object -sum).sum
     $humankills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).humankills | Measure-Object -sum).sum
     $player_matches = ($killstats.stats | where-object { $_.playername -eq $player -and $_.matchType -eq 'custom' }).count
-    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.matchType -eq 'custom'}).count
-    $winratio = ($player_wins / $player_matches) * 100
+    $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.matchType -eq 'custom' }).count
     $winratio_old = (($oldstats.custom | Where-Object { $_.playername -eq $player }).winratio)
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
     write-output 'custom'
@@ -319,7 +327,7 @@ foreach ($player in $all_player_matches.playername) {
         matches    = $player_matches
         KD_H       = $humankills / $deaths
         KD_ALL     = $kills / $deaths
-        winratio   = ($player_wins / $player_matches) * 100
+        winratio   = Get-winratio -player_wins $player_wins -player_matches $player_matches
         wins       = $player_wins
         dbno       = $dbno
         change     = $change
@@ -368,3 +376,5 @@ foreach ($file in $difference) {
 }
 write-output "Operation complete"
 remove-lock
+$Error
+Stop-Transcript
