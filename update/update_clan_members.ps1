@@ -1,4 +1,6 @@
-﻿. .\..\includes\ps1\lockfile.ps1
+﻿Start-Transcript -Path '/var/log/dtch/update_clan_members.log' -Append
+
+. .\..\includes\ps1\lockfile.ps1
 
 new-lock
 if ($PSScriptRoot.length -eq 0) {
@@ -126,3 +128,5 @@ $lifetimestats['updated'] = $formattedString
 
 $lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
 remove-lock
+$Error
+Stop-Transcript
