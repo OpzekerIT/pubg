@@ -1,6 +1,6 @@
 ﻿Start-Transcript -Path '/var/log/dtch/update_clan_members.log' -Append
 Write-Output 'Running from'
-Get-Location
+(Get-Location).path
 . .\..\includes\ps1\lockfile.ps1
 
 new-lock

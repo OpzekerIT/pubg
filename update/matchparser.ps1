@@ -1,5 +1,6 @@
 Start-Transcript -Path '/var/log/dtch/matchparser.log' -Append
 Write-Output 'Running from'
+(Get-Location).path
 . .\..\includes\ps1\lockfile.ps1
 
 new-lock
@@ -166,7 +167,7 @@ foreach ($player in $all_player_matches.playername) {
     $winratio_old = (($oldstats.all | Where-Object { $_.playername -eq $player }).winratio)
     $winratio = Get-winratio -player_wins $player_wins -player_matches $player_matches
     $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
-    
+
     write-output 'all'
     write-output "Calculating for player $player"
     write-output "new winratio $winratio"
