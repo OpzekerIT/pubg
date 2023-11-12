@@ -127,7 +127,9 @@ foreach ($player in $all_player_matches) {
                 stats    = $killstat
                 winplace = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object { $_.id -eq $match.id }).stats.winplace
             }
+            Write-Output "Writing to file $scriptroot/../data/killstats/$($match.id)_$player_name.json"
             $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id)_$player_name.json"
+            
            
         }
         else {
@@ -145,7 +147,7 @@ foreach ($file in $matchfiles) {
         $killstats += $json
     }
     else {
-        write-output "Archiveing $($file.name)"
+        write-output "Archiving $($file.name)"
         Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive" -Force
     }
 }
@@ -361,7 +363,9 @@ write-output "Writing file"
 
 $date = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 $filenameDate = ($date -replace ":", "-")
+write-output "writing to file : $scriptroot/../data/archive/$($filenameDate)_player_last_stats.json"
 ($playerstats | convertto-json) | out-file "$scriptroot/../data/archive/$($filenameDate)_player_last_stats.json"
+
 
 write-output "Cleaning cache"
 
