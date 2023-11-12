@@ -1,4 +1,5 @@
 function new-lock {
+    Write-Output 'Setting lock'
     if ($env:temp) {
         $lockFile = Join-Path -Path $env:temp -ChildPath 'lockfile_pubg.lock'
     }
@@ -10,12 +11,9 @@ function new-lock {
         Exit
     }
     New-Item -ItemType File -Path $lockFile | Out-Null
-
-
-
-    
 }
 function remove-lock {
+    Write-Output 'Removing lock'
     if ($env:temp) {
         $lockFile = Join-Path -Path $env:temp -ChildPath 'lockfile_pubg.lock'
     }
