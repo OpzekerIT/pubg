@@ -1,7 +1,7 @@
 Start-Transcript -Path '/var/log/dtch/matchparser.log' -Append
 Write-Output 'Running from'
 (Get-Location).path
-. .\..\includes\ps1\lockfile.ps1
+. ./../includes/ps1/lockfile.ps1
 
 new-lock
 
