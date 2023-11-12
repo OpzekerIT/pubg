@@ -29,7 +29,11 @@ error_reporting(E_ALL);
                 }
 
                 echo "<br>";
-                echo "Stats for $key (minimal 8 matches)";
+                if($key == 'all'){
+                echo "Stats for $key (minimal 20 matches)";
+                }else{
+                    echo "Stats for $key (minimal 8 matches)";
+                }
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Player</th>
@@ -52,6 +56,10 @@ error_reporting(E_ALL);
                     if ($player_data['matches'] < 8){
                         continue;
                     }
+                    if ($key == 'all' && $player_data['matches'] < 20) {
+                        continue;
+                    }
+                    
                     $player_name = $player_data['playername'];
                     $deaths = number_format($player_data['deaths'], 0, ',', '');
                     $kills = number_format($player_data['kills'], 0, ',', '');
