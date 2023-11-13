@@ -223,33 +223,7 @@ a {
     color: #000; /* Dark text on hover */
     cursor: pointer;
 }
-.btn:active {
-    transform: translateY(1px); /* Slight Pressed-In effect on Click */
-}
 
-
-.btn_table {
-    font-family: 'Courier New', monospace;
-    background: #222; /* Dark background for buttons */
-    color: #33ff33; /* Bright green text */
-    border: 1px solid #33ff33; /* Border to match text color */
-    padding: 0px 0px 0px 0px;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    max-width: 100px; /* Max width of the button */
-    max-height: 30px; /* Max height of the button */
-    box-sizing: border-box; /* Include padding and border in width/height */
-}
-
-.btn_table:hover {
-    background: #33ff33; /* Bright green background on hover */
-    color: #000; /* Dark text on hover */
-    cursor: pointer;
-}
-
-.btn_table:active {
-    transform: translateY(1px); /* Slight Pressed-In effect on Click */
-}
 /* Responsive button sizing for mobile for .btn class*/
 @media (max-width: 768px) {
     .btn {
@@ -257,7 +231,9 @@ a {
         font-size: 14px; /* Adjust font size for mobile readability */
     }
 }
-
+.btn:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
+}
 /* Container for tables to manage overflow */
 .table-container {
     overflow-x: auto;
