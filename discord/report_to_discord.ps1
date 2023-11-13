@@ -1,7 +1,4 @@
-
-. .\..\includes\ps1\lockfile.ps1 
-  
-new-lock
+﻿Start-Transcript -Path '/var/log/report_new_matches.log' -Append
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -9,6 +6,8 @@ if ($PSScriptRoot.length -eq 0) {
 else {
     $scriptroot = $PSScriptRoot
 }
+. $scriptroot\..\includes\ps1\lockfile.ps1
+new-lock
 function IsValidEntry($entry) {
     return ($entry.KD_H -ne 'NaN' -and $entry.KD_ALL -ne 'NaN') -and 
            ($entry.KD_H -ne 'Infinity' -and $entry.KD_ALL -ne 'Infinity')
@@ -100,3 +99,4 @@ $payload = [PSCustomObject]@{
 
 Invoke-RestMethod -Uri $webhookurl -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
 remove-lock
+Stop-Transcript

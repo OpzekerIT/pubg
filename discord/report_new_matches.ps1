@@ -1,6 +1,4 @@
-. .\..\includes\ps1\lockfile.ps1 
-  
-new-lock
+﻿Start-Transcript -Path '/var/log/dtch/report_new_matches.log' -Append
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -8,6 +6,8 @@ if ($PSScriptRoot.length -eq 0) {
 else {
     $scriptroot = $PSScriptRoot
 }
+. $scriptroot\..\includes\ps1\lockfile.ps1
+new-lock
 
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
@@ -170,3 +170,4 @@ $newJson = $player_matches | ConvertTo-Json -Depth 100
 $newJson | out-file "$scriptroot/../data/player_matches.json"
 
 remove-lock
+Stop-Transcript
