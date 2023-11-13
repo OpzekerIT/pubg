@@ -236,6 +236,9 @@ a {
     padding: 0px 0px 0px 0px;
     text-transform: uppercase;
     transition: background-color 0.3s ease, color 0.3s ease;
+    max-width: 100px; /* Max width of the button */
+    max-height: 30px; /* Max height of the button */
+    box-sizing: border-box; /* Include padding and border in width/height */
 }
 
 .btn_table:hover {
@@ -243,10 +246,10 @@ a {
     color: #000; /* Dark text on hover */
     cursor: pointer;
 }
+
 .btn_table:active {
     transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
-
 /* Responsive button sizing for mobile for .btn class*/
 @media (max-width: 768px) {
     .btn {
