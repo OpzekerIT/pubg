@@ -99,7 +99,7 @@ error_reporting(E_ALL);
 
 
                     echo "<tr>
-                    <td>$player_name</td>
+                    <td><form method='post' action=''><button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button></form><br></td>
                     <td>$winratio</td>
                     <td>$KD_H</td>
                     <td>$KD_ALL</td>
