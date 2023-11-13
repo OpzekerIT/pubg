@@ -233,7 +233,7 @@ a {
     background: #222; /* Dark background for buttons */
     color: #33ff33; /* Bright green text */
     border: 1px solid #33ff33; /* Border to match text color */
-    padding: 0px 0pxpx;
+    padding: 0px 0px 0px 0px;
     text-transform: uppercase;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
