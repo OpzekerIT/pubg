@@ -1,4 +1,8 @@
-﻿if ($PSScriptRoot.length -eq 0) {
+﻿Start-Transcript -Path '/var/log/dtch/update_clan_members.log' -Append
+Write-Output 'Running from'
+(Get-Location).path
+
+if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
 else {
@@ -28,7 +32,7 @@ if ($fileContent -match "\`$clanmembers\s*=\s*array\(([^)]+)\)") {
 else {
     Write-Output "Clan members not found"
 }
-if ($clanMembersArray.count -ge 10 ) {
+if ($clanMembersArray.count -gt 10 ) {
     write-output "Currently not able to process more then 10 players"
     exit
 }
@@ -127,3 +131,5 @@ $lifetimestats['updated'] = $formattedString
 
 $lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
 remove-lock
+$Error
+Stop-Transcript
