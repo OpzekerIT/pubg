@@ -19,14 +19,6 @@ else {
     Write-Output "API Key not found"
 }
 
-else {
-    Write-Output "Clan members not found"
-}
-if ($clanMembersArray.count -gt 10 ) {
-    write-output "Currently not able to process more then 10 players"
-    exit
-}
-
 $headers = @{
     'accept'        = 'application/vnd.api+json'
     'Authorization' = "$apiKey"
