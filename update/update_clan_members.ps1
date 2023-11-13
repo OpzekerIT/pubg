@@ -1,12 +1,13 @@
-﻿. .\..\includes\ps1\lockfile.ps1
-
-new-lock
-if ($PSScriptRoot.length -eq 0) {
+﻿if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
 else {
     $scriptroot = $PSScriptRoot
 }
+
+. $scriptroot\..\includes\ps1\lockfile.ps1
+new-lock
+
 # Read the content of the file as a single string
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
