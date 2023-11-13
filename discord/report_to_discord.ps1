@@ -1,3 +1,5 @@
+﻿Start-Transcript -Path '/var/log/report_new_matches.log' -Append
+
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
@@ -97,3 +99,4 @@ $payload = [PSCustomObject]@{
 
 Invoke-RestMethod -Uri $webhookurl -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
 remove-lock
+Stop-Transcript

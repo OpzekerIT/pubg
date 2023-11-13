@@ -1,3 +1,5 @@
+﻿Start-Transcript -Path '/var/log/dtch/report_new_matches.log' -Append
+
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
@@ -168,3 +170,4 @@ $newJson = $player_matches | ConvertTo-Json -Depth 100
 $newJson | out-file "$scriptroot/../data/player_matches.json"
 
 remove-lock
+Stop-Transcript
