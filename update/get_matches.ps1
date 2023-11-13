@@ -19,9 +19,6 @@ else {
     Write-Output "API Key not found"
 }
 
-$clanMembersArray = (Get-Content "$scriptroot/../config/clanmembers.json" | convertfrom-json).clanmembers
-Write-Output "Clan Members: $($clanMembersArray -join ', ')"
-
 else {
     Write-Output "Clan members not found"
 }
