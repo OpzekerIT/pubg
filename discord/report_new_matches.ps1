@@ -1,4 +1,4 @@
-﻿﻿﻿﻿Start-Transcript -Path '/var/log/dtch/report_new_matches.log' -Append
+﻿Start-Transcript -Path '/var/log/dtch/report_new_matches.log' -Append
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
