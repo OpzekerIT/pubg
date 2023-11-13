@@ -1,7 +1,3 @@
-. .\..\includes\ps1\lockfile.ps1
-
-new-lock
-
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
@@ -9,7 +5,8 @@ else {
     $scriptroot = $PSScriptRoot
 }
 
-
+. $scriptroot\..\includes\ps1\lockfile.ps1
+new-lock
 
 # Read the content of the file as a single string
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
@@ -22,12 +19,9 @@ else {
     Write-Output "API Key not found"
 }
 
-if ($fileContent -match "\`$clanmembers\s*=\s*array\(([^)]+)\)") {
-    # Remove quotes and split by comma to get individual members
-    $clanMembers = ($matches[1] -replace '"|\'', '' -split ","').replace(" ", "")
-    $clanMembersArray = $clanMembers.split(",").trim()
-    Write-Output "Clan Members: $($clanMembersArray -join ', ')"
-}
+$clanMembersArray = (Get-Content "$scriptroot/../config/clanmembers.json" | convertfrom-json).clanmembers
+Write-Output "Clan Members: $($clanMembersArray -join ', ')"
+
 else {
     Write-Output "Clan members not found"
 }
@@ -49,7 +43,14 @@ foreach ($player in $player_data) {
     $playermatches = @()
     foreach ($match in $lastMatches) {
         Write-Host "Getting match for $($player.attributes.name) match: $match "
-        $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$match" -Method GET -Headers $headers
+        if(Test-Path "$scriptroot/../data/matches/$match.json"){
+            write-output "Getting $match from cache"
+            $stats = get-content "$scriptroot/../data/matches/$match.json" | convertfrom-json
+        }else{
+            $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$match" -Method GET -Headers $headers
+            $stats | ConvertTo-Json -Depth 100 | Out-File "$scriptroot/../data/matches/$match.json"
+        }
+        
         $playermatches += [PSCustomObject]@{ 
             stats         = $stats.included.ATTRIBUTES.stats  | where-object { $_.name -eq $player.attributes.name }
             matchType     = $stats.data.attributes.matchtype
