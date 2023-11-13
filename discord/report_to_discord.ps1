@@ -1,14 +1,11 @@
-
-. .\..\includes\ps1\lockfile.ps1 
-  
-new-lock
-
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
 else {
     $scriptroot = $PSScriptRoot
 }
+. $scriptroot\..\includes\ps1\lockfile.ps1
+new-lock
 function IsValidEntry($entry) {
     return ($entry.KD_H -ne 'NaN' -and $entry.KD_ALL -ne 'NaN') -and 
            ($entry.KD_H -ne 'Infinity' -and $entry.KD_ALL -ne 'Infinity')
