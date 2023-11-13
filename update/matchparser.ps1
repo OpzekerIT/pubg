@@ -1,9 +1,6 @@
 Start-Transcript -Path '/var/log/dtch/matchparser.log' -Append
 Write-Output 'Running from'
 (Get-Location).path
-. ./../includes/ps1/lockfile.ps1
-
-new-lock
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
@@ -11,6 +8,10 @@ if ($PSScriptRoot.length -eq 0) {
 else {
     $scriptroot = $PSScriptRoot
 }
+
+. $scriptroot\..\includes\ps1\lockfile.ps1
+new-lock
+
 
 function Get-Change {
     param (
@@ -103,7 +104,7 @@ foreach ($player in $all_player_matches) {
     $player_name = $player.playername
 
     foreach ($match in $player.player_matches) {
-       
+        write-output "Analyzing match $($match.id) for player $player_name"
         if (!(Test-Path -path "$scriptroot/../data/killstats/$($match.id)_$player_name.json" )) {
             $telemetryfile = "$scriptroot/../data/telemetry_cache/$($match.telemetry_url.split("/")[-1])"
             if (!(test-path -Path $telemetryfile)) {
