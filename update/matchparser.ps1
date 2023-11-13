@@ -11,8 +11,9 @@ else {
 
 . $scriptroot\..\includes\ps1\lockfile.ps1
 new-lock
-
-
+##SETTINGS
+$monthsback = -1 # how many months back to look for matches
+##END OF SETTINGS
 function Get-Change {
     param (
         [double]$OldWinRatio,
@@ -142,7 +143,7 @@ foreach ($player in $all_player_matches) {
 
 $killstats = @()
 $matchfiles = Get-ChildItem "$scriptroot/../data/killstats/" -File -Filter *.json
-$last_month = (get-date).AddMonths(-1)
+$last_month = (get-date).AddMonths($monthsback)
 foreach ($file in $matchfiles) {
     $json = get-content $file | ConvertFrom-Json
     if ($json.created -gt $last_month) {
