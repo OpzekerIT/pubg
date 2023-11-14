@@ -23,15 +23,10 @@ else {
     Write-Output "API Key not found"
 }
 
-if ($fileContent -match "\`$clanmembers\s*=\s*array\(([^)]+)\)") {
-    # Remove quotes and split by comma to get individual members
-    $clanMembers = ($matches[1] -replace '"|\'', '' -split ","').replace(" ", "")
-    $clanMembersArray = $clanMembers.split(",").trim()
-    Write-Output "Clan Members: $($clanMembersArray -join ', ')"
-}
-else {
-    Write-Output "Clan members not found"
-}
+
+$clanMembersArray = (get-content "$scriptroot/../config/clanmembers.json" | convertfrom-json).clanMembers
+$clanMembers = $clanMembersArray -join ','
+
 if ($clanMembersArray.count -gt 10 ) {
     write-output "Currently not able to process more then 10 players"
     exit
@@ -131,5 +126,4 @@ $lifetimestats['updated'] = $formattedString
 
 $lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
 remove-lock
-$Error
 Stop-Transcript
