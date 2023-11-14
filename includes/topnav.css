@@ -55,7 +55,7 @@
     position: relative;
     min-width: 424px;
     max-width: 500px;
-    margin: 5px auto;
+    margin: 5px auto 5px auto;
     padding: 10px;
     border: 1px solid rgb(255, 255, 255);
     border-radius: 10px;
