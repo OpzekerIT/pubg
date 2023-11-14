@@ -22,7 +22,7 @@ error_reporting(E_ALL);
             $players_matches = json_decode(file_get_contents('./data/player_matches.json'), true);
 
             // Display buttons for each player
-            echo "<form method='post' action=''>";
+            echo "<form method='get' action=''>";
             foreach ($players_matches as $player_data) {
                 if (isset($player_data['playername'])) {
                     $player_name = $player_data['playername'];
@@ -32,7 +32,7 @@ error_reporting(E_ALL);
             
             echo "</form><br>";
 
-            $selected_player = $_POST['selected_player'] ?? $players_matches[0]['playername'];
+            $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
             $mapNames = array(
                 "Baltic_Main" => "Erangel",
                 "Chimera_Main" => "Paramo",
