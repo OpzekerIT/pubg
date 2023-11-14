@@ -204,8 +204,8 @@ nav {
 
 /* Ensure links stand out */
 a {
-    color: #6699ff; /* Blue color for links */
-    text-decoration: underline; /* Underline links for better visibility */
+    color: #e69109; /* Blue color for links */
+    text-decoration: none; /* Underline links for better visibility */
 }
 
 /* Specific button styles for .btn class to match the hacker theme */

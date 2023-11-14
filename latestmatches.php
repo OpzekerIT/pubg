@@ -7,16 +7,17 @@ error_reporting(E_ALL);
 <!DOCTYPE html>
 <html lang="en">
 <?php include './includes/head.php'; ?>
+
 <body>
 
-<?php include './includes/navigation.php'; ?>
-<header>
-    <img src="./images/banner2.png" alt="banner" class="banner">
+    <?php include './includes/navigation.php'; ?>
+    <header>
+        <img src="./images/banner2.png" alt="banner" class="banner">
     </header>
-<main>
-    <section>
-        <h2>Match Stats</h2>
-        <?php
+    <main>
+        <section>
+            <h2>Match Stats</h2>
+            <?php
             include './config/config.php';
 
             $players_matches = json_decode(file_get_contents('./data/player_matches.json'), true);
@@ -29,7 +30,7 @@ error_reporting(E_ALL);
                     echo "<button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button>";
                 }
             }
-            
+
             echo "</form><br>";
 
             $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
@@ -64,17 +65,28 @@ error_reporting(E_ALL);
                         $damage = number_format($match['stats']['damageDealt'], 0, '.', '');
                         $timeSurvived = $match['stats']['timeSurvived'];
                         $winPlace = $match['stats']['winPlace'];
-                        echo "<tr><td>$formattedDate</td><td>$gameMode</td><td>$matchType</td><td>$mapName</td><td>$kills</td><td>$damage</td><td>$timeSurvived</td><td>$winPlace</td></tr>";
+                        echo "<tr>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $formattedDate . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $gameMode . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $matchType . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $mapName . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $kills . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $damage . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $timeSurvived . "</a></td>
+                                <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $winPlace . "</a></td>
+                            </tr>";
+
                     }
                     echo "</table><br>";
 
                 }
             }
-        ?>
-    </section>
-</main>
+            ?>
+        </section>
+    </main>
 
-<?php include './includes/footer.php'; ?>
+    <?php include './includes/footer.php'; ?>
 
 </body>
+
 </html>
