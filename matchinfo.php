@@ -73,7 +73,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>Time Survived</th>
                             <th>Rank</th>
                             <th>Revives</th>
-                            <th>Walk Distance</th>
                             <th>Longest Kill</th>
                             <th>DBNOs</th>
                             <th>Headshot Kills</th>
@@ -90,9 +89,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['revives']) . "</td>";
-                            echo "<td>" . htmlspecialchars($playerStats['walkDistance']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['longestKill']) . "</td>";
-                            echo "<td>" . htmlspecialchars($playerStats['dBNOs']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['DBNOs']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['headshotKills']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['assists']) . "</td>";
                             echo "</tr>";
