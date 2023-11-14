@@ -1,4 +1,10 @@
 function new-lock {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $by
+    )
     Write-Output 'Setting lock'
     $lock = $true
     $timeout = 10
@@ -23,6 +29,9 @@ function new-lock {
         $i++
     }
     New-Item -ItemType File -Path $lockFile | Out-Null
+    if ($by) {
+        $by | Out-File -FilePath $lockFile -Append
+    }
 
 }
 function remove-lock {
