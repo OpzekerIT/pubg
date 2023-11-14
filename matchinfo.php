@@ -41,13 +41,13 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
                 <tr>
                     <!-- <th>Match Date</th> -->
-                <tr>
+             
                     <th>Player Name</th>
                     <th>Kills</th>
                     <th>Damage Dealt</th>
                     <th>Time Survived</th>
                     <th>Rank</th>
-                </tr>
+               
                 </tr>
 
 
