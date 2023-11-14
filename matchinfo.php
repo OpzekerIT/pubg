@@ -51,7 +51,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     // Read and decode the JSON file
                     $jsonData = json_decode(file_get_contents($filename), true);
                     $matchinfo = $jsonData['data']['attributes'];
-                    $matchdata = $jsonData['data']
+                    $matchdata = $jsonData['data'];
                     echo "<table class='sortable'><tr><th>matchType</th><th>duration</th><th>gameMode</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($matchinfo['matchType']) . "</td>";
