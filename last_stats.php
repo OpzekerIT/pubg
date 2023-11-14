@@ -100,14 +100,14 @@ error_reporting(E_ALL);
 
                     echo "<tr>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$player_name</a></td>
-                    <td>$winratio</td>
-                    <td>$KD_H</td>
-                    <td>$KD_ALL</td>
-                    <td>$kills</td>
-                    <td>$humankills</td>
-                    <td>$matches</td>
-                    <td>$wins</td>
-                    <td>$deaths</td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$winratio</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$KD_H</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$KD_ALL</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$kills</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$humankills</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$matches</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$wins</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$deaths</a></td>
                     <td style='line-height: 17px;'><img src='$imagePath' alt='Change Indicator' style='vertical-align: middle;' width='17' height='17'/> $change </td>
 
                     
