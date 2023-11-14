@@ -7,7 +7,7 @@ else {
     $scriptroot = $PSScriptRoot
 }
 . $scriptroot\..\includes\ps1\lockfile.ps1
-new-lock
+new-lock -by "report_new_matches"
 
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 

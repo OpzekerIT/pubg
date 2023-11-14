@@ -7,7 +7,7 @@ else {
     $scriptroot = $PSScriptRoot
 }
 . $scriptroot\..\includes\ps1\lockfile.ps1
-new-lock
+new-lock -by "report_to_discord"
 function IsValidEntry($entry) {
     return ($entry.KD_H -ne 'NaN' -and $entry.KD_ALL -ne 'NaN') -and 
            ($entry.KD_H -ne 'Infinity' -and $entry.KD_ALL -ne 'Infinity')
