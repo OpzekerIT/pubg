@@ -19,7 +19,7 @@ if (isset($_GET['matchid'])) {
         // Loop through the JSON data to extract player stats
 
         foreach ($jsonData['included'] as $includedItem) {
-            
+            if ($includedItem['type'] == "participant"){
                 $playerStats = $includedItem['attributes']['stats'];
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars($playerStats['name']) . "</td>";
@@ -28,7 +28,7 @@ if (isset($_GET['matchid'])) {
                 echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
                 echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
                 echo "</tr>";
-            
+            }
         }
 
         echo "</table>";
