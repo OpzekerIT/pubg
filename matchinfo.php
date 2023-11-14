@@ -37,52 +37,57 @@ $lastMatches = array_slice($allMatches, 0, 8);
         <section>
             <h2>Latest Matches</h2>
 
-            <table class='sortable'>
-
-                <tr>
-                    <!-- <th>Match Date</th> -->
-             
-                    <th>Player Name</th>
-                    <th>Kills</th>
-                    <th>Damage Dealt</th>
-                    <th>Time Survived</th>
-                    <th>Rank</th>
-               
-                </tr>
 
 
-                <?php
-                // Check if a match ID is provided in the GET request
-                if (isset($_GET['matchid'])) {
-                    $matchId = $_GET['matchid'];
-                    $filename = "data/matches/" . $matchId . ".json";
 
-                    // Check if the JSON file for the given match ID exists
-                    if (file_exists($filename)) {
-                        // Read and decode the JSON file
-                        $jsonData = json_decode(file_get_contents($filename), true);
+            <?php
+            // Check if a match ID is provided in the GET request
+            if (isset($_GET['matchid'])) {
+                $matchId = $_GET['matchid'];
+                $filename = "data/matches/" . $matchId . ".json";
 
-                        foreach ($jsonData['included'] as $includedItem) {
-                            if ($includedItem['type'] == "participant") {
-                                $playerStats = $includedItem['attributes']['stats'];
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($playerStats['name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($playerStats['kills']) . "</td>";
-                                echo "<td>" . htmlspecialchars($playerStats['damageDealt']) . "</td>";
-                                echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
-                                echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
-                                echo "</tr>";
-                            }
+                // Check if the JSON file for the given match ID exists
+                if (file_exists($filename)) {
+                    // Read and decode the JSON file
+                    $jsonData = json_decode(file_get_contents($filename), true);
+                    $matchinfo = $jsonData['data']['attributes'];
+                    $matchdata = $jsonData['data']
+                    echo "<table class='sortable'><tr><th>matchType</th><th>duration</th><th>gameMode</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($matchinfo['matchType']) . "</td>";
+                    echo "<td>" . htmlspecialchars($matchinfo['duration']) . "</td>";
+                    echo "<td>" . htmlspecialchars($matchinfo['gameMode']) . "</td>";
+                    echo "<td>" . htmlspecialchars($matchinfo['mapName']) . "</td>";
+                    echo "<td>" . htmlspecialchars($matchinfo['createdAt']) . "</td>";
+                    echo "<td>" . htmlspecialchars($$matchdata['id']) . "</td>";
+                    echo "</tr>";
+
+                    echo "</table>";
+
+
+                    echo "<table class='sortable'><tr><th>Player Name</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>Rank</th></tr>";
+
+                    foreach ($jsonData['included'] as $includedItem) {
+                        if ($includedItem['type'] == "participant") {
+                            $playerStats = $includedItem['attributes']['stats'];
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($playerStats['name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['kills']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['damageDealt']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
+                            echo "</tr>";
                         }
-
-                        echo "</table>";
-                    } else {
-                        echo "JSON file not found for the given match ID.";
                     }
+
+                    echo "</table>";
                 } else {
-                    echo "No match ID provided.";
+                    echo "JSON file not found for the given match ID.";
                 }
-                ?>
+            } else {
+                echo "No match ID provided.";
+            }
+            ?>
 
             </table>
 
