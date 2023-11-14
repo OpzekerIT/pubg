@@ -17,20 +17,20 @@ if (isset($_GET['matchid'])) {
         echo "<tr><th>Player Name</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>Rank</th></tr>";
 
         // Loop through the JSON data to extract player stats
-        foreach ($jsonData['data']['relationships']['rosters']['data'] as $roster) {
-            foreach ($jsonData['included'] as $includedItem) {
-                if ($includedItem['type'] === 'participant' && in_array(['type' => 'participant', 'id' => $includedItem['id']], $roster['relationships']['participants']['data'])) {
-                    $playerStats = $includedItem['attributes']['stats'];
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($playerStats['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($playerStats['kills']) . "</td>";
-                    echo "<td>" . htmlspecialchars($playerStats['damageDealt']) . "</td>";
-                    echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
-                    echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
-                    echo "</tr>";
-                }
-            }
+
+        foreach ($jsonData['included'] as $includedItem) {
+            
+                $playerStats = $includedItem['attributes']['stats'];
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($playerStats['name']) . "</td>";
+                echo "<td>" . htmlspecialchars($playerStats['kills']) . "</td>";
+                echo "<td>" . htmlspecialchars($playerStats['damageDealt']) . "</td>";
+                echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
+                echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
+                echo "</tr>";
+            
         }
+
         echo "</table>";
     } else {
         echo "JSON file not found for the given match ID.";
