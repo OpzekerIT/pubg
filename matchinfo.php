@@ -8,9 +8,6 @@ if (isset($_GET['matchid'])) {
     if (file_exists($filename)) {
         // Read and decode the JSON file
         $jsonData = json_decode(file_get_contents($filename), true);
-        echo "<pre>";
-        print_r($jsonData['included']);
-        echo "</pre>";
 
         // Start building the HTML table
         echo "<table border='1'>";
