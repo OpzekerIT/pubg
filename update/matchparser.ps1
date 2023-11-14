@@ -389,5 +389,4 @@ foreach ($file in $difference) {
 }
 write-output "Operation complete"
 remove-lock
-$Error
 Stop-Transcript
