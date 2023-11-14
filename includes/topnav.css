@@ -3,6 +3,13 @@
     overflow: hidden;
     background-color: #0f0f0f;
     position: relative;
+    max-width: 1200px;
+    min-width: 800px;
+    margin: 5px auto;
+    padding: 10px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
   
   /* Hide the links inside the navigation menu (except for logo/home) */
