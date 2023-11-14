@@ -37,7 +37,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
         <section>
             <h2>Latest Matches</h2>
 
-            <table class='sortable'>
+            <table border='1' class='sortable'>
                 <thead>
                     <tr>
                         <!-- <th>Match Date</th> -->
