@@ -63,7 +63,7 @@ $map_map = @{
 }
 
 $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
-$new_win_matches = $player_matches.new_win_matches
+$new_win_matches = $player_matches[-1].new_win_matches
 
 
 foreach ($winid in $new_win_matches) {

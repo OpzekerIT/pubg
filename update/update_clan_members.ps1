@@ -24,24 +24,48 @@ else {
 }
 
 
-$clanMembersArray = (get-content "$scriptroot/../config/clanmembers.json" | convertfrom-json).clanMembers
+$clanMembersArray = (Get-Content "$scriptroot/../config/clanmembers.json" | ConvertFrom-Json).clanMembers
+
+$clanmemberchunks = @()
+$chunk = @()
+$chunksize = 10
+$i = 0
+
+foreach ($member in $clanMembersArray) {
+    $chunk += $member
+    if ($chunk.Count -eq $chunksize) {
+        $clanmemberchunks += @{ "Chunk$i" = $chunk }
+        $chunk = @()
+        $i++
+    }
+}
+
+# Add any remaining members to the last chunk
+if ($chunk.Count -gt 0) {
+    $clanmemberchunks += @{ "Chunk$i" = $chunk }
+}
 $clanMembers = $clanMembersArray -join ','
 
-if ($clanMembersArray.count -gt 10 ) {
-    write-output "Currently not able to process more then 10 players"
-    exit
-}
+
 
 $headers = @{
     'accept'        = 'application/vnd.api+json'
     'Authorization' = "$apiKey"
 }
-try {
-    $playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers 
-} catch {
-    write-output 'Sleeping for 61 seconds'
-    start-sleep -Seconds 61
-    $playerinfo = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers
+$playerinfo = @()
+foreach ($key in $clanmemberchunks.keys) {
+
+    $clanMembers = $clanmemberchunks.$key -join ','
+    $clanMembers
+    try {
+        $playerinfo += Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers 
+    }
+    catch {
+        write-output 'Sleeping for 61 seconds'
+        start-sleep -Seconds 61
+        $playerinfo += Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players?filter[playerNames]=$clanMembers" -Method GET -Headers $headers
+    }
+
 }
 $playerinfo.data | convertto-json -depth 100 | Out-File "$scriptroot/../data/player_data.json"
 $playerList = @()
@@ -57,12 +81,32 @@ $playerinfo.data | ForEach-Object {
 $playerList
 
 
-$playeridstring = ""
-foreach ($playerid in $playerinfo.data.id) {
-    $playeridstring += "$playerid,"
-}
-$playeridstring = $playeridstring.Substring(0, $playeridstring.Length - 1)
 
+$playerChunks = @{}
+$chunk = @()
+$chunksize = 10
+$i = 0
+
+foreach ($player in $playerList) {
+    $chunkName = "Chunk$i"
+    $chunk += $player
+    if ($chunk.Count -eq $chunksize) {
+        $playerChunks[$chunkName] = $chunk
+        $chunk = @()
+        $i++
+    }
+}
+
+# Add any remaining players to the last chunk
+if ($chunk.Count -gt 0) {
+    $playerChunks["Chunk$i"] = $chunk
+}
+
+$playeridstringarray = @()
+foreach ($key in $playerChunks.keys) {
+
+    $playeridstringarray += $playerChunks.$key.PlayerID -join ','
+}
 
 $playermodes = @(
     "solo",
@@ -74,43 +118,44 @@ $playermodes = @(
 )
 # Initialize the master hashtable
 $lifetimestats = @{}
-
-foreach ($playmode in $playermodes) {
-    # Fetch stats for the current playmode
+foreach ($playeridstring in $playeridstringarray) {
+    foreach ($playmode in $playermodes) {
+        # Fetch stats for the current playmode
     
         write-output "Getting data for players $playeridstring gameode $playmode"
  
-        try{
+        try {
             $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
-        } catch {
+        }
+        catch {
             write-output 'sleeping for 61 seconds'
             start-sleep -Seconds 61
             $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons/lifetime/gameMode/$playmode/players?filter[playerIds]=$playeridstring" -Method GET -Headers $headers
         }
    
  
-    # Check if the playmode doesn't exist in the hashtable, then add it
-    if (-not $lifetimestats.ContainsKey($playmode)) {
-        $lifetimestats[$playmode] = @{}
-    }
-
-    foreach ($stat in $stats.data.relationships.player.data.id) {
-        
-        # Fetch the player name for the current stat (account ID) from the dictionary
-        $playerName = $playerList | Where-Object { $_.PlayerID -eq $stat } | Select-Object -ExpandProperty PlayerName
-        write-output "Getting data for $playerName with gamemode $playmode"
-        # Fetch the specific stat data for the current stat
-        $specificStat = ($stats.data | where-object { $_.relationships.player.data.id -eq $stat }).attributes.gamemodestats.$playmode
-
-        # Create a new hashtable entry for the player and insert the specific stat data
-        if (-not $lifetimestats[$playmode].ContainsKey($playerName)) {
-            $lifetimestats[$playmode][$playerName] = @{}
+        # Check if the playmode doesn't exist in the hashtable, then add it
+        if (-not $lifetimestats.ContainsKey($playmode)) {
+            $lifetimestats[$playmode] = @{}
         }
-        $lifetimestats[$playmode][$playerName][$stat] = $specificStat
+
+        foreach ($stat in $stats.data.relationships.player.data.id) {
+        
+            # Fetch the player name for the current stat (account ID) from the dictionary
+            $playerName = $playerList | Where-Object { $_.PlayerID -eq $stat } | Select-Object -ExpandProperty PlayerName
+            write-output "Getting data for $playerName with gamemode $playmode"
+            # Fetch the specific stat data for the current stat
+            $specificStat = ($stats.data | where-object { $_.relationships.player.data.id -eq $stat }).attributes.gamemodestats.$playmode
+
+            # Create a new hashtable entry for the player and insert the specific stat data
+            if (-not $lifetimestats[$playmode].ContainsKey($playerName)) {
+                $lifetimestats[$playmode][$playerName] = @{}
+            }
+            $lifetimestats[$playmode][$playerName][$stat] = $specificStat
+        }
     }
+
 }
-
-
 
 # Get current date and time
 $currentDateTime = Get-Date
