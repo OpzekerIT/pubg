@@ -99,7 +99,7 @@ error_reporting(E_ALL);
 
 
                     echo "<tr>
-                    <td><a href='https://dev.dtch.online/latestmatches.php?selected_player=$player_name'>$player_name</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$player_name</a></td>
                     <td>$winratio</td>
                     <td>$KD_H</td>
                     <td>$KD_ALL</td>
