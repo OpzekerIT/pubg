@@ -53,7 +53,8 @@
     overflow: hidden;
     background-color: #0f0f0f;
     position: relative;
-    width: 100%;
+    min-width: 424px;
+    max-width: 500px;
     margin: 5px auto;
     padding: 10px;
     border: 1px solid rgb(255, 255, 255);
