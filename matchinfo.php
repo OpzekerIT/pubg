@@ -2,7 +2,7 @@
 // Check if a match ID is provided in the GET request
 if (isset($_GET['matchid'])) {
     $matchId = $_GET['matchid'];
-    $filename = $matchId . ".json";
+    $filename = "matches/" . $matchId . ".json";
 
     // Check if the JSON file for the given match ID exists
     if (file_exists($filename)) {
