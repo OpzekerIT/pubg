@@ -83,8 +83,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
     </tbody>
 </table>
 
-        <p>Join us on our Discord:</p>
-        <a href="https://discord.gg/wMXsB3ZmNA" target="_blank" rel="noopener noreferrer">
+      
+        <a href="https://discord.gg/wMXsB3ZmNA" target="_blank" rel="noopener noreferrer" title="Join us on our Discord">
             <img src="./media/discordlogo.png" alt="Discord Logo" class="discord-logo">
         </a>
     </section>
