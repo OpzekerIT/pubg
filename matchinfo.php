@@ -65,7 +65,20 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "</table>";
 
 
-                    echo "<table class='sortable'><tr><th>Player Name</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>Rank</th></tr>";
+                    echo "<table class='sortable'>";
+                    echo "<tr>
+                            <th>Player Name</th>
+                            <th>Kills</th>
+                            <th>Damage Dealt</th>
+                            <th>Time Survived</th>
+                            <th>Rank</th>
+                            <th>Revives</th>
+                            <th>Walk Distance</th>
+                            <th>Longest Kill</th>
+                            <th>DBNOs</th>
+                            <th>Headshot Kills</th>
+                            <th>Assists</th>
+                        </tr>";
 
                     foreach ($jsonData['included'] as $includedItem) {
                         if ($includedItem['type'] == "participant") {
@@ -76,11 +89,17 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             echo "<td>" . htmlspecialchars($playerStats['damageDealt']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
                             echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['revives']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['walkDistance']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['longestKill']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['dBNOs']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['headshotKills']) . "</td>";
+                            echo "<td>" . htmlspecialchars($playerStats['assists']) . "</td>";
                             echo "</tr>";
                         }
                     }
-
                     echo "</table>";
+
                 } else {
                     echo "JSON file not found for the given match ID.";
                 }
