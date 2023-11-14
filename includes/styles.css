@@ -198,7 +198,7 @@ body {
 /* Override other elements as needed for the hacker theme */
 nav {
     background: #121212; /* Dark background for navigation */
-   /*  border-bottom: 1px solid #33ff33;  Bright green border for accent */
+   /*  border-bottom: 1px solid #e69109;  Bright green border for accent */
 }
 
 /* Ensure links stand out */
@@ -211,15 +211,15 @@ a {
 .btn {
     font-family: 'Courier New', monospace;
     background: #222; /* Dark background for buttons */
-    color: #33ff33; /* Bright green text */
-    border: 1px solid #33ff33; /* Border to match text color */
+    color: #e69109; /* Bright green text */
+    border: 1px solid #e69109; /* Border to match text color */
     padding: 10px 20px;
     text-transform: uppercase;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn:hover {
-    background: #33ff33; /* Bright green background on hover */
+    background: #e69109; /* Bright green background on hover */
     color: #000; /* Dark text on hover */
     cursor: pointer;
 }
