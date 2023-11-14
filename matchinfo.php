@@ -8,7 +8,7 @@ if (isset($_GET['matchid'])) {
     if (file_exists($filename)) {
         // Read and decode the JSON file
         $jsonData = json_decode(file_get_contents($filename), true);
-
+        echo $jsonData;
         // Start building the HTML table
         echo "<table border='1'>";
         echo "<tr><th>Player Name</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>Rank</th></tr>";
