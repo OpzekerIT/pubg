@@ -2,7 +2,7 @@
 $host = $_SERVER['HTTP_HOST'];
 
 if ($host == 'dev.dtch.online') {
-    echo "You are on the development! Site";
+    echo "<center>You are on the development! Site</center>";
 }
 ?>
 <div class="topnav">
