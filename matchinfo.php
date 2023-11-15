@@ -164,8 +164,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             if (substr($playerStats['playerId'], 0, 2) !== 'ai') {
                                 // Create links for each stat
                                 echo "<tr>";
-                                echo "<td>Human</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
+                                echo "<td>Human</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['damageDealt']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
