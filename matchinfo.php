@@ -94,8 +94,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         echo "<table class='sortable'>";
                         echo "<tr>
                             <th>Player Name</th>
-                            <th>Kills</th>
                             <th>humankills</th>
+                            <th>Kills</th>
                             <th>Total Damage</th>
                             <th>Rank</th>
                             <th>DBNOs</th>
