@@ -98,10 +98,25 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
                     foreach ($files as $file) {
                         $jsonData_individual_player = json_decode(file_get_contents($file), true);
+                        $individualPlayerName = $jsonData_individual_player['stats']['playername'];
+                    
+                        // Search for the player in $jsonData['included'] to find damageDealt
+                        $damageDealt = 0;
+                        foreach ($jsonData['included'] as $includedItem) {
+                            if ($includedItem['type'] == "participant") {
+                                $playerStats = $includedItem['attributes']['stats'];
+                                if ($individualPlayerName == $playerStats['name']) {
+                                    $damageDealt = $playerStats['damageDealt'];
+                                    break; // Stop searching once the player is found
+                                }
+                            }
+                        }
+                    
                         echo "<tr>";
-                        echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['playername']) . "</td>";
+                        echo "<td>" . htmlspecialchars($individualPlayerName) . "</td>";
                         echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['humankills']) . "</td>";
                         echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['kills']) . "</td>";
+                        echo "<td>" . htmlspecialchars($damageDealt) . "</td>"; // Display damageDealt here
                         echo "</tr>";
                     }
                     echo "</table>";
