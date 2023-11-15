@@ -7,7 +7,6 @@
     min-width: 800px;
     margin: 5px auto 5px auto;
     padding: 10px;
-    border: 1px solid rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
@@ -19,11 +18,11 @@
   
   /* Style navigation menu links */
   .topnav a {
-    color: white;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
     display: block;
+    border-radius: 10px;
   }
   
   /* Style the hamburger menu */
@@ -34,6 +33,9 @@
     position: absolute;
     right: 0;
     top: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
   }
   
   /* Add a grey background color on mouse-over */
