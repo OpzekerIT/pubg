@@ -24,6 +24,7 @@
     text-decoration: none;
     font-size: 17px;
     display: block;
+    border-radius: 10px;
   }
   
   /* Style the hamburger menu */
@@ -34,8 +35,9 @@
     position: absolute;
     right: 0;
     top: 0;
-    margin-top: 8px;
-    margin-right: 8px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
   }
   
   /* Add a grey background color on mouse-over */
