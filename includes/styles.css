@@ -12,9 +12,10 @@ body {
     font-family: 'Roboto', sans-serif;
     /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
     color: white;
-    background-image: url(../images/bck.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
+    background: url(../images/bck.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
 }
 
