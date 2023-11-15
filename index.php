@@ -66,20 +66,18 @@ $lastMatches = array_slice($allMatches, 0, 8);
         );
 
         foreach($lastMatches as $match) {
-            ?>
-            <tr>
-            <!--    <td><?php echo date("Y-m-d", strtotime($match['createdAt'])); ?></td> -->
-                <td><?php echo $match['playername']; ?></td>
-                <td><?php echo $match['gameMode']; ?></td>
-                <td><?php echo $match['matchType']; ?></td>
-                <td><?php echo isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']; ?></td>
-                <td><?php echo $match['stats']['kills']; ?></td>
-                <td><?php echo number_format($match['stats']['damageDealt'], 0, '.', ''); ?></td>
-                <td><?php echo $match['stats']['winPlace']; ?></td>
-            </tr>
-            <?php
-        }
-        ?>
+            $matchid = $match['id'];
+            echo "<tr>
+            <td><a href='machinfo.php?machid=$matchid'>" . $match['playername'] . "</a></td>
+            <td><a href='machinfo.php?machid=$matchid'>" . $match['gameMode'] . "</a></td>
+            <td><a href='machinfo.php?machid=$matchid'>" . $match['matchType'] . "</a></td>
+            <td><a href='machinfo.php?machid=$matchid'>" . isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'] . "</a></td>
+            <td><a href='machinfo.php?machid=$matchid'>" . $match['stats']['kills'] . "</a></td>
+            <td><a href='machinfo.php?machid=$matchid'>" . number_format($match['stats']['damageDealt'], 0, '.', '') . "</a></td>
+            <td><a href='machinfo.php?machid=$matchid'>" . $match['stats']['winPlace'] . "</a></td>
+
+        </tr>";
+        } ?>
     </tbody>
 </table>
 
