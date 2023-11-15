@@ -67,12 +67,12 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
         foreach($lastMatches as $match) {
             $matchid = $match['id'];
-            print_r($match);
+            
             echo "<tr>
             <td><a href='machinfo.php?machid=$matchid'>" . $match['playername'] . "</a></td>
             <td><a href='machinfo.php?machid=$matchid'>" . $match['gameMode'] . "</a></td>
             <td><a href='machinfo.php?machid=$matchid'>" . $match['matchType'] . "</a></td>
-            <td><a href='machinfo.php?machid=$matchid'>" . isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'] . "</a></td>
+            
             <td><a href='machinfo.php?machid=$matchid'>" . $match['stats']['kills'] . "</a></td>
             <td><a href='machinfo.php?machid=$matchid'>" . number_format($match['stats']['damageDealt'], 0, '.', '') . "</a></td>
             <td><a href='machinfo.php?machid=$matchid'>" . $match['stats']['winPlace'] . "</a></td>
