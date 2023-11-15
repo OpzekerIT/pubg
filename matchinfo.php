@@ -41,10 +41,25 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
 
             <?php
+
+            $mapNames = array(
+                "Baltic_Main" => "Erangel",
+                "Chimera_Main" => "Paramo",
+                "Desert_Main" => "Miramar",
+                "DihorOtok_Main" => "Vikendi",
+                "Erangel_Main" => "Erangel",
+                "Heaven_Main" => "Haven",
+                "Kiki_Main" => "Deston",
+                "Range_Main" => "Camp Jackal",
+                "Savage_Main" => "Sanhok",
+                "Summerland_Main" => "Karakin",
+                "Tiger_Main" => "Taego"
+            );
             // Check if a match ID is provided in the GET request
             if (isset($_GET['matchid'])) {
                 $matchId = $_GET['matchid'];
                 $filename = "data/matches/" . $matchId . ".json";
+
 
                 // Check if the JSON file for the given match ID exists
                 if (file_exists($filename)) {
@@ -52,18 +67,65 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     $jsonData = json_decode(file_get_contents($filename), true);
                     $matchinfo = $jsonData['data']['attributes'];
                     $matchdata = $jsonData['data'];
-                    echo "<table class='sortable'><tr><th>matchType</th><th>duration</th><th>gameMode</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
+
+
+                    echo "<table class='sortable'><tr><th>matchType</th><th>gameMode</th><th>duration</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($matchinfo['matchType']) . "</td>";
-                    echo "<td>" . htmlspecialchars($matchinfo['duration']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchinfo['gameMode']) . "</td>";
-                    echo "<td>" . htmlspecialchars($matchinfo['mapName']) . "</td>";
+                    echo "<td>" . htmlspecialchars($matchinfo['duration']) . "</td>";
+                    echo "<td>" . htmlspecialchars(isset($mapNames[$matchinfo['mapName']]) ? $mapNames[$matchinfo['mapName']] : $matchinfo['mapName']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchinfo['createdAt']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchdata['id']) . "</td>";
                     echo "</tr>";
-
                     echo "</table>";
 
+
+
+
+                    echo "<table class='sortable'>";
+                    echo "<tr>
+                            <th>Player Name</th>
+                            <th>Kills</th>
+                            <th>humankills</th>
+                            <th>Total Damage</th>
+                            <th>Rank</th>
+                            <th>DBNOs</th>
+                        </tr>";
+
+                    $directory = 'data/killstats/';
+                    $prefix = $matchdata['id'];
+                    $files = glob($directory . $prefix . '*');
+
+
+                    foreach ($files as $file) {
+                        $jsonData_individual_player = json_decode(file_get_contents($file), true);
+                        $individualPlayerName = $jsonData_individual_player['stats']['playername'];
+                    
+                        // Search for the player in $jsonData['included'] to find damageDealt
+                        $damageDealt = 0;
+                        foreach ($jsonData['included'] as $includedItem) {
+                            if ($includedItem['type'] == "participant") {
+                                $playerStats = $includedItem['attributes']['stats'];
+                                if ($individualPlayerName == $playerStats['name']) {
+                                    $damageDealt = $playerStats['damageDealt'];
+                                    $rank = $playerStats['winPlace'];
+                                    $DBNOs = $playerStats['DBNOs'];
+                                    break; 
+                                }
+                            }
+                        }
+                    
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($individualPlayerName) . "</td>";
+                        echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['humankills']) . "</td>";
+                        echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['kills']) . "</td>";
+                        echo "<td>" . htmlspecialchars($damageDealt) . "</td>"; 
+                        echo "<td>" . htmlspecialchars($rank) . "</td>"; 
+                        echo "<td>" . htmlspecialchars($DBNOs) . "</td>"; 
+                        echo "</tr>";
+                    }
+                    echo "</table>";
 
                     echo "<table class='sortable'>";
                     echo "<tr>
@@ -78,7 +140,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>Headshot Kills</th>
                             <th>Assists</th>
                         </tr>";
-
                     foreach ($jsonData['included'] as $includedItem) {
                         if ($includedItem['type'] == "participant") {
                             $playerStats = $includedItem['attributes']['stats'];
