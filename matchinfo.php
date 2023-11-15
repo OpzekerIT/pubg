@@ -65,7 +65,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 $files = glob($directory . $prefix . '*');
                 echo $prefix;
                 echo $directory;
-                echo $files 
+                echo $files;
                 foreach ($files as $file) {
                     echo $file . "\n";
                 }
