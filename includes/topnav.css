@@ -34,6 +34,8 @@
     position: absolute;
     right: 0;
     top: 0;
+    margin-top: 8px;
+    margin-right: 8px;
   }
   
   /* Add a grey background color on mouse-over */
