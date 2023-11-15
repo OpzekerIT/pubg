@@ -59,7 +59,12 @@ $lastMatches = array_slice($allMatches, 0, 8);
             if (isset($_GET['matchid'])) {
                 $matchId = $_GET['matchid'];
                 $filename = "data/matches/" . $matchId . ".json";
-
+                $directory = 'killstats/';
+                $prefix = $matchdata['id'];
+                $files = glob($directory . $prefix . '*');
+                foreach ($files as $file) {
+                    echo $file . "\n";
+                }
                 // Check if the JSON file for the given match ID exists
                 if (file_exists($filename)) {
                     // Read and decode the JSON file
