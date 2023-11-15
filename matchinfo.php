@@ -88,7 +88,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>Player Name</th>
                             <th>Kills</th>
                             <th>humankills</th>
-                            
+                            <th>Total Damage</th>
                         </tr>";
 
                     $directory = 'data/killstats/';
