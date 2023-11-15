@@ -59,9 +59,13 @@ $lastMatches = array_slice($allMatches, 0, 8);
             if (isset($_GET['matchid'])) {
                 $matchId = $_GET['matchid'];
                 $filename = "data/matches/" . $matchId . ".json";
-                $directory = 'killstats/';
+                
+                $directory = 'data/killstats/';
                 $prefix = $matchdata['id'];
                 $files = glob($directory . $prefix . '*');
+                echo $prefix;
+                echo $directory;
+                echo $files 
                 foreach ($files as $file) {
                     echo $file . "\n";
                 }
