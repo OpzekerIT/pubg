@@ -59,7 +59,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
             if (isset($_GET['matchid'])) {
                 $matchId = $_GET['matchid'];
                 $filename = "data/matches/" . $matchId . ".json";
-                
+
 
                 // Check if the JSON file for the given match ID exists
                 if (file_exists($filename)) {
@@ -67,20 +67,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     $jsonData = json_decode(file_get_contents($filename), true);
                     $matchinfo = $jsonData['data']['attributes'];
                     $matchdata = $jsonData['data'];
-                    
-                    $directory = 'data/killstats/';
-                    $prefix = $matchdata['id'];
-                    $files = glob($directory . $prefix . '*');
-                    foreach ($files as $file) {
-                        echo $file . "\n";
-                    }
 
-                    foreach($files as $file){
-                        $jsonData_individual_player = json_decode(file_get_contents($file), true);
-                        echo $jsonData_individual_player['stats']['humankills'];
-                        echo $jsonData_individual_player['stats']['kills'];
-
-                    }
 
                     echo "<table class='sortable'><tr><th>matchType</th><th>gameMode</th><th>duration</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
                     echo "<tr>";
@@ -93,6 +80,31 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "</tr>";
                     echo "</table>";
 
+
+
+
+                    echo "<table class='sortable'>";
+                    echo "<tr>
+                            <th>Player Name</th>
+                            <th>Kills</th>
+                            <th>humankills</th>
+                            
+                        </tr>";
+
+                    $directory = 'data/killstats/';
+                    $prefix = $matchdata['id'];
+                    $files = glob($directory . $prefix . '*');
+
+
+                    foreach ($files as $file) {
+                        $jsonData_individual_player = json_decode(file_get_contents($file), true);
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['playername']) . "</td>";
+                        echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['humankills']) . "</td>";
+                        echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['kills']) . "</td>";
+                        echo "</tr>";
+                    }
+                    echo "</table>";
 
                     echo "<table class='sortable'>";
                     echo "<tr>
@@ -107,7 +119,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>Headshot Kills</th>
                             <th>Assists</th>
                         </tr>";
-
                     foreach ($jsonData['included'] as $includedItem) {
                         if ($includedItem['type'] == "participant") {
                             $playerStats = $includedItem['attributes']['stats'];
