@@ -165,7 +165,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                                 // Create links for each stat
                                 echo "<tr>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
-                                echo "<td>Human</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'> Human </a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['damageDealt']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
