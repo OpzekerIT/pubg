@@ -104,9 +104,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         }
                     } else {
 
-
-
-
                         echo "<table class='sortable'>";
                         echo "<tr>
                             <th>Player Name</th>
