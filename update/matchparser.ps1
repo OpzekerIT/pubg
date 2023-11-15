@@ -60,7 +60,6 @@ function get-killstats {
         gameMode   = $gameMode
         matchType  = $matchType
         dbno       = ($attacks | where-object { $_.dBNOMaker.name -eq $player_name }).count
-        
 
     }
 }

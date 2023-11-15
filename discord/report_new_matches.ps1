@@ -147,6 +147,7 @@ id              $($winmatches[0].id)
         }
 
         send-discord -content "[2D replay](<$2D_replay_url>)"
+        send-discord -content "More match details [DTCH_STATS](https://dtch.online/matchinfo.php?matchid=$($winmatches[0].id))"
     }
     else {
         write-output "Something went wrong (more then 10 matches to report)"
