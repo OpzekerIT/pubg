@@ -85,7 +85,23 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     $files = glob($directory . $prefix . '*');
 
                     if (count($files) == 0) {
-                        echo "No individual player data available (yet) check back in half hour.";
+                        // Get current time
+                        $currentTime = new DateTime();
+                        $minutes = intval($currentTime->format('i'));
+
+                        // Calculate minutes to next update
+                        $minutesToNextUpdate = 30 - ($minutes % 30);
+                        if ($minutesToNextUpdate === 30) {
+                            // If it's exactly on the hour or half-hour, set the next update to 30 minutes
+                            $minutesToNextUpdate = 0;
+                        }
+
+                        // Display the message
+                        if ($minutesToNextUpdate > 0) {
+                            echo "Check back in $minutesToNextUpdate minutes. Data is updated every half hour.";
+                        } else {
+                            echo "Data is updating, please check back shortly.";
+                        }
                     } else {
 
 
