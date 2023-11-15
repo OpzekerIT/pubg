@@ -67,6 +67,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
         foreach($lastMatches as $match) {
             $matchid = $match['id'];
+            print_r($match);
             echo "<tr>
             <td><a href='machinfo.php?machid=$matchid'>" . $match['playername'] . "</a></td>
             <td><a href='machinfo.php?machid=$matchid'>" . $match['gameMode'] . "</a></td>
