@@ -7,7 +7,7 @@ function new-lock {
     )
     Write-Output 'Setting lock'
     $lock = $true
-    $timeout = 10
+    $timeout = 15
     $i = 0
     while ($lock) {
         if ($env:temp) {
