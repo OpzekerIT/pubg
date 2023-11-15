@@ -75,11 +75,11 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         echo $file . "\n";
                     }
 
-                    foreach($file as $files){
+                    foreach($files as $file){
                         $jsonData_individual_player = json_decode(file_get_contents($file), true);
                         echo $jsonData_individual_player['stats']['humankills'];
                         echo $jsonData_individual_player['stats']['kills'];
-                        
+
                     }
 
                     echo "<table class='sortable'><tr><th>matchType</th><th>gameMode</th><th>duration</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
