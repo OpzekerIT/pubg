@@ -76,7 +76,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "<td>" . htmlspecialchars($matchinfo['createdAt']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchdata['id']) . "</td>";
                     echo "</tr>";
-                    isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
                     echo "</table>";
 
 
