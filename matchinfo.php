@@ -89,6 +89,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>Kills</th>
                             <th>humankills</th>
                             <th>Total Damage</th>
+                            <th>Rank</th>
+                            <th>DBNOs</th>
                         </tr>";
 
                     $directory = 'data/killstats/';
@@ -107,7 +109,9 @@ $lastMatches = array_slice($allMatches, 0, 8);
                                 $playerStats = $includedItem['attributes']['stats'];
                                 if ($individualPlayerName == $playerStats['name']) {
                                     $damageDealt = $playerStats['damageDealt'];
-                                    break; // Stop searching once the player is found
+                                    $rank = $playerStats['winPlace'];
+                                    $DBNOs = $playerStats['DBNOs'];
+                                    break; 
                                 }
                             }
                         }
@@ -116,7 +120,9 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         echo "<td>" . htmlspecialchars($individualPlayerName) . "</td>";
                         echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['humankills']) . "</td>";
                         echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['kills']) . "</td>";
-                        echo "<td>" . htmlspecialchars($damageDealt) . "</td>"; // Display damageDealt here
+                        echo "<td>" . htmlspecialchars($damageDealt) . "</td>"; 
+                        echo "<td>" . htmlspecialchars($rank) . "</td>"; 
+                        echo "<td>" . htmlspecialchars($DBNOs) . "</td>"; 
                         echo "</tr>";
                     }
                     echo "</table>";
