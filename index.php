@@ -69,13 +69,13 @@ $lastMatches = array_slice($allMatches, 0, 8);
             $matchid = $match['id'];
             
             echo "<tr>
-            <td><a href='matchinfo.php?machid=$matchid'>" . $match['playername'] . "</a></td>
-            <td><a href='matchinfo.php?machid=$matchid'>" . $match['gameMode'] . "</a></td>
-            <td><a href='matchinfo.php?machid=$matchid'>" . $match['matchType'] . "</a></td>
-            <td><a href='matchinfo.php?machid=$matchid'>" . (isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']) . "</a></td>
-            <td><a href='matchinfo.php?machid=$matchid'>" . $match['stats']['kills'] . "</a></td>
-            <td><a href='matchinfo.php?machid=$matchid'>" . number_format($match['stats']['damageDealt'], 0, '.', '') . "</a></td>
-            <td><a href='matchinfo.php?machid=$matchid'>" . $match['stats']['winPlace'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['playername'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['gameMode'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['matchType'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . (isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']) . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['stats']['kills'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . number_format($match['stats']['damageDealt'], 0, '.', '') . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['stats']['winPlace'] . "</a></td>
 
         </tr>";
         } ?>
