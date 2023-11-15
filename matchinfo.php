@@ -146,6 +146,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "<table class='sortable'>";
                     echo "<tr>
                             <th>Player Name</th>
+                            <th>Sort</th>
                             <th>Kills</th>
                             <th>Damage Dealt</th>
                             <th>Time Survived</th>
@@ -155,22 +156,42 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>DBNOs</th>
                             <th>Headshot Kills</th>
                             <th>Assists</th>
+
                         </tr>";
                     foreach ($jsonData['included'] as $includedItem) {
                         if ($includedItem['type'] == "participant") {
                             $playerStats = $includedItem['attributes']['stats'];
-                            echo "<tr>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['damageDealt']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['winPlace']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['revives']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['longestKill']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['DBNOs']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['headshotKills']) . "</a></td>";
-                            echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['assists']) . "</a></td>";
-                            echo "</tr>";
+                            if (substr($playerStats['playerId'], 0, 2) !== 'ai') {
+                                // Create links for each stat
+                                echo "<tr>";
+                                echo "<td>Human</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['damageDealt']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['winPlace']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['revives']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['longestKill']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['DBNOs']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['headshotKills']) . "</a></td>";
+                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['assists']) . "</a></td>";
+                                echo "</tr>";
+                            } else {
+                                // Display without link
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($playerStats['name']) . "</td>";
+                                echo "<td>Bot</a></td>";
+                                echo "<td>" . htmlspecialchars($playerStats['kills']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['damageDealt']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['timeSurvived']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['winPlace']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['revives']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['longestKill']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['DBNOs']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['headshotKills']) . "</td>";
+                                echo "<td>" . htmlspecialchars($playerStats['assists']) . "</td>";
+                                echo "</tr>";
+                            }
                         }
                     }
                     echo "</table>";
