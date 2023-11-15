@@ -41,6 +41,20 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
 
             <?php
+
+            $mapNames = array(
+                "Baltic_Main" => "Erangel",
+                "Chimera_Main" => "Paramo",
+                "Desert_Main" => "Miramar",
+                "DihorOtok_Main" => "Vikendi",
+                "Erangel_Main" => "Erangel",
+                "Heaven_Main" => "Haven",
+                "Kiki_Main" => "Deston",
+                "Range_Main" => "Camp Jackal",
+                "Savage_Main" => "Sanhok",
+                "Summerland_Main" => "Karakin",
+                "Tiger_Main" => "Taego"
+            );
             // Check if a match ID is provided in the GET request
             if (isset($_GET['matchid'])) {
                 $matchId = $_GET['matchid'];
@@ -52,9 +66,10 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     $jsonData = json_decode(file_get_contents($filename), true);
                     $matchinfo = $jsonData['data']['attributes'];
                     $matchdata = $jsonData['data'];
-                    echo "<table class='sortable'><tr><th>matchType</th><th>duration</th><th>gameMode</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
+                    echo "<table class='sortable'><tr><th>matchType</th><th>gameMode</th><th>duration</th><th>gameMode</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($matchinfo['matchType']) . "</td>";
+                    echo "<td>" . htmlspecialchars($matchinfo['gameMode']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchinfo['duration']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchinfo['gameMode']) . "</td>";
                     echo "<td>" . htmlspecialchars($matchinfo['mapName']) . "</td>";
