@@ -60,21 +60,21 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 $matchId = $_GET['matchid'];
                 $filename = "data/matches/" . $matchId . ".json";
                 
-                $directory = 'data/killstats/';
-                $prefix = $matchdata['id'];
-                $files = glob($directory . $prefix . '*');
-                echo $prefix;
-                echo $directory;
-                echo $files;
-                foreach ($files as $file) {
-                    echo $file . "\n";
-                }
+
                 // Check if the JSON file for the given match ID exists
                 if (file_exists($filename)) {
                     // Read and decode the JSON file
                     $jsonData = json_decode(file_get_contents($filename), true);
                     $matchinfo = $jsonData['data']['attributes'];
                     $matchdata = $jsonData['data'];
+                    
+                    $directory = 'data/killstats/';
+                    $prefix = $matchdata['id'];
+                    $files = glob($directory . $prefix . '*');
+                    foreach ($files as $file) {
+                        echo $file . "\n";
+                    }
+
                     echo "<table class='sortable'><tr><th>matchType</th><th>gameMode</th><th>duration</th><th>mapName</th><th>createdAt</th><th>id</th></tr>";
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($matchinfo['matchType']) . "</td>";
