@@ -62,6 +62,7 @@ header .banner {
     display: block; /* Prevents inline default spacing */
     margin: 0 auto; /* Centers the image within the header */
     width: auto; /* Adjusts the width to maintain the aspect ratio */
+    border-radius: 10px;
 }
 
   
