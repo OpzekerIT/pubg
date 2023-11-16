@@ -67,7 +67,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 foreach ($lastMatches as $match) {
                     $matchid = $match['id'];
                     $date = new DateTime($match['createdAt']);
-                    $date->modify('+2 hours');
+                    $date->modify('+1 hours');
                     $formattedDate = $date->format('m-d H:i:s');
                     echo "<tr>
             
