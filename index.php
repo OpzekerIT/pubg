@@ -38,8 +38,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
             <table>
 
                 <tr>
-                    <th>Match Date</th>
                     <th>Player Name</th>
+                    <th>Match Date</th>
                     <th>Mode</th>
                     <th>Type</th>
                     <th>Map</th>
@@ -68,8 +68,9 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     $matchid = $match['id'];
 
                     echo "<tr>
-            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['createdAt'] . "</a></td>
+            
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['playername'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $match['createdAt'] . "</a></td>
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['gameMode'] . "</a></td>
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['matchType'] . "</a></td>
             <td><a href='matchinfo.php?matchid=$matchid'>" . (isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']) . "</a></td>
