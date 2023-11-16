@@ -1,9 +1,3 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <?php include './includes/head.php'; ?>
@@ -50,10 +44,17 @@ error_reporting(E_ALL);
             // Display the player's match stats
             foreach ($players_matches as $player_data) {
                 if (isset($player_data['playername']) && $player_data['playername'] === $selected_player) {
+
                     echo "<h2>Recent Matches for $selected_player</h2>";
                     echo "<table border='1' class='sortable'>";
                     echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
                     foreach ($player_data['player_matches'] as $match) {
+                        if (isset($_GET['filter_by_match_type'])) {
+                            if ($match['matchType'] !== $_GET['filter_by_match_type']) {
+                                continue;
+                            }
+
+                        }
                         $date = new DateTime($match['createdAt']);
                         $date->modify('+2 hours');
                         $formattedDate = $date->format('m-d H:i:s');
