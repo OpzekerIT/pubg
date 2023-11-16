@@ -27,11 +27,11 @@
             echo "</form><br>";
 
             echo "<form method='get' action=''>
-            <input type='submit' name='MatchType' value='all' class='btn'>
-            <input type='submit' name='MatchType' value='airoyale' class='btn'>
-            <input type='submit' name='MatchType' value='official' class='btn'>
-            <input type='submit' name='MatchType' value='custom' class='btn'>
-            <input type='submit' name='MatchType' value='event' class='btn'>
+            <input type='submit' name='filter_by_match_type' value='all' class='btn'>
+            <input type='submit' name='filter_by_match_type' value='airoyale' class='btn'>
+            <input type='submit' name='filter_by_match_type' value='official' class='btn'>
+            <input type='submit' name='filter_by_match_type' value='custom' class='btn'>
+            <input type='submit' name='filter_by_match_type' value='event' class='btn'>
             <input type='hidden' name='selected_player' value='$player_name'>
           </form><br>";
             
