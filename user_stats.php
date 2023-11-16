@@ -21,10 +21,10 @@ error_reporting(E_ALL);
 
             $players_data = json_decode(file_get_contents('./data/player_lifetime_data.json'), true);
 
-            $selected_mode = isset($_POST['game_mode']) ? $_POST['game_mode'] : 'squad';
+            $selected_mode = isset($_GET['game_mode']) ? $_GET['game_mode'] : 'squad';
 
             // Form to select game mode
-            echo "<form method='post' action=''>
+            echo "<form method='get' action=''>
                     <input type='submit' name='game_mode' value='solo' class='btn'>
                     <input type='submit' name='game_mode' value='duo' class='btn'>
                     <input type='submit' name='game_mode' value='squad' class='btn'>
@@ -35,7 +35,7 @@ error_reporting(E_ALL);
                   </form><br>";
 
             // Buttons for each player
-            echo "<form method='post' action=''>";
+            echo "<form method='get' action=''>";
             foreach ($players_data[$selected_mode] as $player_name => $player_details) {
                 echo "<button type='submit' name='selected_player' value='$player_name' class='btn' >$player_name</button>";
                 
@@ -43,7 +43,7 @@ error_reporting(E_ALL);
             echo "<input type='hidden' name='game_mode' value='$selected_mode'>";
             echo "</form><br>";
 
-            $selected_player = $_POST['selected_player'] ?? array_key_first($players_data[$selected_mode]);
+            $selected_player = $_GET['selected_player'] ?? array_key_first($players_data[$selected_mode]);
 
             // Fetch the player stats based on game mode and selected player
             if (isset($players_data[$selected_mode][$selected_player])) {
