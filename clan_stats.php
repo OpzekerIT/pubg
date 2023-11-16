@@ -17,6 +17,7 @@
             $clanInfoPath = './data/claninfo.json';
             $clanmembersfile = './config/clanmembers.json';
             $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
+            print_r($clanmembers);
             if (file_exists($clanInfoPath)) {
                 $clan = json_decode(file_get_contents($clanInfoPath), true);
                 if (isset($clan) && !empty($clan)) {
