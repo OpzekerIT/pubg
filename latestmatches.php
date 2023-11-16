@@ -34,7 +34,7 @@
             <input type='submit' name='filter_by_match_type' value='event' class='btn'>
             <input type='hidden' name='selected_player' value='$player_name'>
           </form><br>";
-            
+
 
             $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
             $mapNames = array(
@@ -59,9 +59,10 @@
                     echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
                     foreach ($player_data['player_matches'] as $match) {
                         if (isset($_GET['filter_by_match_type'])) {
-                            if ($match['matchType'] !== $_GET['filter_by_match_type']) {
+                            if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
                                 continue;
                             }
+
 
                         }
                         $date = new DateTime($match['createdAt']);
