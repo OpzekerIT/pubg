@@ -12,7 +12,5 @@
     <meta property="og:title" content="DTCH CLAN">
     <meta property="og:description" content="DTCH CLAN STATS">
     <meta property="og:image" content="https://dtch.online/images/logo.png">
-
-
     <script src="./lib/sorttable.js"></script>
 </head>
