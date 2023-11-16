@@ -86,7 +86,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
             <?php
 
 
-            // Load clan data from claninfo.json
+           //CLANINFO
             $clanInfoPath = './data/claninfo.json';
             $clanmembersfile = './config/clanmembers.json';
             $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
@@ -99,6 +99,9 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td></tr>";
                     }
                     foreach ($clan as $key => $value) {
+                        if($key == 'updated'){
+                            continue;
+                        }
                         echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
                     }
 
