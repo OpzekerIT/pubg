@@ -67,7 +67,7 @@
 
                         }
                         $date = new DateTime($match['createdAt']);
-                        $date->modify('+2 hours');
+                        $date->modify('+1 hours');
                         $formattedDate = $date->format('m-d H:i:s');
 
                         $matchType = $match['matchType'];

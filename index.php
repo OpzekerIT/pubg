@@ -27,48 +27,52 @@ $lastMatches = array_slice($allMatches, 0, 8);
 <?php include './includes/head.php'; ?>
 
 <body>
-    <?php 
+    <?php
     include './includes/navigation.php';
     include './includes/header.php';
-     ?>
+    ?>
     <main>
         <section>
             <h2>Latest Matches</h2>
 
             <table>
-                
-                    <tr>
-                        <!-- <th>Match Date</th> -->
-                        <th>Player Name</th>
-                        <th>Mode</th>
-                        <th>Type</th>
-                        <th>Map</th>
-                        <th>Kills</th>
-                        <th>Damage</th>
-                        <th>Place</th>
-                    </tr>
-                
-                
-                    <?php
-                    $mapNames = array(
-                        "Baltic_Main" => "Erangel",
-                        "Chimera_Main" => "Paramo",
-                        "Desert_Main" => "Miramar",
-                        "DihorOtok_Main" => "Vikendi",
-                        "Erangel_Main" => "Erangel",
-                        "Heaven_Main" => "Haven",
-                        "Kiki_Main" => "Deston",
-                        "Range_Main" => "Camp Jackal",
-                        "Savage_Main" => "Sanhok",
-                        "Summerland_Main" => "Karakin",
-                        "Tiger_Main" => "Taego"
-                    );
 
-                    foreach ($lastMatches as $match) {
-                        $matchid = $match['id'];
+                <tr>
+                    <th>Player Name</th>
+                    <th>Match Date</th>
+                    <th>Mode</th>
+                    <th>Type</th>
+                    <th>Map</th>
+                    <th>Kills</th>
+                    <th>Damage</th>
+                    <th>Place</th>
+                </tr>
 
-                        echo "<tr>
+
+                <?php
+                $mapNames = array(
+                    "Baltic_Main" => "Erangel",
+                    "Chimera_Main" => "Paramo",
+                    "Desert_Main" => "Miramar",
+                    "DihorOtok_Main" => "Vikendi",
+                    "Erangel_Main" => "Erangel",
+                    "Heaven_Main" => "Haven",
+                    "Kiki_Main" => "Deston",
+                    "Range_Main" => "Camp Jackal",
+                    "Savage_Main" => "Sanhok",
+                    "Summerland_Main" => "Karakin",
+                    "Tiger_Main" => "Taego"
+                );
+
+                foreach ($lastMatches as $match) {
+                    $matchid = $match['id'];
+                    $date = new DateTime($match['createdAt']);
+                    $date->modify('+1 hours');
+                    $formattedDate = $date->format('m-d H:i:s');
+                    echo "<tr>
+            
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['playername'] . "</a></td>
+            <td><a href='matchinfo.php?matchid=$matchid'>" . $formattedDate . "</a></td>
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['gameMode'] . "</a></td>
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['matchType'] . "</a></td>
             <td><a href='matchinfo.php?matchid=$matchid'>" . (isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName']) . "</a></td>
@@ -77,14 +81,14 @@ $lastMatches = array_slice($allMatches, 0, 8);
             <td><a href='matchinfo.php?matchid=$matchid'>" . $match['stats']['winPlace'] . "</a></td>
 
         </tr>";
-                    } ?>
-               
+                } ?>
+
             </table>
             <h2>Clan Info</h2>
             <?php
 
 
-           //CLANINFO
+            //CLANINFO
             $clanInfoPath = './data/claninfo.json';
             $clanmembersfile = './config/clanmembers.json';
             $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
@@ -97,7 +101,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td></tr>";
                     }
                     foreach ($clan as $key => $value) {
-                        if($key == 'updated'){
+                        if ($key == 'updated') {
                             continue;
                         }
                         echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
