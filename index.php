@@ -27,12 +27,10 @@ $lastMatches = array_slice($allMatches, 0, 8);
 <?php include './includes/head.php'; ?>
 
 <body>
-    <?php include './includes/navigation.php'; ?>
-
-    <header>
-        <img src="./images/banner2.png" alt="banner" class="banner">
-    </header>
-
+    <?php 
+    include './includes/navigation.php';
+    include './includes/header.php';
+     ?>
     <main>
         <section>
             <h2>Latest Matches</h2>
