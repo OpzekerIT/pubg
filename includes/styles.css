@@ -10,110 +10,264 @@ body, h1, h2, p, ul, li, a {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: url(../images/bck.jpg) no-repeat center center fixed;
-    background-size: cover;
+    /*background: linear-gradient(to right, #0f2027, #203a43, #2c5364);*/
     color: white;
+    background: url(../images/bck.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
+
 nav {
-    background: linear-gradient(to right, #FF416C, #FF4B2B);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-    padding: 10px 0;
+    background: linear-gradient(to right, #FF416C, #FF4B2B);  /* Gradient Background */
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1); /* Slight Shadow for Depth */
+    padding: 10px 0; /* Vertical Padding */
     min-width: 800px;
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
-    text-align: center;
+    text-align: center; /* Center the navigation items */
 }
 
 nav li {
     display: inline-block;
-    margin: 0 15px;
+    margin: 0 15px; /* Spacing between items */
 }
 
 nav a {
     color: white;
     padding: 10px 20px;
-    border-radius: 25px;
-    transition: background-color 0.3s, transform 0.3s;
-    font-weight: 600;
-    font-size: 16px;
+    border-radius: 25px; /* Rounded Edges */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth Transition for Hover Effect */
+    font-weight: 600; /* Slightly Bold */
+    font-size: 16px; /* Adjust as needed */
 }
 
 nav a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1); /* Slight White Background on Hover */
+    transform: translateY(-2px); /* Slight Lift on Hover */
 }
 
 nav a:active {
-    transform: translateY(1px);
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
 }
 
 header .banner {
-    max-width: 100%;
-    max-height: 200px;
-    display: block;
-    margin: 40px auto 0px auto;
-    width: auto;
+    max-width: 100%; /* Ensures the image is never larger than its container */
+    max-height: 200px; /* Maximum height for the image */
+    display: block; /* Prevents inline default spacing */
+    margin: 40px auto 0px auto; /* Centers the image within the header */
+    width: auto; /* Adjusts the width to maintain the aspect ratio */
     border-radius: 10px;
 }
 
-header h1, section h2 {
+  
+header, main, footer {
+    max-width: 1200px;
+    min-width: 800px;
+    margin: 5px auto;
+    padding: 10px;
+    /*border: 1px solid rgb(255, 255, 255);*/
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
     border-bottom: 1px solid white;
     margin-bottom: 10px;
     padding-bottom: 5px;
     font-family: 'Bungee Spice';
-    text-align: center;
+    text-align: center; /* Centers the text horizontally */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section h2 {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-family: 'Bungee Spice';
+    text-align: center; /* Centers the text horizontally */
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 30px;    
 }
+
+
 
 footer {
     text-align: center;
 }
 
 @media (max-width: 600px) {
+
     th:nth-child(4), td:nth-child(4),
     th:nth-child(9), td:nth-child(9) {
         display: none;
     }
 
     header .banner {
-        max-height: 100px;
-        width: 100%;
+        max-height: 100px; /* Resize the maximum height for mobile */
+        width: 100%; /* Take full width of the container */
     }
 
+    /* You may also want to adjust other elements to fit mobile layout better */
     header, main, footer {
-        min-width: 0;
-        padding: 5px;
-        margin: 5px 5px;
+        min-width: 0; /* Allow the width to shrink below 800px */
+        padding: 5px; /* Reduce padding for mobile devices */
+        margin: 5px 5px; /* Less margin for tighter mobile layout */
         max-width: 800px;
         min-width: 200px;
     }
-
+    
     nav {
-        min-width: 0;
+        min-width: 0; /* Allow the nav to be responsive below 800px */
     }
-
+    
     nav ul {
-        text-align: left;
+        text-align: left; /* Align nav items to the left on mobile for better spacing */
     }
-
     th, td {
-        padding: 0px;
+        padding: 0px; /* Reduce padding */
         margin: 0px;
-        font-size: 10px;
-        letter-spacing: -0.5px;
+        font-size: 10px; /* Reduce font size */
+        letter-spacing: -0.5px; /* Reduce space between letters */
     }
-
+    /* Other styles can be added here as needed for mobile optimization */
     table {
-        font-size: 12px;
+        font-size: 12px; /* Decrease font size for the whole table */
         margin-top: 5px;
         border-spacing: 0;
         border-collapse: collapse;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    position: sticky;
+    top: 22px;
+    background: black;
+    box-shadow: 0 0 50px 5px #ff6f114d;
+}
+
+table, th, td {
+    border: 1px solid #e6910924;
+    border-radius: 1px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #1e0c0094;
+    color: #ff6000;
+}
+
+tr:hover {
+    background-color: #444;
+}
+
+.discord-logo {
+    width: 150px;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.discord-logo:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+
+/* Ensure elements scale well on mobile */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Adjust font size for mobile readability */
+    }
+    /* Add additional mobile scaling styles as needed */
+}
+
+/* Override other elements as needed for the hacker theme */
+nav {
+    background: #121212; /* Dark background for navigation */
+   /*  border-bottom: 1px solid #e69109;  Bright green border for accent */
+}
+
+/* Ensure links stand out */
+a {
+    color: #e69109; /* Blue color for links */
+    text-decoration: none; /* Underline links for better visibility */
+}
+
+/* Specific button styles for .btn class to match the hacker theme */
+.btn {
+    font-family: 'Roboto', monospace;
+    background: #222; /* Dark background for buttons */
+    color: #e69109; /* Bright green text */
+    border: 1px solid #e69109; /* Border to match text color */
+    padding: 10px 20px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background: #e69109; /* Bright green background on hover */
+    color: #000; /* Dark text on hover */
+    cursor: pointer;
+}
+
+/* Responsive button sizing for mobile for .btn class*/
+@media (max-width: 768px) {
+    .btn {
+        padding: 8px 16px;
+        font-size: 14px; /* Adjust font size for mobile readability */
+    }
+}
+.btn:active {
+    transform: translateY(1px); /* Slight Pressed-In effect on Click */
+}
+/* Container for tables to manage overflow */
+.table-container {
+    overflow-x: auto;
+    margin: 0 auto; /* Center the table container if necessary */
+}
+
+/* Styles for the table */
+table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: auto; /* Let the table layout be automatic */
+}
+
+/* Ensure table cells do not cause overflow */
+td, th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+    td, th {
+        padding: 8px; /* Adjust cell padding for smaller screens */
     }
 }
