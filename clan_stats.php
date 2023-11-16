@@ -21,6 +21,8 @@ error_reporting(E_ALL);
 
             // Load clan data from claninfo.json
             $clanInfoPath = './data/claninfo.json';
+            $clanmembersfile = './config/clanmembers.json';
+            $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
             if (file_exists($clanInfoPath)) {
                 $clan = json_decode(file_get_contents($clanInfoPath), true);
                 if (isset($clan) && !empty($clan)) {
@@ -29,6 +31,10 @@ error_reporting(E_ALL);
                     foreach ($clan as $key => $value) {
                         echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
                     }
+                    foreach ($clanmembers as $value) {
+                        echo "<tr><td>name</td><td>" . htmlspecialchars($value) . "</td></tr>";
+                    }
+
                     echo "</table>";
                 } else {
                     echo "<p>No clan attributes available</p>";
