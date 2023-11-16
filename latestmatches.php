@@ -4,10 +4,11 @@
 
 <body>
 
-    <?php include './includes/navigation.php'; ?>
-    <header>
-        <img src="./images/banner2.png" alt="banner" class="banner">
-    </header>
+    <?php 
+    include './includes/navigation.php';
+    include './includes/header.php';
+     ?>
+
     <main>
         <section>
             <h2>Match Stats</h2>
