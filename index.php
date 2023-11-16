@@ -95,12 +95,13 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 if (isset($clan) && !empty($clan)) {
                     echo "<table>";
                     echo "<tr><th>Attribute</th><th>Value</th></tr>";
-                    foreach ($clan as $key => $value) {
-                        echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
-                    }
                     foreach ($clanmembers['clanMembers'] as $value) {
                         echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td></tr>";
                     }
+                    foreach ($clan as $key => $value) {
+                        echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
+                    }
+
 
                     echo "</table>";
                 } else {
