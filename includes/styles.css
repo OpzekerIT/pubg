@@ -152,6 +152,11 @@ table {
     margin-top: 20px;
 }
 
+thead {
+    position: sticky;
+    top: 50px;
+}
+
 table, th, td {
     border: 1px solid #e6910924;
     border-radius: 1px;
@@ -210,7 +215,7 @@ a {
 
 /* Specific button styles for .btn class to match the hacker theme */
 .btn {
-    font-family: 'Courier New', monospace;
+    font-family: 'Roboto', monospace;
     background: #222; /* Dark background for buttons */
     color: #e69109; /* Bright green text */
     border: 1px solid #e69109; /* Border to match text color */
