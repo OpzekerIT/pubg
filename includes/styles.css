@@ -154,7 +154,9 @@ table {
 
 thead {
     position: sticky;
-    top: 50px;
+    top: 22px;
+    background: black;
+    box-shadow: 0 0 50px 5px #ff6f114d;
 }
 
 table, th, td {
