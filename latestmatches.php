@@ -23,9 +23,21 @@
                     $player_name = $player_data['playername'];
                     echo "<button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button>";
                 }
+
+                echo "</form><br>";
+
+                echo "<form method='get' action=''>
+                <input type='submit' name='MatchType' value='all' class='btn'>
+                <input type='submit' name='MatchType' value='airoyale' class='btn'>
+                <input type='submit' name='MatchType' value='official' class='btn'>
+                <input type='submit' name='MatchType' value='custom' class='btn'>
+                <input type='submit' name='MatchType' value='event' class='btn'>
+                <input type='hidden' name='selected_player' value='$player_name'>
+              </form><br>";
+
             }
 
-            echo "</form><br>";
+            
 
             $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
             $mapNames = array(
