@@ -26,7 +26,7 @@
                     foreach ($clan as $key => $value) {
                         echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
                     }
-                    foreach ($clanmembers as $value) {
+                    foreach ($clanmembers['clanMembers'] as $value) {
                         echo "<tr><td>name</td><td>" . htmlspecialchars($value) . "</td></tr>";
                     }
 
