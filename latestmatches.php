@@ -25,18 +25,18 @@
                 }
             }
             echo "</form><br>";
-
+            $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
             echo "<form method='get' action=''>
             <input type='submit' name='filter_by_match_type' value='all' class='btn'>
             <input type='submit' name='filter_by_match_type' value='airoyale' class='btn'>
             <input type='submit' name='filter_by_match_type' value='official' class='btn'>
             <input type='submit' name='filter_by_match_type' value='custom' class='btn'>
             <input type='submit' name='filter_by_match_type' value='event' class='btn'>
-            <input type='hidden' name='selected_player' value='$player_name'>
+            <input type='hidden' name='selected_player' value='$selected_player'>
           </form><br>";
 
 
-            $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
+
             $mapNames = array(
                 "Baltic_Main" => "Erangel",
                 "Chimera_Main" => "Paramo",
