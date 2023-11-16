@@ -9,7 +9,6 @@ if ($host == 'dev.dtch.online') {
     <a href="index.php" class="active">Home</a>
 
     <div id="myLinks">
-        <a href="clan_stats.php">Clan Stats</a>
         <a href="user_stats.php">User Stats</a>
         <a href="topstats.php">Top10</a>
         <a href="topstatsavg.php">Match % T10</a>
