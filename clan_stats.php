@@ -4,7 +4,10 @@
 
 <body>
 
-    <?php include './includes/navigation.php'; ?>
+    <?php 
+    include './includes/navigation.php';
+    include './config/config.php';
+    ?>
     <header>
         <img src="./images/banner2.png" alt="banner" class="banner">
     </header>
@@ -12,7 +15,7 @@
         <section>
             <h2>Clan Stats</h2>
             <?php
-            include './config/config.php';
+            
 
             // Load clan data from claninfo.json
             $clanInfoPath = './data/claninfo.json';
