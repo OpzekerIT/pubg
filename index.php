@@ -82,7 +82,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     } ?>
                
             </table>
-            <h2>Clan Stats</h2>
+            <h2>Clan Info</h2>
             <?php
 
 
