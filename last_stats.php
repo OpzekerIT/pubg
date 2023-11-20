@@ -1,5 +1,5 @@
 <?php
-$ogDescription = "Player Stats past month";
+$ogDescription = "Explore detailed player statistics over the past month including win percentages, K/D ratios in human and all-player categories, total kills, and more. Delve into stats for various match types like Intense, Casual, Official, Custom, and Ranked, and see how players have fared in a minimum number of matches. Stay informed with the latest updates on player performance.";
 ?>
 
 <!DOCTYPE html>

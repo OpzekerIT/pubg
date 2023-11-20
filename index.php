@@ -1,4 +1,6 @@
 <?php
+$ogDescription = "Welcome to the epicenter of PUBG action! Catch up on the latest matches with detailed stats including player names, match dates, modes, types, maps, kills, and more. Plus, get an inside look at our clan's profile, including member details and key attributes. Stay connected with the pulse of our PUBG community!";
+
 // Read the JSON file
 $jsonData = file_get_contents('data/player_matches.json');
 $playersData = json_decode($jsonData, true);
