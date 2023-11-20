@@ -160,7 +160,8 @@ function Get-MatchStatsPlayer {
         [switch] $GameMode,
         [switch] $MatchType,
         [string] $typemodevalue,
-        [array] $playernames
+        [array] $playernames,
+        [string] $friendlyname
     )
     $MatchStatsPlayer = @()
     foreach ($player in $playernames) {
@@ -179,11 +180,11 @@ function Get-MatchStatsPlayer {
         $humankills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).humankills | Measure-Object -sum).sum
         $player_matches = ($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).count
         $player_wins = ($killstats | where-object { $_.stats.playername -eq $player -and $_.winplace -eq 1 -and $_.stats.$filterProperty -like $typemodevalue }).count
-        $winratio_old = (($oldstats.Intense | Where-Object { $_.playername -eq $player }).winratio)
+        $winratio_old = (($oldstats.$friendlyname | Where-Object { $_.playername -eq $player }).winratio)
         $winratio = Get-winratio -player_wins $player_wins -player_matches $player_matches
         $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
         
-        write-host $filterProperty$
+        write-host $filterProperty
         write-host $typemodevalue
         write-host "Calculating for player $player"
         write-host "new winratio $winratio"
@@ -208,12 +209,12 @@ function Get-MatchStatsPlayer {
 }
 
 
-$playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername
-$playerstats_airoyale = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername
-$playerstats_official = Get-MatchStatsPlayer -MatchType -typemodevalue 'official' -playernames $all_player_matches.playername
-$playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -playernames $all_player_matches.playername
-$playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername
-$playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername
+$playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername -friendlyname 'Intense'
+$playerstats_airoyale = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual'
+$playerstats_official = Get-MatchStatsPlayer -MatchType -typemodevalue 'official' -playernames $all_player_matches.playername -friendlyname 'official'
+$playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -playernames $all_player_matches.playername -friendlyname 'custom'
+$playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername -friendlyname 'all'
+$playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername -friendlyname 'Ranked'
 
 
 $playerstats_custom = $playerstats_custom | Sort-Object winratio -Descending
