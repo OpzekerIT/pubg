@@ -1,7 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$ogDescription = "Explore detailed lifetime statistics of PUBG players in various game modes including solo, duo, and squad. Choose your favorite mode and player to view their performance stats, victories, and more, updated regularly.";
 ?>
 
 <!DOCTYPE html>

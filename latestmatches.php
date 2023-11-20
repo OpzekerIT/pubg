@@ -1,3 +1,8 @@
+<?php
+$ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explore recent matches, various game modes, and match types. View individual performance metrics like kills, damage dealt, and survival time for each clan member. Stay updated with the latest match stats and follow the clan's journey in PUBG.";
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include './includes/head.php'; ?>
