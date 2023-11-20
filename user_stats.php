@@ -1,5 +1,5 @@
 <?php
-$ogDescription = "User stats";
+$ogDescription = "Explore detailed lifetime statistics of PUBG players in various game modes including solo, duo, and squad. Choose your favorite mode and player to view their performance stats, victories, and more, updated regularly.";
 ?>
 
 <!DOCTYPE html>
