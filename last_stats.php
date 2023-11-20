@@ -42,7 +42,10 @@ error_reporting(E_ALL);
                 if ($key == 'official') {
                     echo "Stats for $key (minimal 8 matches)";
                 }
-                if ($key == 'ranked') {
+                if ($key == 'custom') {
+                    echo "Stats for $key (minimal 5 matches)";
+                }
+                if ($key == 'Ranked') {
                     echo "Stats for $key (minimal 5 matches)";
                 }
                 echo $key;
@@ -79,7 +82,10 @@ error_reporting(E_ALL);
                     if ($key == 'official' && $player_data['matches'] < 8) {
                         continue;
                     }
-                    if ($key == 'ranked' && $player_data['matches'] < 5) {
+                    if ($key == 'custom' && $player_data['matches'] < 8) {
+                        continue;
+                    }
+                    if ($key == 'Ranked' && $player_data['matches'] < 5) {
                         continue;
                     }
 
