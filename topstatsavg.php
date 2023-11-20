@@ -1,8 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$ogDescription = "Discover comprehensive average statistics for PUBG players. Dive into player performance across various game modes including solo, duo, and squad, and explore key metrics like Kills, Damage, Headshots, Wins, and Top10s. Stay updated with the latest statistical trends in PUBG gaming.";
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -1,8 +1,9 @@
+
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$ogDescription = "Check out the top 10 PUBG player rankings in key performance categories! Explore leaderboards for metrics like damage dealt, headshot kills, and more across different game modes. Stay on top of the competitive scene and see where you or your favorite players stand in our regularly updated stats.";
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
