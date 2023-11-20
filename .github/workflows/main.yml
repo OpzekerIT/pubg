@@ -25,7 +25,7 @@ jobs:
     - name: Sync Files from ${{ github.ref }}
       uses: SamKirkland/web-deploy@v1
       with:
-        target-server: lanta.eu
+        target-server: 86.93.122.67
         remote-user: stats
         private-ssh-key: ${{ secrets.SSH_KEY }}
         destination-path: ${{ env.DESTINATION }}

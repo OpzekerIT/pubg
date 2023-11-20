@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <meta property="og:title" content="DTCH CLAN">
     <meta property="og:description" content="DTCH CLAN STATS">
-    <meta property="og:image" content="https://dtch.online/images/logo.png">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image" content="https://dtch.online/images/logo800x800.png" >
     <script defer src="./lib/sorttable.js"></script>
 </head>

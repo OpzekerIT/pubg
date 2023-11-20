@@ -11,10 +11,10 @@ error_reporting(E_ALL);
 
 <body>
 
-    <?php 
+    <?php
     include './includes/navigation.php';
     include './includes/header.php';
-     ?>
+    ?>
 
     <main>
         <section>
@@ -30,10 +30,23 @@ error_reporting(E_ALL);
                 }
 
                 echo "<br>";
-                if($key == 'all'){
-                echo "Stats for $key (minimal 20 matches)";
-                }else{
+                if ($key == 'all') {
+                    echo "Stats for $key (minimal 20 matches)";
+                }
+                if ($key == 'Intense') {
                     echo "Stats for $key (minimal 8 matches)";
+                }
+                if ($key == 'Casual') {
+                    echo "Stats for $key (minimal 8 matches)";
+                }
+                if ($key == 'official') {
+                    echo "Stats for $key (minimal 8 matches)";
+                }
+                if ($key == 'custom') {
+                    echo "Stats for $key (minimal 8 matches)";
+                }
+                if ($key == 'Ranked') {
+                    echo "Stats for $key (minimal 5 matches)";
                 }
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
@@ -54,13 +67,26 @@ error_reporting(E_ALL);
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-                    if ($player_data['matches'] < 8){
-                        continue;
-                    }
+
                     if ($key == 'all' && $player_data['matches'] < 20) {
                         continue;
                     }
-                    
+                    if ($key == 'Intense' && $player_data['matches'] < 8) {
+                        continue;
+                    }
+                    if ($key == 'Casual' && $player_data['matches'] < 8) {
+                        continue;
+                    }
+                    if ($key == 'official' && $player_data['matches'] < 8) {
+                        continue;
+                    }
+                    if ($key == 'custom' && $player_data['matches'] < 8) {
+                        continue;
+                    }
+                    if ($key == 'Ranked' && $player_data['matches'] < 5) {
+                        continue;
+                    }
+
                     $player_name = $player_data['playername'];
                     $deaths = number_format($player_data['deaths'], 0, ',', '');
                     $kills = number_format($player_data['kills'], 0, ',', '');
