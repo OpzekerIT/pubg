@@ -1,4 +1,9 @@
 <?php
+$ogDescription = "Match information";
+?>
+
+
+<?php
 // Read the JSON file
 $jsonData = file_get_contents('data/player_matches.json');
 $playersData = json_decode($jsonData, true);

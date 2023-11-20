@@ -1,3 +1,8 @@
+<?php
+$ogDescription = "DTCH Clan Match Stats";
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include './includes/head.php'; ?>
