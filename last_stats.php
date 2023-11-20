@@ -43,13 +43,11 @@ error_reporting(E_ALL);
                     echo "Stats for $key (minimal 8 matches)";
                 }
                 if ($key == 'custom') {
-                    echo "Stats for $key (minimal 5 matches)";
+                    echo "Stats for $key (minimal 8 matches)";
                 }
                 if ($key == 'Ranked') {
                     echo "Stats for $key (minimal 5 matches)";
                 }
-                echo $key;
-
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Player</th>
