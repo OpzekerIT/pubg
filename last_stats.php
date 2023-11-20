@@ -45,6 +45,7 @@ error_reporting(E_ALL);
                 if ($key == 'ranked') {
                     echo "Stats for $key (minimal 5 matches)";
                 }
+                echo $key;
 
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
