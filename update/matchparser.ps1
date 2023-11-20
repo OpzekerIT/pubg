@@ -183,7 +183,8 @@ function Get-MatchStatsPlayer {
         $winratio = Get-winratio -player_wins $player_wins -player_matches $player_matches
         $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
         
-        write-host 'event'
+        write-host $filterProperty$
+        write-host $typemodevalue
         write-host "Calculating for player $player"
         write-host "new winratio $winratio"
         write-host "Old winratio $winratio_old"
