@@ -1,5 +1,6 @@
 <?php
-$ogDescription = "Average User Stats";
+$ogDescription = "Discover comprehensive average statistics for PUBG players. Dive into player performance across various game modes including solo, duo, and squad, and explore key metrics like Kills, Damage, Headshots, Wins, and Top10s. Stay updated with the latest statistical trends in PUBG gaming.";
+
 ?>
 
 

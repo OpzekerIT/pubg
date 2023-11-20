@@ -1,6 +1,7 @@
 
 <?php
-$ogDescription = "User Stats top 10";
+$ogDescription = "Check out the top 10 PUBG player rankings in key performance categories! Explore leaderboards for metrics like damage dealt, headshot kills, and more across different game modes. Stay on top of the competitive scene and see where you or your favorite players stand in our regularly updated stats.";
+
 ?>
 
 

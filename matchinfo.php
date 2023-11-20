@@ -1,5 +1,5 @@
 <?php
-$ogDescription = "Match information";
+$ogDescription = "Get in-depth insights into recent PUBG matches. Discover detailed match information including player stats, game modes, match types, and map names. Updated regularly to provide the latest and most comprehensive match data for PUBG enthusiasts.";
 ?>
 
 
