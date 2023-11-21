@@ -19,16 +19,23 @@ function new-lock {
         if (Test-Path -Path $lockFile) {
             Write-Host "Job is already running. Sleeping 10 seconds"
             Start-Sleep -Seconds 10
-        }else{
-            $lock = $false
         }
-        if($i -ge $timeout){
+        else {
+            try {
+                New-Item -ItemType File -Path $lockFile | Out-Null
+                $lock = $false
+            }
+            catch {
+                Write-Output "Unable to create lockfile , resuming lock loop"
+                $lock = $true
+            }
+        }
+        if ($i -ge $timeout) {
             Write-Output "Timed out"
             exit
         }
         $i++
     }
-    New-Item -ItemType File -Path $lockFile | Out-Null
     if ($by) {
         $by | Out-File -FilePath $lockFile -Append
     }
