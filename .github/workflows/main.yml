@@ -25,11 +25,11 @@ jobs:
     - name: Sync Files from ${{ github.ref }}
       uses: SamKirkland/web-deploy@v1
       with:
-        target-server: 86.93.122.67
+        target-server: ${{ secrets.DEST_SERVER }}
         remote-user: stats
         private-ssh-key: ${{ secrets.SSH_KEY }}
         destination-path: ${{ env.DESTINATION }}
-        rsync-options: --no-times -r -v --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ --exclude=config.php
+        rsync-options: --no-times -r --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ --exclude=config.php
     - name: LINK TO WEBSITE
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
