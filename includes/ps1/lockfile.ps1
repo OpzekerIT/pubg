@@ -26,6 +26,7 @@ function new-lock {
                 $lock = $false
             }
             catch {
+                Write-Output "Unable to create lockfile , resuming lock loop"
                 $lock = $true
             }
         }
