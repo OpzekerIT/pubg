@@ -120,7 +120,7 @@ foreach ($file in $matchfiles) {
         write-output "NEW $matchfiledate"
     }
 }
-$player_matches_object | convertto-json -Depth 100 | out-file "$scriptroot/../data/cached_matches.json"
+$player_matches_object | Sort-Object createdAt| convertto-json -Depth 100 | out-file "$scriptroot/../data/cached_matches.json"
 
 remove-lock
 Stop-Transcript
