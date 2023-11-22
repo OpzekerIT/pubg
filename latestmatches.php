@@ -91,10 +91,12 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                             </tr>";
 
                     }
-                    echo "</table><br>";
+                    
 
                 }
+                
             }
+            echo "</table><br>";
             ?>
         </section>
     </main>
