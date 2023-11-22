@@ -22,7 +22,8 @@ function new-lock {
         }
         else {
             try {
-                New-Item -ItemType File -Path $lockFile | Out-Null
+                $content = if ($by) { $by } else { "" }
+                New-Item -ItemType File -Path $lockFile -Value $content
                 $lock = $false
             }
             catch {
@@ -36,10 +37,6 @@ function new-lock {
         }
         $i++
     }
-    if ($by) {
-        $by | Out-File -FilePath $lockFile -Append
-    }
-
 }
 function remove-lock {
     Write-Output 'Removing lock'
