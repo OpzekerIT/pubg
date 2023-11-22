@@ -20,15 +20,15 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             <?php
             include './config/config.php';
 
-            $players_matches = json_decode(file_get_contents('./data/player_matches.json'), true);
+            $players_matches = json_decode(file_get_contents('./data/cached_matches.json'), true);
+            $players = json_decode(file_get_contents('./config/clanmembers.json'), true);
 
             // Display buttons for each player
             echo "<form method='get' action=''>";
-            foreach ($players_matches as $player_data) {
-                if (isset($player_data['playername'])) {
-                    $player_name = $player_data['playername'];
-                    echo "<button type='submit' name='selected_player' value='$player_name' class='btn'>$player_name</button>";
-                }
+            foreach ($players['clanMembers'] as $player) {
+               
+                    echo "<button type='submit' name='selected_player' value='$player' class='btn'>$player</button>";
+               
             }
             echo "</form><br>";
             $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
