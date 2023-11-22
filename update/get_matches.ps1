@@ -114,7 +114,7 @@ foreach ($file in $matchfiles) {
                 createdAt =  $filecontent.data.attributes.createdAt
                 mapName = $filecontent.data.attributes.mapName
                 id    = $filecontent.data.id
-                stats = $player_matches_cached
+                stats = @($player_matches_cached)
             }
         }
         write-output "NEW $matchfiledate"
