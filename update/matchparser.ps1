@@ -45,13 +45,9 @@ function get-killstats {
         $matchType,
         $gameMode
     )
-    $attacks = @()
-    foreach ($action in $telemetry) {
 
-        $attacks += $action
-        
-    }
-    $kills = $attacks | where-object { $_.killer.name -eq $player_name }
+    $kills = $telemetry | where-object { $_.killer.name -eq $player_name -and $_._T -eq 'LOGPLAYERKILLV2'}
+    $HumanDmg = $([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player_name -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))
     return @{
         playername = $player_name
         humankills = ($kills | where-object { $_.victim.accountId -notlike 'ai.*' }).count
@@ -60,6 +56,8 @@ function get-killstats {
         gameMode   = $gameMode
         matchType  = $matchType
         dbno       = ($attacks | where-object { $_.dBNOMaker.name -eq $player_name }).count
+        HumanDmg   = $HumanDmg
+
 
     }
 }
@@ -119,7 +117,7 @@ foreach ($player in $all_player_matches) {
             }
        
             write-output "Analyzing for player $player_name telemetry: $($match.telemetry_url)"
-            $killstat = get-killstats -player_name $player_name -telemetry ($telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }) -gameMode $match.gameMode -matchType $match.matchType
+            $killstat = get-killstats -player_name $player_name -telemetry ($telemetry | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }) -gameMode $match.gameMode -matchType $match.matchType
         
         
             $savekillstats = @{

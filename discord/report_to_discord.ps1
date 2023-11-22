@@ -59,10 +59,10 @@ $content = "
 
 Hey toppers!
 
-Laten we eens duiken in de cijfers van onze supergamers van de afgelopen twee weken:
+Laten we eens duiken in de cijfers van onze supergamers van de afgelopen maand:
 
 :dart: Meeste Kills:
-Hats off voor **$($most_kills['name'])**! Met **$($most_kills['stat'])** kills is hij/zij onze scherpschutter van de week!
+Hats off voor **$($most_kills['name'])**! Met **$($most_kills['stat'])** kills is hij/zij onze scherpschutter van de maand!
 
 :skull_crossbones: Meeste Deaths:
 Oei, oei, oei... **$($most_deaths['name'])** is helaas het vaakst naar het hiernamaals gestuurd met **$($most_deaths['stat'])** deaths. Kop op, volgende keer beter!

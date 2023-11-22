@@ -1,7 +1,4 @@
-﻿
-
-
-if($PSScriptRoot.length -eq 0){
+﻿if($PSScriptRoot.length -eq 0){
     $scriptroot = Get-Location
 }else{
     $scriptroot = $PSScriptRoot
