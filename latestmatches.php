@@ -9,10 +9,10 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
 
 <body>
 
-    <?php 
+    <?php
     include './includes/navigation.php';
     include './includes/header.php';
-     ?>
+    ?>
 
     <main>
         <section>
@@ -26,9 +26,9 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             // Display buttons for each player
             echo "<form method='get' action=''>";
             foreach ($players['clanMembers'] as $player) {
-               
-                    echo "<button type='submit' name='selected_player' value='$player' class='btn'>$player</button>";
-               
+
+                echo "<button type='submit' name='selected_player' value='$player' class='btn'>$player</button>";
+
             }
             echo "</form><br>";
             $selected_player = $_GET['selected_player'] ?? $players[0];
@@ -63,12 +63,10 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             foreach ($players_matches as $match) {
                 if ($match['stats']['name'] === $selected_player) {
 
-                    
-                    foreach ($player_data['player_matches'] as $match) {
-                        if (isset($_GET['filter_by_match_type'])) {
-                            if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
-                                continue;
-                            }
+
+                    if (isset($_GET['filter_by_match_type'])) {
+                        if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
+                            continue;
                         }
                         $date = new DateTime($match['createdAt']);
                         $date->modify('+1 hours');
