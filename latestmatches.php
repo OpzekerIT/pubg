@@ -31,7 +31,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                
             }
             echo "</form><br>";
-            $selected_player = $_GET['selected_player'] ?? $players_matches[0]['playername'];
+            $selected_player = $_GET['selected_player'] ?? $players[0];
             echo "<form method='get' action=''>
             <input type='submit' name='filter_by_match_type' value='all' class='btn'>
             <input type='submit' name='filter_by_match_type' value='airoyale' class='btn'>
@@ -57,8 +57,8 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                 "Tiger_Main" => "Taego"
             );
             // Display the player's match stats
-            foreach ($players_matches as $player_data) {
-                if (isset($player_data['playername']) && $player_data['playername'] === $selected_player) {
+            foreach ($players_matches as $selected_match) {
+                if (isset($selected_match['stats']['name']) === $selected_player) {
 
                     echo "<h2>Recent Matches for $selected_player</h2>";
                     echo "<table border='1' class='sortable'>";
