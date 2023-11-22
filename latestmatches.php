@@ -68,18 +68,19 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                         if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
                             continue;
                         }
-                        $date = new DateTime($match['createdAt']);
-                        $date->modify('+1 hours');
-                        $formattedDate = $date->format('m-d H:i:s');
+                    }
+                    $date = new DateTime($match['createdAt']);
+                    $date->modify('+1 hours');
+                    $formattedDate = $date->format('m-d H:i:s');
 
-                        $matchType = $match['matchType'];
-                        $gameMode = $match['gameMode'];
-                        $mapName = isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
-                        $kills = $match['stats']['kills'];
-                        $damage = number_format($match['stats']['damageDealt'], 0, '.', '');
-                        $timeSurvived = $match['stats']['timeSurvived'];
-                        $winPlace = $match['stats']['winPlace'];
-                        echo "<tr>
+                    $matchType = $match['matchType'];
+                    $gameMode = $match['gameMode'];
+                    $mapName = isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
+                    $kills = $match['stats']['kills'];
+                    $damage = number_format($match['stats']['damageDealt'], 0, '.', '');
+                    $timeSurvived = $match['stats']['timeSurvived'];
+                    $winPlace = $match['stats']['winPlace'];
+                    echo "<tr>
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $formattedDate . "</a></td>
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $gameMode . "</a></td>
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $matchType . "</a></td>
@@ -90,11 +91,11 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $winPlace . "</a></td>
                             </tr>";
 
-                    }
-                    
+
+
 
                 }
-                
+
             }
             echo "</table><br>";
             ?>
