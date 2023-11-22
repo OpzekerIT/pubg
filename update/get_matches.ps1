@@ -114,13 +114,13 @@ foreach ($file in $matchfiles) {
                 createdAt =  $filecontent.data.attributes.createdAt
                 mapName = $filecontent.data.attributes.mapName
                 id    = $filecontent.data.id
-                stats = $player_matches_cached
+                stats = @($player_matches_cached)
             }
         }
         write-output "NEW $matchfiledate"
     }
 }
-$player_matches_object | convertto-json -Depth 100 | out-file "$scriptroot/../data/cached_matches.json"
+$player_matches_object | Sort-Object createdAt -Descending | convertto-json -Depth 100 | out-file "$scriptroot/../data/cached_matches.json"
 
 remove-lock
 Stop-Transcript

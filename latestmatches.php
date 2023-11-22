@@ -31,7 +31,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
 
             }
             echo "</form><br>";
-            $selected_player = $_GET['selected_player'] ?? $players[0];
+            $selected_player = $_GET['selected_player'] ?? $players['clanMembers'][0];
             echo "<form method='get' action=''>
             <input type='submit' name='filter_by_match_type' value='all' class='btn'>
             <input type='submit' name='filter_by_match_type' value='airoyale' class='btn'>
@@ -61,26 +61,28 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             echo "<table border='1' class='sortable'>";
             echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
             foreach ($players_matches as $match) {
-                if ($match['stats']['name'] === $selected_player) {
+                // print_r($match['stats']);
+                foreach ($match['stats'] as $stats) {
+                    if ($stats['name'] === $selected_player) {
 
 
-                    if (isset($_GET['filter_by_match_type'])) {
-                        if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
-                            continue;
+                        if (isset($_GET['filter_by_match_type'])) {
+                            if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
+                                continue;
+                            }
                         }
-                    }
-                    $date = new DateTime($match['createdAt']);
-                    $date->modify('+1 hours');
-                    $formattedDate = $date->format('m-d H:i:s');
+                        $date = new DateTime($match['createdAt']);
+                        $date->modify('+1 hours');
+                        $formattedDate = $date->format('m-d H:i:s');
 
-                    $matchType = $match['matchType'];
-                    $gameMode = $match['gameMode'];
-                    $mapName = isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
-                    $kills = $match['stats']['kills'];
-                    $damage = number_format($match['stats']['damageDealt'], 0, '.', '');
-                    $timeSurvived = $match['stats']['timeSurvived'];
-                    $winPlace = $match['stats']['winPlace'];
-                    echo "<tr>
+                        $matchType = $match['matchType'];
+                        $gameMode = $match['gameMode'];
+                        $mapName = isset($mapNames[$match['mapName']]) ? $mapNames[$match['mapName']] : $match['mapName'];
+                        $kills = $stats['kills'];
+                        $damage = number_format($stats['damageDealt'], 0, '.', '');
+                        $timeSurvived = $stats['timeSurvived'];
+                        $winPlace = $stats['winPlace'];
+                        echo "<tr>
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $formattedDate . "</a></td>
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $gameMode . "</a></td>
                                 <td><a href='matchinfo.php?matchid=" . $match['id'] . "'>" . $matchType . "</a></td>
@@ -94,8 +96,8 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
 
 
 
+                    }
                 }
-
             }
             echo "</table><br>";
             ?>
