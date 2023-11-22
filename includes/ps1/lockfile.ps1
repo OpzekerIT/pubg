@@ -32,7 +32,6 @@ function new-lock {
                 Write-Output "Unable to create lockfile, error: $_. Resuming lock loop."
             }
         }
-
         if ($i -ge $timeout) {
             Write-Output "Timed out after $timeout attempts."
             exit
