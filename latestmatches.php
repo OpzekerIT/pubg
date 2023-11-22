@@ -66,11 +66,11 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                     if ($stats['name'] === $selected_player) {
 
 
-                        if (isset($_GET['filter_by_match_type'])) {
-                            if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
-                                continue;
-                            }
-                        }
+                        // if (isset($_GET['filter_by_match_type'])) {
+                        //     if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
+                        //         continue;
+                        //     }
+                        // }
                         $date = new DateTime($match['createdAt']);
                         $date->modify('+1 hours');
                         $formattedDate = $date->format('m-d H:i:s');
