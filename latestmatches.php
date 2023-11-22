@@ -57,20 +57,18 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                 "Tiger_Main" => "Taego"
             );
             // Display the player's match stats
-            foreach ($players_matches as $selected_match) {
-                print_r($selected_match['stats']['name']);
-                if ($selected_match['stats']['name'] === $selected_player) {
+            echo "<h2>Recent Matches for $selected_player</h2>";
+            echo "<table border='1' class='sortable'>";
+            echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
+            foreach ($players_matches as $match) {
+                if ($match['stats']['name'] === $selected_player) {
 
-                    echo "<h2>Recent Matches for $selected_player</h2>";
-                    echo "<table border='1' class='sortable'>";
-                    echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
+                    
                     foreach ($player_data['player_matches'] as $match) {
                         if (isset($_GET['filter_by_match_type'])) {
                             if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
                                 continue;
                             }
-
-
                         }
                         $date = new DateTime($match['createdAt']);
                         $date->modify('+1 hours');
