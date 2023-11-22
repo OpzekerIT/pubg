@@ -31,7 +31,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
 
             }
             echo "</form><br>";
-            $selected_player = $_GET['selected_player'] ?? $players[0];
+            $selected_player = $_GET['selected_player'] ?? $players['clanMembers'][0];
             echo "<form method='get' action=''>
             <input type='submit' name='filter_by_match_type' value='all' class='btn'>
             <input type='submit' name='filter_by_match_type' value='airoyale' class='btn'>
@@ -64,11 +64,11 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
                 if ($match['stats']['name'] === $selected_player) {
 
 
-                    if (isset($_GET['filter_by_match_type'])) {
-                        if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
-                            continue;
-                        }
-                    }
+                    // if (isset($_GET['filter_by_match_type'])) {
+                    //     if ($_GET['filter_by_match_type'] !== 'all' && $match['matchType'] !== $_GET['filter_by_match_type']) {
+                    //         continue;
+                    //     }
+                    // }
                     $date = new DateTime($match['createdAt']);
                     $date->modify('+1 hours');
                     $formattedDate = $date->format('m-d H:i:s');
