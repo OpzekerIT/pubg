@@ -61,7 +61,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             echo "<table border='1' class='sortable'>";
             echo "<tr><th>Match Date</th><th>Game Mode</th><th>Match Type</th><th>Map</th><th>Kills</th><th>Damage Dealt</th><th>Time Survived</th><th>win Place</th></tr>";
             foreach ($players_matches as $match) {
-                if ($match['stats']['name'] === $selected_player) {
+                if ($match['stats']['name'] == $selected_player) {
 
 
                     // if (isset($_GET['filter_by_match_type'])) {
