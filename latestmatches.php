@@ -58,7 +58,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             );
             // Display the player's match stats
             foreach ($players_matches as $selected_match) {
-                print_r($selected_match);
+                print_r($selected_match['stats']['name']);
                 if (isset($selected_match['stats']['name']) === $selected_player) {
 
                     echo "<h2>Recent Matches for $selected_player</h2>";
