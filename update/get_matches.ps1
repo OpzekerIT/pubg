@@ -66,7 +66,8 @@ foreach ($player in $player_data) {
 }
 
 if (test-path "$scriptroot/../data/player_matches.json") {
-    $old_player_data = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
+    try{$old_player_data = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100}
+    catch {exit}
     $new_ids = ($player_matches.player_matches | where-object { $_.stats.winplace -eq 1 }).id
     $old_ids = ($old_player_data.player_matches | where-object { $_.stats.winplace -eq 1 }).id 
     $new_win_matches = ((Compare-Object -ReferenceObject $old_ids -DifferenceObject $new_ids) | Where-Object { $_.SideIndicator -eq '=>' }).InputObject | Select-Object -Unique
