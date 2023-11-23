@@ -46,7 +46,7 @@ function get-killstats {
         $gameMode
     )
 
-    $kills = $telemetry | where-object { $_.killer.name -eq $player_name -and $_._T -eq 'LOGPLAYERKILLV2'}
+    $kills = $telemetry | where-object { $_.killer.name -eq $player_name -and $_._T -eq 'LOGPLAYERKILLV2' }
     $HumanDmg = $([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player_name -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))
     return @{
         playername = $player_name
@@ -93,7 +93,15 @@ else {
     $oldstats = @()
 }
 
-$all_player_matches = get-content  "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
+try { 
+    $all_player_matches = get-content  "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100 
+}
+catch {   
+    Write-Output 'Unable to read file exitin'
+    exit
+}
+
+
 
 foreach ($player in $all_player_matches) {
     if ($player.psobject.properties.name -eq 'new_win_matches') {
@@ -166,10 +174,10 @@ function Get-MatchStatsPlayer {
         if ($null -eq $player) {
             continue
         }
-        if($GameMode){
+        if ($GameMode) {
             $filterProperty = 'gameMode'
         }
-        if($MatchType){
+        if ($MatchType) {
             $filterProperty = 'matchType'
         }
         $deaths = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).deaths | Measure-Object -sum).sum

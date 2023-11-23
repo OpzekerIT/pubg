@@ -62,7 +62,12 @@ $map_map = @{
     "Tiger_Main"      = "Taego"
 }
 
-$player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
+try { 
+    $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100 
+}
+catch {
+    Write-Output 'Unable to read file exitin' 
+}
 $new_win_matches = $player_matches[-1].new_win_matches
 
 
