@@ -26,7 +26,13 @@ $headers = @{
     'Authorization' = "$apiKey"
 }
 $player_matches = @()
-$player_data = get-content  "$scriptroot/../data/player_data.json" | convertfrom-json -Depth 100
+try { 
+    $player_data = get-content  "$scriptroot/../data/player_data.json" | convertfrom-json -Depth 100 
+}
+catch {
+    Write-Output 'Unable to read file exitin'
+    exit
+}
 
 
 foreach ($player in $player_data) {
@@ -66,8 +72,13 @@ foreach ($player in $player_data) {
 }
 
 if (test-path "$scriptroot/../data/player_matches.json") {
-    try{$old_player_data = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100}
-    catch {exit}
+    try {
+        $old_player_data = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100
+    }
+    catch {
+        Write-Output 'Unable to read file exitin'
+        exit
+    }
     $new_ids = ($player_matches.player_matches | where-object { $_.stats.winplace -eq 1 }).id
     $old_ids = ($old_player_data.player_matches | where-object { $_.stats.winplace -eq 1 }).id 
     $new_win_matches = ((Compare-Object -ReferenceObject $old_ids -DifferenceObject $new_ids) | Where-Object { $_.SideIndicator -eq '=>' }).InputObject | Select-Object -Unique
@@ -111,11 +122,11 @@ foreach ($file in $matchfiles) {
         if ($null -ne $player_matches_cached) {
             $player_matches_object += [PSCustomObject]@{
                 matchType = $filecontent.data.attributes.matchType
-                gameMode = $filecontent.data.attributes.gameMode
-                createdAt =  $filecontent.data.attributes.createdAt
-                mapName = $filecontent.data.attributes.mapName
-                id    = $filecontent.data.id
-                stats = @($player_matches_cached)
+                gameMode  = $filecontent.data.attributes.gameMode
+                createdAt = $filecontent.data.attributes.createdAt
+                mapName   = $filecontent.data.attributes.mapName
+                id        = $filecontent.data.id
+                stats     = @($player_matches_cached)
             }
         }
         write-output "NEW $matchfiledate"
