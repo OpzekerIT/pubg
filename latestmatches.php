@@ -38,6 +38,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
             <input type='submit' name='filter_by_match_type' value='official' class='btn'>
             <input type='submit' name='filter_by_match_type' value='custom' class='btn'>
             <input type='submit' name='filter_by_match_type' value='event' class='btn'>
+            <input type='submit' name='filter_by_match_type' value='competitive' class='btn'>
             <input type='hidden' name='selected_player' value='$selected_player'>
           </form><br>";
 
