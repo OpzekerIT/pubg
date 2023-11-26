@@ -52,10 +52,10 @@ function get-killstats {
         playername = $player_name
         humankills = ($kills | where-object { $_.victim.accountId -notlike 'ai.*' }).count
         kills      = $kills.count
-        deaths     = ($attacks | where-object { $_.victim.name -eq $player_name }).count
+        deaths     = ($kills | where-object { $_.victim.name -eq $player_name }).count
         gameMode   = $gameMode
         matchType  = $matchType
-        dbno       = ($attacks | where-object { $_.dBNOMaker.name -eq $player_name }).count
+        dbno       = ($kills | where-object { $_.dBNOMaker.name -eq $player_name }).count
         HumanDmg   = $HumanDmg
 
 
