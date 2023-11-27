@@ -104,7 +104,8 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     foreach ($clanmembers['clanMembers'] as $value) {
                         foreach ($playerRanks as $rank) {
                             print_r($value);
-                            print_r($rank['stat']);
+                            print_r($rank['name']);
+                            print_r($rank['stat']['data']);
                             
                             if ($rank['name'] == $value) {
                                 print_r($rank);
