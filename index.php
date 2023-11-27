@@ -93,14 +93,24 @@ $lastMatches = array_slice($allMatches, 0, 8);
             //CLANINFO
             $clanInfoPath = './data/claninfo.json';
             $clanmembersfile = './config/clanmembers.json';
+            $rankedfile = './config/player_season_data.json';
             $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
+            $playerRanks = json_decode(file_get_contents($rankedfile), true);
             if (file_exists($clanInfoPath)) {
                 $clan = json_decode(file_get_contents($clanInfoPath), true);
                 if (isset($clan) && !empty($clan)) {
                     echo "<table>";
-                    echo "<tr><th>Attribute</th><th>Value</th></tr>";
+                    echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
                     foreach ($clanmembers['clanMembers'] as $value) {
-                        echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td></tr>";
+                        foreach ($playerRanks as $rank) {
+                            if ($rank['name'] == $value) {
+                                if (isset($rank['stats']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>" . htmlspecialchars($rank['stats']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']) . "</td><td>" . htmlspecialchars($rank['stats']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']) . "</td></tr>";
+                                } else {
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>N/A</td><td>N/A</td></tr>";
+                                }
+                            }
+                        }
                     }
                     foreach ($clan as $key => $value) {
                         if ($key == 'updated') {
@@ -108,12 +118,11 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         }
                         echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
                     }
-
-
                     echo "</table>";
                 } else {
                     echo "<p>No clan attributes available</p>";
                 }
+
             } else {
                 echo "<p>Clan info file missing</p>";
             }
