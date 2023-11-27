@@ -104,6 +104,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     foreach ($clanmembers['clanMembers'] as $value) {
                         foreach ($playerRanks as $rank) {
                             if ($rank['name'] == $value) {
+                                print_r($rank);
                                 if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
                                     echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>" . htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']) . "</td><td>" . htmlspecialchars($rank['stats']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']) . "</td></tr>";
                                 } else {
