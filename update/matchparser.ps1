@@ -45,17 +45,18 @@ function get-killstats {
         $matchType,
         $gameMode
     )
-
-    $kills = $telemetry | where-object { $_.killer.name -eq $player_name -and $_._T -eq 'LOGPLAYERKILLV2' }
+    $LOGPLAYERKILLV2 = $telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }
+    $kills = $LOGPLAYERKILLV2 | where-object { $_.killer.name -eq $player_name}
+    $deaths = $LOGPLAYERKILLV2 | where-object { $_.victim.name -eq $player_name -and $_.finisher.name.count -ge 1 }
     $HumanDmg = $([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player_name -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))
     return @{
         playername = $player_name
         humankills = ($kills | where-object { $_.victim.accountId -notlike 'ai.*' }).count
         kills      = $kills.count
-        deaths     = ($attacks | where-object { $_.victim.name -eq $player_name }).count
+        deaths     = ($deaths).count
         gameMode   = $gameMode
         matchType  = $matchType
-        dbno       = ($attacks | where-object { $_.dBNOMaker.name -eq $player_name }).count
+        dbno       = ($kills | where-object { $_.dBNOMaker.name -eq $player_name }).count
         HumanDmg   = $HumanDmg
 
 
