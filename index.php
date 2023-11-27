@@ -103,8 +103,9 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
                     foreach ($clanmembers['clanMembers'] as $value) {
                         foreach ($playerRanks as $rank) {
-                            print_r($rank);
                             print_r($value);
+                            print_r($rank['stat']);
+                            
                             if ($rank['name'] == $value) {
                                 print_r($rank);
                                 if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
