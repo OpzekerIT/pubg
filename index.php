@@ -105,7 +105,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         foreach ($playerRanks as $rank) {
                             print_r($value);
                             print_r($rank['name']);
-                            print_r($rank['stat']['data']['attributes']['rankedGameModeStats']);
+                            print_r($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']);
                             
                             if ($rank['name'] == $value) {
                                 print_r($rank);
