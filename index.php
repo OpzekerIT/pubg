@@ -93,7 +93,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
             //CLANINFO
             $clanInfoPath = './data/claninfo.json';
             $clanmembersfile = './config/clanmembers.json';
-            $rankedfile = './config/player_season_data.json';
+            $rankedfile = './data/player_season_data.json';
             $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
             $playerRanks = json_decode(file_get_contents($rankedfile), true);
             if (file_exists($clanInfoPath)) {
