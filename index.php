@@ -92,6 +92,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
             //CLANINFO
             $clanInfoPath = './data/claninfo.json';
+            $clanmembersfile = './config/clanmembers.json';
             $rankedfile = './data/player_season_data.json';
             $clanmembers = json_decode(file_get_contents($clanmembersfile), true);
             $playerRanks = json_decode(file_get_contents($rankedfile), true);
@@ -100,23 +101,24 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 if (isset($clan) && !empty($clan)) {
                     echo "<table class='sortable'>";
                     echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
+                    foreach ($clanmembers['clanMembers'] as $value) {
+                        foreach ($playerRanks as $rank) {
 
-                    foreach ($playerRanks as $rank) {
+                            if ($rank['name'] == $value) {
+                                if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
+                                    $tier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier'];
+                                    $subTier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['subTier'];
+                                    $image = "./images/ranks/" . $tier . "-" . $subTier . ".png";
+                                    $rankPoint = htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']);
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td><img src='" . $image . "' class='table-image'></td><td>" . $rankPoint . "</td></tr>";
+                                } else {
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td><img src='./images/ranks/Unranked.png' class='table-image'></td><td></td></tr>";
+                                }
+                            }
 
-                        if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
-                            $tier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier'];
-                            $subTier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['subTier'];
-                            $image = "./images/ranks/" . $tier . "-" . $subTier . ".png";
-                            $rankPoint = htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']);
-                            echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>" . htmlspecialchars($rank['name']) . "</a></td><td><img src='" . $image . "' class='table-image'></td><td>" . $rankPoint . "</td></tr>";
-                        } else {
-                            echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>" . htmlspecialchars($rank['name']) . "</a></td><td><img src='./images/ranks/Unranked.png' class='table-image'></td><td></td></tr>";
+
                         }
-
-
-
                     }
-
                     foreach ($clan as $key => $value) {
                         if ($key == 'updated') {
                             continue;
