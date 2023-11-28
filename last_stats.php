@@ -51,9 +51,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     <th>Player</th>
                     <th>Win %</th>
                     <th>K/D Human</th>
+                    <th>Human Kills</th>
                     <th>K/D All</th>
                     <th>Kills</th>
-                    <th>Human Kills</th>
                     <th>Mtchs</th>
                     <th>Wins</th>
                     <th>Deaths</th>
@@ -127,9 +127,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     <td><a href='latestmatches.php?selected_player=$player_name'>$player_name</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$winratio</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$KD_H</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$humankills</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$KD_ALL</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$kills</a></td>
-                    <td><a href='latestmatches.php?selected_player=$player_name'>$humankills</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$matches</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$wins</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$deaths</a></td>
