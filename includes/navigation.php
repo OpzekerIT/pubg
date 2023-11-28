@@ -9,11 +9,11 @@ if ($host == 'dev.dtch.online') {
     <a href="index.php" class="active">Home</a>
 
     <div id="myLinks">
-        <a href="user_stats.php">User Stats</a>
-        <a href="topstats.php">Top10</a>
-        <a href="topstatsavg.php">Match % T10</a>
-        <a href="latestmatches.php">Last Matches</a>
         <a href="last_stats.php">Last month %</a>
+        <a href="latestmatches.php">Last Matches</a>
+        <a href="topstatsavg.php">Match % T10</a>
+        <a href="topstats.php">Top10</a>
+        <a href="user_stats.php">User Stats</a>       
     </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
