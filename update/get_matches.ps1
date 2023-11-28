@@ -33,8 +33,6 @@ catch {
     Write-Output 'Unable to read file exitin'
     exit
 }
-
-
 foreach ($player in $player_data) {
     $lastMatches = $player.relationships.matches.data.id #| Select-Object -First 10
     $playermatches = @()
