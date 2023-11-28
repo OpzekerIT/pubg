@@ -14,8 +14,8 @@ body {
     background-size: cover;
 }
 .table-image {
-    max-height: 25px;
-    max-width: 25px;
+    max-height: 50px;
+    max-width: 50px;
     width: auto;
     height: auto;
 }
