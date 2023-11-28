@@ -13,6 +13,12 @@ body {
     -o-background-size: cover;
     background-size: cover;
 }
+.table-image {
+    max-height: 100px;
+    max-width: 150px;
+    width: auto;
+    height: auto;
+}
 
 nav {
     background: linear-gradient(to right, #FF416C, #FF4B2B);
