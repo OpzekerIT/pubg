@@ -33,8 +33,6 @@ catch {
     Write-Output 'Unable to read file exitin'
     exit
 }
-
-
 foreach ($player in $player_data) {
     $lastMatches = $player.relationships.matches.data.id #| Select-Object -First 10
     $playermatches = @()
@@ -46,7 +44,7 @@ foreach ($player in $player_data) {
         }
         else {
             $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$match" -Method GET -Headers $headers
-            $sortedStats = $stats.included | Where-Object { $_.attributes.stats } | Sort-Object { $_.attributes.stats.winplace } 
+            $sortedStats = $stats.included | Sort-Object { $_.attributes.stats.winplace } 
             $stats.included = $sortedStats
             $stats | ConvertTo-Json -Depth 100 | Out-File "$scriptroot/../data/matches/$match.json"
         }
