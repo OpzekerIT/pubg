@@ -102,17 +102,17 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
 
                     foreach ($playerRanks as $rank) {
-                        if ($rank['name'] == $value) {
-                            if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
-                                $tier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier'];
-                                $subTier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['subTier'];
-                                $image = "./images/ranks/" . $tier . "-" . $subTier . ".png";
-                                $rankPoint = htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']);
-                                echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>" . htmlspecialchars($rank['name']) . "</a></td><td><img src='" . $image . "' class='table-image'></td><td>" . $rankPoint . "</td></tr>";
-                            } else {
-                                echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>" . htmlspecialchars($rank['name']) . "</a></td><td><img src='./images/ranks/Unranked.png' class='table-image'></td><td></td></tr>";
-                            }
+
+                        if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
+                            $tier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier'];
+                            $subTier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['subTier'];
+                            $image = "./images/ranks/" . $tier . "-" . $subTier . ".png";
+                            $rankPoint = htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']);
+                            echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>" . htmlspecialchars($rank['name']) . "</a></td><td><img src='" . $image . "' class='table-image'></td><td>" . $rankPoint . "</td></tr>";
+                        } else {
+                            echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($rank['name']) . "'>" . htmlspecialchars($rank['name']) . "</a></td><td><img src='./images/ranks/Unranked.png' class='table-image'></td><td></td></tr>";
                         }
+
 
 
                     }
