@@ -123,7 +123,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         if ($key == 'updated') {
                             continue;
                         }
-                        echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td></tr>";
+                        echo "<tr><td>" . htmlspecialchars($key) . "</td><td>" . htmlspecialchars($value) . "</td><td></td><td></td></tr>";
                     }
                     echo "</table>";
                 } else {
