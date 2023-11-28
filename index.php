@@ -116,7 +116,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
                                 } else {
                                     //print_r('test2');
-                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>N/A</td><td>N/A</td><td>N/A</td></tr>";
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td></td><td></td><td></td></tr>";
                                 }
                             }
 
