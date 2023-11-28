@@ -46,12 +46,12 @@ if ($chunk.Count -gt 0) {
 }
 $clanMembers = $clanMembersArray -join ','
 
-
-
 $headers = @{
     'accept'        = 'application/vnd.api+json'
     'Authorization' = "$apiKey"
 }
+
+
 $playerinfo = @()
 foreach ($key in $clanmemberchunks.keys) {
 
@@ -172,3 +172,29 @@ $lifetimestats['updated'] = $formattedString
 $lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
 remove-lock
 Stop-Transcript
+
+$seasons = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons" -Method GET -Headers $headers
+$current_season = $seasons.data | Where-Object {$_.attributes.isCurrentSeason -eq $true}
+
+$i = 0
+$seasonstats = @()
+while($playerinfo.data.Count -gt $i) {
+    write-host $clanMembersArray[$i]
+   
+    try{
+        $rankedstat = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players/$($playerinfo.data[$i].id)/seasons/$($current_season.id)/ranked" -Method GET -Headers $headers
+    }catch{
+        write-output 'sleeping for 61 seconds'
+        start-sleep -Seconds 61
+        $rankedstat = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/players/$($playerinfo.data[$i].id)/seasons/$($current_season.id)/ranked" -Method GET -Headers $headers
+    }
+
+    $seasonstats += [PSCustomObject]@{
+        stat = $rankedstat
+        name = $playerinfo.data[$i].attributes.name 
+    }
+
+    $i++
+
+}
+$seasonstats | convertto-json -Depth 100| Out-File "$scriptroot/../data/player_season_data.json"
