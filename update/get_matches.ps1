@@ -46,6 +46,8 @@ foreach ($player in $player_data) {
         }
         else {
             $stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$match" -Method GET -Headers $headers
+            $sortedStats = $stats.included | Where-Object { $_.attributes.stats } | Sort-Object { $_.attributes.stats.winplace } 
+            $stats.included = $sortedStats
             $stats | ConvertTo-Json -Depth 100 | Out-File "$scriptroot/../data/matches/$match.json"
         }
         
