@@ -99,7 +99,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
             if (file_exists($clanInfoPath)) {
                 $clan = json_decode(file_get_contents($clanInfoPath), true);
                 if (isset($clan) && !empty($clan)) {
-                    echo "<table>";
+                    echo "<table class='sortable'>";
                     echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
                     foreach ($clanmembers['clanMembers'] as $value) {
                         foreach ($playerRanks as $rank) {
