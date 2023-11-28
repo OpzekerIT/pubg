@@ -103,20 +103,21 @@ $lastMatches = array_slice($allMatches, 0, 8);
                     echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
                     foreach ($clanmembers['clanMembers'] as $value) {
                         foreach ($playerRanks as $rank) {
-                           // print_r($value);
+                            // print_r($value);
                             //print_r($rank['name']);
                             //print_r($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier']);
-
+            
                             if ($rank['name'] == $value) {
                                 //print_r('test');
                                 //print_r($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier']);
-
-                                //     //if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
-                                echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>" . htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier']) . "</td><td>" . htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']) . "</td></tr>";
             
-                            } else {
-                                print_r('test2');
-                                echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>N/A</td><td>N/A</td></tr>";
+                                if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>" . htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier']) . "</td><td>" . htmlspecialchars($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentRankPoint']) . "</td></tr>";
+
+                                } else {
+                                    //print_r('test2');
+                                    echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td>N/A</td><td>N/A</td></tr>";
+                                }
                             }
 
                         }
