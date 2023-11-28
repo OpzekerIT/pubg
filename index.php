@@ -101,10 +101,10 @@ $lastMatches = array_slice($allMatches, 0, 8);
                 if (isset($clan) && !empty($clan)) {
                     echo "<table class='sortable'>";
                     echo "<tr><th>Attribute</th><th>Value</th><th>Rank(FPP SQUAD)</th><th>Points</th></tr>";
-                    foreach ($clanmembers['clanMembers'] as $value) {
+
                         foreach ($playerRanks as $rank) {
 
-                            if ($rank['name'] == $value) {
+                            
                                 if (isset($rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp'])) {
                                     $tier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['tier'];
                                     $subTier = $rank['stat']['data']['attributes']['rankedGameModeStats']['squad-fpp']['currentTier']['subTier'];
@@ -114,11 +114,11 @@ $lastMatches = array_slice($allMatches, 0, 8);
                                 } else {
                                     echo "<tr><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>name</a></td><td><a href='latestmatches.php?selected_player=" . htmlspecialchars($value) . "'>" . htmlspecialchars($value) . "</a></td><td><img src='./images/ranks/Unranked.png' class='table-image'></td><td></td></tr>";
                                 }
-                            }
+                            
 
 
                         }
-                    }
+                    
                     foreach ($clan as $key => $value) {
                         if ($key == 'updated') {
                             continue;
