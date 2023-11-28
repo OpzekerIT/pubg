@@ -196,7 +196,7 @@ while($playerinfo.data.Count -gt $i) {
     $i++
 
 }
-$seasonstats | convertto-json -Depth 100| Out-File "$scriptroot/../data/player_season_data.json"
+$seasonstats | Sort-Object -Property {$_.stat.data.attributes.rankedGameModeStats.'squad-fpp'.currentRankPoint} -Descending | convertto-json -Depth 100| Out-File "$scriptroot/../data/player_season_data.json"
 
 remove-lock
 Stop-Transcript
