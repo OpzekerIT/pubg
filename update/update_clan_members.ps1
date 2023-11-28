@@ -170,8 +170,7 @@ $lifetimestats['updated'] = $formattedString
 
 
 $lifetimestats | convertto-json -Depth 100 | out-file "$scriptroot/../data/player_lifetime_data.json"
-remove-lock
-Stop-Transcript
+
 
 $seasons = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/seasons" -Method GET -Headers $headers
 $current_season = $seasons.data | Where-Object {$_.attributes.isCurrentSeason -eq $true}
@@ -198,3 +197,6 @@ while($playerinfo.data.Count -gt $i) {
 
 }
 $seasonstats | convertto-json -Depth 100| Out-File "$scriptroot/../data/player_season_data.json"
+
+remove-lock
+Stop-Transcript
