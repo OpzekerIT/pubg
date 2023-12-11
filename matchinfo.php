@@ -32,10 +32,10 @@ $lastMatches = array_slice($allMatches, 0, 8);
 <?php include './includes/head.php'; ?>
 
 <body>
-    <?php 
+    <?php
     include './includes/navigation.php';
     include './includes/header.php';
-     ?>
+    ?>
 
 
     <main>
@@ -47,19 +47,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
 
             <?php
 
-            $mapNames = array(
-                "Baltic_Main" => "Erangel",
-                "Chimera_Main" => "Paramo",
-                "Desert_Main" => "Miramar",
-                "DihorOtok_Main" => "Vikendi",
-                "Erangel_Main" => "Erangel",
-                "Heaven_Main" => "Haven",
-                "Kiki_Main" => "Deston",
-                "Range_Main" => "Camp Jackal",
-                "Savage_Main" => "Sanhok",
-                "Summerland_Main" => "Karakin",
-                "Tiger_Main" => "Taego"
-            );
+            include './includes/mapsmap.php';
             // Check if a match ID is provided in the GET request
             if (isset($_GET['matchid'])) {
                 $matchId = $_GET['matchid'];

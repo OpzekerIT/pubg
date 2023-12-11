@@ -44,19 +44,7 @@ $ogDescription = "Dive into the detailed match stats of DTCH Clan in PUBG. Explo
 
 
 
-            $mapNames = array(
-                "Baltic_Main" => "Erangel",
-                "Chimera_Main" => "Paramo",
-                "Desert_Main" => "Miramar",
-                "DihorOtok_Main" => "Vikendi",
-                "Erangel_Main" => "Erangel",
-                "Heaven_Main" => "Haven",
-                "Kiki_Main" => "Deston",
-                "Range_Main" => "Camp Jackal",
-                "Savage_Main" => "Sanhok",
-                "Summerland_Main" => "Karakin",
-                "Tiger_Main" => "Taego"
-            );
+            include './includes/mapsmap.php';
             // Display the player's match stats
             echo "<h2>Recent Matches for $selected_player</h2>";
             echo "<table border='1' class='sortable'>";
