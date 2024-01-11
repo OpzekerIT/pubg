@@ -1,3 +1,3 @@
 <header>
-        <img src="./images/bannercmass.webp" alt="banner" class="banner">
+        <img src="./images/banner.webp" alt="banner" class="banner">
 </header>
