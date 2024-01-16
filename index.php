@@ -35,7 +35,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
     ?>
     <main>
         <section>
-            <h2>Latest Matches</h2>
+            <h2>Latest Matches1</h2>
 
             <table>
 
