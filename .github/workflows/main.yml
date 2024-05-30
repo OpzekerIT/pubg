@@ -29,7 +29,7 @@ jobs:
         remote-user: stats
         private-ssh-key: ${{ secrets.SSH_KEY }}
         destination-path: ${{ env.DESTINATION }}
-        rsync-options: --no-times -r --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ --exclude=config.php --include=./config/clanmembers.json
+        rsync-options: --no-times -r --include=config/clanmembers.json --exclude=.git* --exclude=*.json --exclude=.git/ --exclude=.github/ --exclude=config.php 
     - name: LINK TO WEBSITE
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
