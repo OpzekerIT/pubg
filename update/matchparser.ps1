@@ -181,6 +181,7 @@ function Get-MatchStatsPlayer {
         if ($MatchType) {
             $filterProperty = 'matchType'
         }
+        $alives = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).alive | Measure-Object -sum).sum
         $deaths = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).deaths | Measure-Object -sum).sum
         $kills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).kills | Measure-Object -sum).sum
         $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).dbno | Measure-Object -sum).sum
@@ -204,7 +205,7 @@ function Get-MatchStatsPlayer {
             kills      = $kills
             humankills = $humankills
             matches    = $player_matches
-            KD_H       = $humankills / $deaths
+            KD_H       = $humankills / ($deaths + $alives)
             KD_ALL     = $kills / $deaths
             winratio   = $winratio
             wins       = $player_wins
