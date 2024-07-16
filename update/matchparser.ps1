@@ -46,7 +46,7 @@ function get-killstats {
         $gameMode
     )
     $LOGPLAYERKILLV2 = $telemetry | where-object { $_._T -eq 'LOGPLAYERKILLV2' }
-    $kills = $LOGPLAYERKILLV2 | where-object { $_.killer.name -eq $player_name}
+    $kills = $LOGPLAYERKILLV2 | where-object { $_.killer.name -eq $player_name }
     $deaths = $LOGPLAYERKILLV2 | where-object { $_.victim.name -eq $player_name -and $_.finisher.name.count -ge 1 }
     $HumanDmg = $([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player_name -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))
     return @{
@@ -130,11 +130,11 @@ foreach ($player in $all_player_matches) {
         
         
             $savekillstats = @{
-
-                matchid  = $match.id
-                created  = $match.createdAt
-                stats    = $killstat
-                winplace = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object { $_.id -eq $match.id }).stats.winplace
+                matchid   = $match.id
+                created   = $match.createdAt
+                stats     = $killstat
+                deathType = $match.stats.deathType
+                winplace  = (($all_player_matches | where-object { $_.playername -eq $player_name } ).player_matches | where-object { $_.id -eq $match.id }).stats.winplace
             }
             Write-Output "Writing to file $scriptroot/../data/killstats/$($match.id)_$player_name.json"
             $savekillstats | ConvertTo-Json | out-file "$scriptroot/../data/killstats/$($match.id)_$player_name.json"
@@ -181,7 +181,7 @@ function Get-MatchStatsPlayer {
         if ($MatchType) {
             $filterProperty = 'matchType'
         }
-        $alives = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).alive | Measure-Object -sum).sum
+        #$alives = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).deathType | Measure-Object -sum).sum
         $deaths = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).deaths | Measure-Object -sum).sum
         $kills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).kills | Measure-Object -sum).sum
         $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).dbno | Measure-Object -sum).sum
@@ -200,6 +200,7 @@ function Get-MatchStatsPlayer {
         write-host $change
     
         $MatchStatsPlayer += [PSCustomObject]@{ 
+            alives     = $alives
             playername = $player
             deaths     = $deaths
             kills      = $kills
