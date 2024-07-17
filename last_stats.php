@@ -25,6 +25,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 if ($key == 'updated') {
                     continue;
                 }
+                if ($key == 'all') {
+                    continue;
+                }
 
                 echo "<br>";
                 // if ($key == 'all') {
@@ -65,7 +68,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                         continue; // Skip this iteration and move to the next
                     }
 
-                    if ($key == 'all' && $player_data['matches'] < 1000) { #skip all
+                     if ($key == 'all' && $player_data['matches'] < 20) {
                         continue;
                     }
                     if ($key == 'Intense' && $player_data['matches'] < 8) {
