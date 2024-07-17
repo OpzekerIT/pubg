@@ -27,9 +27,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 }
 
                 echo "<br>";
-                if ($key == 'all') {
-                    echo "Stats for $key (minimal 20 matches)";
-                }
+                // if ($key == 'all') {
+                //     echo "Stats for $key (minimal 20 matches)";
+                // }
                 if ($key == 'Intense') {
                     echo "Stats for $key (minimal 8 matches)";
                 }
@@ -65,9 +65,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                         continue; // Skip this iteration and move to the next
                     }
 
-                    if ($key == 'all' && $player_data['matches'] < 20) {
-                        continue;
-                    }
+                    // if ($key == 'all' && $player_data['matches'] < 20) {
+                    //     continue;
+                    // }
                     if ($key == 'Intense' && $player_data['matches'] < 8) {
                         continue;
                     }
