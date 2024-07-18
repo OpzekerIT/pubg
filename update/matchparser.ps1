@@ -214,7 +214,12 @@ function Get-MatchStatsPlayer {
             change     = $change
         }
     }
-    return $MatchStatsPlayer | Sort-Object winratio -Descending
+    $MatchStatsPlayer | ForEach-Object {
+        $_ | Add-Member -NotePropertyName RandomKey -NotePropertyValue (Get-Random) -PassThru
+    } | Sort-Object -Property RandomKey | Select-Object -Property * -ExcludeProperty RandomKey #randomize the order
+
+    
+    return $MatchStatsPlayer
 }
 
 
