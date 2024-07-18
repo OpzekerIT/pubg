@@ -33,8 +33,8 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 // if ($key == 'all') {
                 //     echo "Stats for $key (minimal 20 matches)";
                 // }
-                if ($key == 'clan_4_casual') {
-                    echo "Stats for $key (minimal 4 matches)";
+                if ($key == 'clan_casual') {
+                    echo "Stats for $key (minimal 4 matches) - Clan casual min 2 clan players per match";
                 }
                 if ($key == 'Intense') {
                     echo "Stats for $key (minimal 8 matches)";
@@ -71,10 +71,10 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                         continue; // Skip this iteration and move to the next
                     }
 
-                     if ($key == 'all' && $player_data['matches'] < 20) {
+                    if ($key == 'all' && $player_data['matches'] < 20) {
                         continue;
                     }
-                    if ($key == 'clan_4_casual' && $player_data['matches'] < 4) {
+                    if ($key == 'clan_casual' && $player_data['matches'] < 4) {
                         continue;
                     }
                     if ($key == 'Intense' && $player_data['matches'] < 8) {
