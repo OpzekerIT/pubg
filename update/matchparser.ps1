@@ -152,7 +152,7 @@ $matchfiles = Get-ChildItem "$scriptroot/../data/killstats/" -File -Filter *.jso
 
 $killstats_only_full_clan_matches = @()
 $guids = $matchfiles.Name | ForEach-Object { $_.Split("_")[0] }
-$groupedGuids_full_clan_matches = $guids | Group-Object | Where-Object { $_.Count -eq 4 }
+$groupedGuids_full_clan_matches = $guids | Group-Object | Where-Object { $_.Count -gt 1 }
 
 $last_month = (get-date).AddMonths($monthsback)
 foreach ($file in $matchfiles) {
@@ -257,7 +257,7 @@ $formattedString = "$currentDateTime - Time Zone: $currentTimezone"
 
 $playerstats = [PSCustomObject]@{
     all           = $playerstats_all
-    clan_4_casual = $playerstats_airoyale_clan
+    clan_casual = $playerstats_airoyale_clan
     Intense       = $playerstats_event_ibr
     Casual        = $playerstats_airoyale
     official      = $playerstats_official
