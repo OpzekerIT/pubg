@@ -150,17 +150,27 @@ foreach ($player in $all_player_matches) {
 $killstats = @()
 $matchfiles = Get-ChildItem "$scriptroot/../data/killstats/" -File -Filter *.json
 
-$killstats_only_full_clan_matches = @()
+$killstats_clan_matches_gt_1 = @()
+$killstats_clan_matches_gt_2 = @()
+$killstats_clan_matches_gt_3 = @()
 $guids = $matchfiles.Name | ForEach-Object { $_.Split("_")[0] }
-$groupedGuids_full_clan_matches = $guids | Group-Object | Where-Object { $_.Count -gt 1 }
+$groupedGuids_clan_matches_gt_1 = $guids | Group-Object | Where-Object { $_.Count -gt 1 }
+$groupedGuids_clan_matches_gt_2 = $guids | Group-Object | Where-Object { $_.Count -gt 2 }
+$groupedGuids_clan_matches_gt_3 = $guids | Group-Object | Where-Object { $_.Count -gt 3 }
 
 $last_month = (get-date).AddMonths($monthsback)
 foreach ($file in $matchfiles) {
     $json = get-content $file | ConvertFrom-Json
     if ($json.created -gt $last_month) {
         $killstats += $json
-        if ($groupedGuids_full_clan_matches.Name -contains $json.matchid) {
-            $killstats_only_full_clan_matches += $json
+        if ($groupedGuids_clan_matches_gt_1.Name -contains $json.matchid) {
+            $killstats_clan_matches_gt_1 += $json
+        }
+        if ($groupedGuids_clan_matches_gt_2.Name -contains $json.matchid) {
+            $killstats_clan_matches_gt_2 += $json
+        }
+        if ($groupedGuids_clan_matches_gt_3.Name -contains $json.matchid) {
+            $killstats_clan_matches_gt_3 += $json
         }
     }
     else {
@@ -241,7 +251,7 @@ $playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -p
 $playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername -friendlyname 'all' -killstats $killstats -sortstat 'randomkey' 
 $playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername -friendlyname 'Ranked' -killstats $killstats -sortstat 'randomkey' 
 
-$playerstats_airoyale_clan = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats_only_full_clan_matches -sortstat 'winratio' 
+$playerstats_airoyale_clan_gt_1 = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats_clan_matches_gt_1 -sortstat 'winratio' 
 
 $playerstats_custom = $playerstats_custom | Sort-Object winratio -Descending
 
@@ -256,14 +266,14 @@ $formattedString = "$currentDateTime - Time Zone: $currentTimezone"
 # Output the formatted string
 
 $playerstats = [PSCustomObject]@{
-    all           = $playerstats_all
-    clan_casual = $playerstats_airoyale_clan
-    Intense       = $playerstats_event_ibr
-    Casual        = $playerstats_airoyale
-    official      = $playerstats_official
-    custom        = $playerstats_custom
-    updated       = $formattedString
-    Ranked        = $playerstats_ranked
+    all         = $playerstats_all
+    clan_casual = $playerstats_airoyale_clan_gt_1
+    Intense     = $playerstats_event_ibr
+    Casual      = $playerstats_airoyale
+    official    = $playerstats_official
+    custom      = $playerstats_custom
+    updated     = $formattedString
+    Ranked      = $playerstats_ranked
 
 }
 
