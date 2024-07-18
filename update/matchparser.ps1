@@ -12,7 +12,7 @@ else {
 . $scriptroot\..\includes\ps1\lockfile.ps1
 new-lock -by "matchparser"
 ##SETTINGS
-$monthsback = -1 # how many months back to look for matches
+$monthsback = -3 # how many months back to look for matches
 ##END OF SETTINGS
 function Get-Change {
     param (
@@ -149,18 +149,25 @@ foreach ($player in $all_player_matches) {
 
 $killstats = @()
 $matchfiles = Get-ChildItem "$scriptroot/../data/killstats/" -File -Filter *.json
+
+$killstats_only_full_clan_matches = @()
+$guids = $matchfiles.Name | ForEach-Object { $_.Split("_")[0] }
+$groupedGuids_full_clan_matches = $guids | Group-Object | Where-Object { $_.Count -eq 4 }
+
 $last_month = (get-date).AddMonths($monthsback)
 foreach ($file in $matchfiles) {
     $json = get-content $file | ConvertFrom-Json
     if ($json.created -gt $last_month) {
         $killstats += $json
+        if ($groupedGuids_full_clan_matches.Name -contains $json.matchid) {
+            $killstats_only_full_clan_matches += $json
+        }
     }
     else {
         write-output "Archiving $($file.name)"
-        Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive" -Force
+        Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive/" -Force
     }
 }
-
 
 function Get-MatchStatsPlayer {
     param (
@@ -168,7 +175,10 @@ function Get-MatchStatsPlayer {
         [switch] $MatchType,
         [string] $typemodevalue,
         [array] $playernames,
-        [string] $friendlyname
+        [string] $friendlyname,
+        [array] $killstats,
+        [string] $sortstat
+        
     )
     $MatchStatsPlayer = @()
     foreach ($player in $playernames) {
@@ -181,8 +191,8 @@ function Get-MatchStatsPlayer {
         if ($MatchType) {
             $filterProperty = 'matchType'
         }
-        $alives = (($killstats | where-object { $_.stats.playername -eq $player -and $_.stats.$filterProperty -like $typemodevalue }).deathType | where-object {$_ -eq 'alive'}).count
-        $deaths = (($killstats | where-object { $_.stats.playername -eq $player -and $_.stats.$filterProperty -like $typemodevalue }).deathType | where-object {$_ -ne 'alive'}).count
+        $alives = (($killstats | where-object { $_.stats.playername -eq $player -and $_.stats.$filterProperty -like $typemodevalue }).deathType | where-object { $_ -eq 'alive' }).count
+        $deaths = (($killstats | where-object { $_.stats.playername -eq $player -and $_.stats.$filterProperty -like $typemodevalue }).deathType | where-object { $_ -ne 'alive' }).count
         $kills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).kills | Measure-Object -sum).sum
         $dbno = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).dbno | Measure-Object -sum).sum
         $humankills = (($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).humankills | Measure-Object -sum).sum
@@ -214,22 +224,24 @@ function Get-MatchStatsPlayer {
             change     = $change
         }
     }
-    return $MatchStatsPlayer | ForEach-Object {
-         $_ | Add-Member -NotePropertyName RandomKey -NotePropertyValue (Get-Random) -PassThru
-     } | Sort-Object -Property RandomKey | Select-Object -Property * -ExcludeProperty RandomKey #randomize the order
+    $MatchStatsPlayer_sorted = $MatchStatsPlayer | ForEach-Object {
+        $_ | Add-Member -NotePropertyName RandomKey -NotePropertyValue (Get-Random) -PassThru
+    } | Sort-Object -Property $sortstat -Descending | Select-Object -Property * -ExcludeProperty RandomKey #randomize the order
 
+    return $MatchStatsPlayer_sorted
 }
 
 
 
 
-$playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername -friendlyname 'Intense'
-$playerstats_airoyale = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual'
-$playerstats_official = Get-MatchStatsPlayer -MatchType -typemodevalue 'official' -playernames $all_player_matches.playername -friendlyname 'official'
-$playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -playernames $all_player_matches.playername -friendlyname 'custom'
-$playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername -friendlyname 'all'
-$playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername -friendlyname 'Ranked'
+$playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername -friendlyname 'Intense' -killstats $killstats -sortstat 'randomkey' 
+$playerstats_airoyale = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats -sortstat 'randomkey' 
+$playerstats_official = Get-MatchStatsPlayer -MatchType -typemodevalue 'official' -playernames $all_player_matches.playername -friendlyname 'official' -killstats $killstats -sortstat 'randomkey' 
+$playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -playernames $all_player_matches.playername -friendlyname 'custom' -killstats $killstats -sortstat 'randomkey' 
+$playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername -friendlyname 'all' -killstats $killstats -sortstat 'randomkey' 
+$playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername -friendlyname 'Ranked' -killstats $killstats -sortstat 'randomkey' 
 
+$playerstats_airoyale_clan = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats_only_full_clan_matches -sortstat 'winratio' 
 
 $playerstats_custom = $playerstats_custom | Sort-Object winratio -Descending
 
@@ -244,13 +256,15 @@ $formattedString = "$currentDateTime - Time Zone: $currentTimezone"
 # Output the formatted string
 
 $playerstats = [PSCustomObject]@{
-    all      = $playerstats_all
-    Intense  = $playerstats_event_ibr
-    Casual   = $playerstats_airoyale
-    official = $playerstats_official
-    custom   = $playerstats_custom
-    updated  = $formattedString
-    Ranked   = $playerstats_ranked
+    all           = $playerstats_all
+    clan_4_casual = $playerstats_airoyale_clan
+    Intense       = $playerstats_event_ibr
+    Casual        = $playerstats_airoyale
+    official      = $playerstats_official
+    custom        = $playerstats_custom
+    updated       = $formattedString
+    Ranked        = $playerstats_ranked
+
 }
 
 write-output "Writing file"

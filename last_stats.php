@@ -15,7 +15,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
 
     <main>
         <section>
-            <h2>Player Stats past month</h2>
+            <h2>Player Stats past Quarter</h2>
             <?php
             include './config/config.php';
 
@@ -33,6 +33,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 // if ($key == 'all') {
                 //     echo "Stats for $key (minimal 20 matches)";
                 // }
+                if ($key == 'clan_4_casual') {
+                    echo "Stats for $key (minimal 4 matches)";
+                }
                 if ($key == 'Intense') {
                     echo "Stats for $key (minimal 8 matches)";
                 }
@@ -69,6 +72,9 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     }
 
                      if ($key == 'all' && $player_data['matches'] < 20) {
+                        continue;
+                    }
+                    if ($key == 'clan_4_casual' && $player_data['matches'] < 4) {
                         continue;
                     }
                     if ($key == 'Intense' && $player_data['matches'] < 8) {
