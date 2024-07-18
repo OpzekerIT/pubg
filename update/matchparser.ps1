@@ -12,7 +12,7 @@ else {
 . $scriptroot\..\includes\ps1\lockfile.ps1
 new-lock -by "matchparser"
 ##SETTINGS
-$monthsback = -1 # how many months back to look for matches
+$monthsback = -3 # how many months back to look for matches
 ##END OF SETTINGS
 function Get-Change {
     param (

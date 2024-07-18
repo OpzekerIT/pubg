@@ -15,7 +15,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
 
     <main>
         <section>
-            <h2>Player Stats past month</h2>
+            <h2>Player Stats past Quarter</h2>
             <?php
             include './config/config.php';
 
