@@ -214,13 +214,13 @@ function Get-MatchStatsPlayer {
             change     = $change
         }
     }
-    $MatchStatsPlayer | ForEach-Object {
-        $_ | Add-Member -NotePropertyName RandomKey -NotePropertyValue (Get-Random) -PassThru
-    } | Sort-Object -Property RandomKey | Select-Object -Property * -ExcludeProperty RandomKey #randomize the order
+    return $MatchStatsPlayer | ForEach-Object {
+         $_ | Add-Member -NotePropertyName RandomKey -NotePropertyValue (Get-Random) -PassThru
+     } | Sort-Object -Property RandomKey | Select-Object -Property * -ExcludeProperty RandomKey #randomize the order
 
-    
-    return $MatchStatsPlayer
 }
+
+
 
 
 $playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername -friendlyname 'Intense'
