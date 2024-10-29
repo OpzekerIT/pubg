@@ -110,7 +110,7 @@ $player_matches_object = @()
 foreach ($file in $matchfiles) {
     $filecontent = get-content $file | convertfrom-json
     $matchfiledate = $filecontent.data.attributes.createdAt
-    if ($matchfiledate -lt (get-date).AddMonths(-1)) {
+    if ($matchfiledate -lt (get-date).AddMonths(-3)) {
         write-output "archiving $matchfiledate"
         Move-Item -Path $file -Destination "$scriptroot/../data/matches/archive"
     }
