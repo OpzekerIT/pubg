@@ -54,6 +54,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Player</th>
+                    <th>AHD</th>
                     <th>Win %</th>
                     <th>K/D Human</th>
                     <th>Human Kills</th>
@@ -120,6 +121,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     $winratio = number_format($player_data['winratio'], 2, ',', '');
                     $originalChange = str_replace(',', '.', $player_data['change']); // replace comma with period
                     $change = floatval($originalChange);
+                    $ahd = number_format($player_data['ahd'], 2, ',', '');
 
                     if ($originalChange < 0) {
                         $imagePath = 'images\red.png';
@@ -133,6 +135,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
 
                     echo "<tr>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$player_name</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$ahd</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$winratio</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$KD_H</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$humankills</a></td>
