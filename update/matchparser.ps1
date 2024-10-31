@@ -247,14 +247,14 @@ function Get-MatchStatsPlayer {
 
 
 
-$playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername -friendlyname 'Intense' -killstats $killstats -sortstat 'randomkey' 
-$playerstats_airoyale = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats -sortstat 'randomkey' 
-$playerstats_official = Get-MatchStatsPlayer -MatchType -typemodevalue 'official' -playernames $all_player_matches.playername -friendlyname 'official' -killstats $killstats -sortstat 'randomkey' 
-$playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -playernames $all_player_matches.playername -friendlyname 'custom' -killstats $killstats -sortstat 'randomkey' 
-$playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername -friendlyname 'all' -killstats $killstats -sortstat 'randomkey' 
-$playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername -friendlyname 'Ranked' -killstats $killstats -sortstat 'randomkey' 
+$playerstats_event_ibr = Get-MatchStatsPlayer -GameMode -typemodevalue 'ibr' -playernames $all_player_matches.playername -friendlyname 'Intense' -killstats $killstats -sortstat 'ahd' 
+$playerstats_airoyale = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats -sortstat 'ahd' 
+$playerstats_official = Get-MatchStatsPlayer -MatchType -typemodevalue 'official' -playernames $all_player_matches.playername -friendlyname 'official' -killstats $killstats -sortstat 'ahd' 
+$playerstats_custom = Get-MatchStatsPlayer -MatchType -typemodevalue 'custom' -playernames $all_player_matches.playername -friendlyname 'custom' -killstats $killstats -sortstat 'ahd' 
+$playerstats_all = Get-MatchStatsPlayer -MatchType -typemodevalue '*' -playernames $all_player_matches.playername -friendlyname 'all' -killstats $killstats -sortstat 'ahd' 
+$playerstats_ranked = Get-MatchStatsPlayer -MatchType -typemodevalue 'competitive' -playernames $all_player_matches.playername -friendlyname 'Ranked' -killstats $killstats -sortstat 'ahd' 
 
-$playerstats_airoyale_clan_gt_1 = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats_clan_matches_gt_1 -sortstat 'winratio' 
+$playerstats_airoyale_clan_gt_1 = Get-MatchStatsPlayer -MatchType -typemodevalue 'airoyale' -playernames $all_player_matches.playername -friendlyname 'Casual' -killstats $killstats_clan_matches_gt_1 -sortstat 'ahd' 
 
 $playerstats_custom = $playerstats_custom | Sort-Object winratio -Descending
 
