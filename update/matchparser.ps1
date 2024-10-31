@@ -211,6 +211,7 @@ function Get-MatchStatsPlayer {
         $winratio_old = (($oldstats.$friendlyname | Where-Object { $_.playername -eq $player }).winratio)
         $winratio = Get-winratio -player_wins $player_wins -player_matches $player_matches
         $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
+        $avarage_human_damage = [math]::Round(($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).HumanDmg / $player_matches)
         
         write-host $filterProperty
         write-host $typemodevalue
@@ -232,6 +233,8 @@ function Get-MatchStatsPlayer {
             wins       = $player_wins
             dbno       = $dbno
             change     = $change
+            ahd        = $avarage_human_damage
+
         }
     }
     $MatchStatsPlayer_sorted = $MatchStatsPlayer | ForEach-Object {
