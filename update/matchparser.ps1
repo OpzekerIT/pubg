@@ -175,7 +175,7 @@ foreach ($file in $matchfiles) {
     }
     else {
         write-output "Archiving $($file.name)"
-        Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive/" -Force
+        Move-Item -Path $file.FullName -Destination "$scriptroot/../data/killstats/archive/." -Force -Verbose
     }
 }
 
@@ -211,7 +211,7 @@ function Get-MatchStatsPlayer {
         $winratio_old = (($oldstats.$friendlyname | Where-Object { $_.playername -eq $player }).winratio)
         $winratio = Get-winratio -player_wins $player_wins -player_matches $player_matches
         $change = get-change -OldWinRatio $winratio_old -NewWinRatio $winratio
-        $avarage_human_damage = [math]::Round(($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue }).HumanDmg / $player_matches)
+        $avarage_human_damage = [math]::Round((($killstats.stats | where-object { $_.playername -eq $player -and $_.$filterProperty -like $typemodevalue } | Measure-Object -Property HumanDmg -Sum).Sum / $player_matches), 2)
         
         write-host $filterProperty
         write-host $typemodevalue
