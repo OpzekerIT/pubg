@@ -52,10 +52,10 @@ async def teamify(ctx, *args):
         return
 
     guild = ctx.guild
-    voice_channel = discord.utils.get(guild.voice_channels, name="Pubg_Random")
+    voice_channel = discord.utils.get(guild.voice_channels, name="teamify")
 
     if not voice_channel or len(voice_channel.members) == 0:
-        await ctx.send("Er zijn geen mensen in het kanaal 'Pubg_Random' om teams van te maken!")
+        await ctx.send("Er zijn geen mensen in het kanaal 'teamify' om teams van te maken!")
         return
 
     members = voice_channel.members
