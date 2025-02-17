@@ -46,7 +46,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     echo "Stats for $key (minimal 18 matches)";
                 }
                 if ($key == 'custom') {
-                    echo "Stats for $key (minimal 18 matches)";
+                    echo "Stats for $key (minimal 8 matches)";
                 }
                 if ($key == 'Ranked') {
                     echo "Stats for $key (minimal 8 matches)";
@@ -87,7 +87,7 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     if ($key == 'official' && $player_data['matches'] < 18) {
                         continue;
                     }
-                    if ($key == 'custom' && $player_data['matches'] < 18) {
+                    if ($key == 'custom' && $player_data['matches'] < 8) {
                         continue;
                     }
                     if ($key == 'Ranked' && $player_data['matches'] < 8) {
