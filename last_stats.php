@@ -31,25 +31,25 @@ $ogDescription = "Explore detailed player statistics over the past month includi
 
                 echo "<br>";
                 // if ($key == 'all') {
-                //     echo "Stats for $key (minimal 20 matches)";
+                //     echo "Stats for $key (minimal 25 matches)";
                 // }
                 if ($key == 'clan_casual') {
-                    echo "Stats for $key (minimal 4 matches) - Clan casual min 2 clan players per match";
+                    echo "Stats for $key (minimal 18 matches) - Clan casual min 2 clan players per match";
                 }
                 if ($key == 'Intense') {
-                    echo "Stats for $key (minimal 8 matches)";
+                    echo "Stats for $key (minimal 18 matches)";
                 }
                 if ($key == 'Casual') {
-                    echo "Stats for $key (minimal 8 matches)";
+                    echo "Stats for $key (minimal 18 matches)";
                 }
                 if ($key == 'official') {
-                    echo "Stats for $key (minimal 8 matches)";
+                    echo "Stats for $key (minimal 18 matches)";
                 }
                 if ($key == 'custom') {
-                    echo "Stats for $key (minimal 8 matches)";
+                    echo "Stats for $key (minimal 18 matches)";
                 }
                 if ($key == 'Ranked') {
-                    echo "Stats for $key (minimal 5 matches)";
+                    echo "Stats for $key (minimal 8 matches)";
                 }
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
@@ -72,25 +72,25 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                         continue; // Skip this iteration and move to the next
                     }
 
-                    if ($key == 'all' && $player_data['matches'] < 20) {
+                    if ($key == 'all' && $player_data['matches'] < 25) {
                         continue;
                     }
-                    if ($key == 'clan_casual' && $player_data['matches'] < 4) {
+                    if ($key == 'clan_casual' && $player_data['matches'] < 18) {
                         continue;
                     }
-                    if ($key == 'Intense' && $player_data['matches'] < 8) {
+                    if ($key == 'Intense' && $player_data['matches'] < 18) {
                         continue;
                     }
-                    if ($key == 'Casual' && $player_data['matches'] < 8) {
+                    if ($key == 'Casual' && $player_data['matches'] < 18) {
                         continue;
                     }
-                    if ($key == 'official' && $player_data['matches'] < 8) {
+                    if ($key == 'official' && $player_data['matches'] < 18) {
                         continue;
                     }
-                    if ($key == 'custom' && $player_data['matches'] < 8) {
+                    if ($key == 'custom' && $player_data['matches'] < 18) {
                         continue;
                     }
-                    if ($key == 'Ranked' && $player_data['matches'] < 5) {
+                    if ($key == 'Ranked' && $player_data['matches'] < 8) {
                         continue;
                     }
 
