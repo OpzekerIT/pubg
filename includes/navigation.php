@@ -11,7 +11,6 @@ if ($host == 'dev.dtch.online') {
     <div id="myLinks">
         <a href="last_stats.php">Last month %</a>
         <a href="latestmatches.php">Last Matches</a>
-        <a href="topstatsavg.php">Match % T10</a>
         <a href="topstats.php">Top10</a>
         <a href="user_stats.php">User Stats</a>       
     </div>

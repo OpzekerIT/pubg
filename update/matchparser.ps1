@@ -227,8 +227,8 @@ function Get-MatchStatsPlayer {
             kills      = $kills
             humankills = $humankills
             matches    = $player_matches
-            KD_H       = $humankills / ($deaths + $alives) # KD_Human calculated per match (kills / (deaths + alives))
-            KD_ALL     = $kills / ($deaths + $alives) # KD_ALL calculated per match (kills / (deaths + alives))
+            KD_H       = $humankills / $deaths
+            KD_ALL     = $kills / $deaths
             winratio   = $winratio
             wins       = $player_wins
             dbno       = $dbno

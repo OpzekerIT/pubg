@@ -28,8 +28,13 @@ body {
     font-size: 14px;
 }
 
-th:nth-child(4), td:nth-child(4), th:nth-child(9), td:nth-child(9) {
-    display: none;
+th:nth-child(1), td:nth-child(1), /* Player */
+th:nth-child(2), td:nth-child(2), /* winrato */
+th:nth-child(3), td:nth-child(3), /* win% */
+th:nth-child(4), td:nth-child(4), /* kdh% */
+th:nth-child(8), td:nth-child(8) /* matches */
+{ 
+    display: table-cell;
 }
 
 header .banner {
