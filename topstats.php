@@ -1,6 +1,6 @@
 
 <?php
-$ogDescription = "Check out the top 10 PUBG player rankings in key performance categories! Explore leaderboards for metrics like damage dealt, headshot kills, and more across different game modes. Stay on top of the competitive scene and see where you or your favorite players stand in our regularly updated stats.";
+$ogDescription = "Check out the top 20 PUBG player rankings in key performance categories! Explore leaderboards for metrics like damage dealt, headshot kills, and more across different game modes. Stay on top of the competitive scene and see where you or your favorite players stand in our regularly updated stats.";
 
 ?>
 
@@ -31,10 +31,10 @@ include './includes/header.php';
                     <input type='submit' name='game_mode' value='squad' class='btn'>
                   </form><br>";
 
-            // Displaying top 10 comparisons for each attribute
+            // Displaying top 20 comparisons for each attribute
             $attributes = ['wins','top10s','kills','dBNOs','damageDealt','headshotKills','roadKills','teamKills','roundMostKills'];
             foreach ($attributes as $attribute) {
-                echo "<h3>Top 10 $attribute</h3>";
+                echo "<h3>Top 20 $attribute</h3>";
                 uasort($players_data[$selected_mode], function ($a, $b) use ($attribute) {
                     $account_id_a = array_key_first($a);
                     $account_id_b = array_key_first($b);
@@ -45,7 +45,7 @@ include './includes/header.php';
                 echo "<tr><th>Player</th><th>$attribute</th></tr>";
                 $count = 0;
                 foreach ($players_data[$selected_mode] as $player_name => $player_details) {
-                    if ($count++ >= 10) break; // Limit to top 10 players
+                    if ($count++ >= 20) break; // Limit to top 20 players
                     $account_id = array_key_first($player_details);
                     echo "<tr><td>$player_name</td><td>{$player_details[$account_id][$attribute]}</td></tr>";
                 }

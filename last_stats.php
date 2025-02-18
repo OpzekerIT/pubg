@@ -54,8 +54,8 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Player</th>
-                    <th>AHD</th>
                     <th>Win %</th>
+                    <th>AHD</th>
                     <th>K/D Human</th>
                     <th>Human Kills</th>
                     <th>K/D All</th>
@@ -135,8 +135,8 @@ $ogDescription = "Explore detailed player statistics over the past month includi
 
                     echo "<tr>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$player_name</a></td>
-                    <td><a href='latestmatches.php?selected_player=$player_name'>$ahd</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$winratio</a></td>
+                    <td><a href='latestmatches.php?selected_player=$player_name'>$ahd</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$KD_H</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$humankills</a></td>
                     <td><a href='latestmatches.php?selected_player=$player_name'>$KD_ALL</a></td>
