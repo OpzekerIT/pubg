@@ -1,4 +1,6 @@
-﻿import discord
+﻿import json
+import os
+import discord
 import random
 import asyncio
 import re
@@ -119,7 +121,46 @@ async def teamify(ctx, *args):
                         await ctx.send(f"Kanaal {channel.name} is opgeruimd omdat het leeg was!")
 
 @bot.command()
-async def whoisbest(ctx):
-    await ctx.send("Lanta is the best")
+async def whoisbest(ctx, category="Casual"):
+    # Bestandspad
+    file_path = os.path.join("..", "data", "player_last_stats.json")
+    
+    try:
+        # JSON-bestand lezen
+        with open(file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+        
+        available_categories = list(data.keys())
+        
+        if category not in data:
+            await ctx.send(f"Ongeldige categorie '{category}'! Beschikbare categorieën: {', '.join(available_categories)}")
+            return
+        
+        players = [player for player in data.get(category, []) if player.get("matches", 0) >= 18]
+
+        if not players:
+            await ctx.send(f"Geen spelersstatistieken gevonden voor '{category}' met minimaal 18 gespeelde matches!")
+            return
+
+        # Sorteer spelers op winratio (aflopend)
+        top_winratio = sorted(players, key=lambda x: x.get("winratio", 0), reverse=True)[:3]
+
+        # Sorteer spelers op gemiddelde damage (aflopend)
+        top_ahd = sorted(players, key=lambda x: x.get("ahd", 0), reverse=True)[:3]
+
+        # Bouw het bericht op
+        message = f"**\U0001F3C6 Top 3 Winratio ({category})**\n"
+        for i, player in enumerate(top_winratio, start=1):
+            message += f"{i}. **{player['playername']}** - {player['winratio']:.2f}%\n"
+
+        message += f"\n**\U0001F480 Top 3 AHD ({category})**\n"
+        for i, player in enumerate(top_ahd, start=1):
+            message += f"{i}. **{player['playername']}** - {player['ahd']:.2f}\n"
+
+        await ctx.send(message)
+
+    except Exception as e:
+        await ctx.send(f"Fout bij het laden van de statistieken: {str(e)}")
+
 
 bot.run(token)
