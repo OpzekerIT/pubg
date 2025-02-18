@@ -54,8 +54,8 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                 echo "<table border='1' class='sortable'>";
                 echo "<tr>
                     <th>Player</th>
-                    <th>AHD</th>
                     <th>Win %</th>
+                    <th>AHD</th>
                     <th>K/D Human</th>
                     <th>Human Kills</th>
                     <th>K/D All</th>
