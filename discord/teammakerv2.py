@@ -138,8 +138,8 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
         )
         await ctx.send(help_message)
         return
-    
-        
+
+
     # Bestandspad
     file_path = os.path.join("..", "data", "player_last_stats.json")
     
@@ -188,5 +188,21 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
     except Exception as e:
         await ctx.send(f"Fout bij het laden van de statistieken: {str(e)}")
 
+@bot.event        
+async def on_voice_state_update(member, before, after):
+    logging_channel = discord.utils.get(member.guild.text_channels, name="logging")
+    
+    if not logging_channel:
+        return
+
+    if before.channel is None and after.channel is not None:
+        # Lid joint een voice channel
+        await logging_channel.send(f"🔊 {member.name} is gejoined in voice kanaal: **{after.channel.name}**")
+    elif before.channel is not None and after.channel is None:
+        # Lid verlaat een voice channel
+        await logging_channel.send(f"🔇 {member.name} heeft het voice kanaal **{before.channel.name}** verlaten.")
+    elif before.channel != after.channel:
+        # Lid switched van voice kanaal
+        await logging_channel.send(f"🔄 {member.name} is van **{before.channel.name}** naar **{after.channel.name}** gegaan.")
 
 bot.run(token)
