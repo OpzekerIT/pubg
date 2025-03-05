@@ -29,10 +29,13 @@ body {
 }
 
 th:nth-child(1), td:nth-child(1), /* Player */
-th:nth-child(2), td:nth-child(2), /* winrato */
-th:nth-child(3), td:nth-child(3), /* win% */
-th:nth-child(4), td:nth-child(4), /* kdh% */
-th:nth-child(8), td:nth-child(8) /* matches */
+th:nth-child(2), td:nth-child(2), /* Win % */
+th:nth-child(3), td:nth-child(3), /* AHD */
+th:nth-child(4), td:nth-child(4), /* K/D Human */
+th:nth-child(5), td:nth-child(5), /* K/D All */
+th:nth-child(6), td:nth-child(6), /* Matches */
+th:nth-child(7), td:nth-child(7), /* Wins */
+th:nth-child(8), td:nth-child(8) /* Deaths */
 { 
     display: table-cell;
 }
