@@ -121,7 +121,25 @@ async def teamify(ctx, *args):
                         await ctx.send(f"Kanaal {channel.name} is opgeruimd omdat het leeg was!")
 
 @bot.command()
-async def whoisbest(ctx, category="Casual"):
+async def whoisbest(ctx, category="Casual", matchesback=18):
+
+
+    if category.lower() == "help":
+        help_message = (
+            "**Gebruik van het commando `whoisbest`:**\n"
+            "`!whoisbest [category] [matchesback]`\n\n"
+            "**Parameters:**\n"
+            "`category` - De categorie van de stats, bijv. 'Casual' of 'Ranked'. Niet hoofdlettergevoelig.\n"
+            "`matchesback` - Het minimum aantal matches dat een speler gespeeld moet hebben om mee te tellen (standaard 18).\n\n"
+            "**Voorbeeld:**\n"
+            "`!whoisbest Casual 18`\n"
+            "Laat de top 3 spelers zien op basis van winratio en gemiddelde damage in de Casual categorie met minimaal 18 matches.\n\n"
+            "Typ `!whoisbest help` om deze uitleg opnieuw te zien."
+        )
+        await ctx.send(help_message)
+        return
+    
+        
     # Bestandspad
     file_path = os.path.join("..", "data", "player_last_stats.json")
     
@@ -129,17 +147,25 @@ async def whoisbest(ctx, category="Casual"):
         # JSON-bestand lezen
         with open(file_path, "r", encoding="utf-8") as file:
             data = json.load(file)
-        
-        available_categories = list(data.keys())
-        
-        if category not in data:
-            await ctx.send(f"Ongeldige categorie '{category}'! Beschikbare categorieën: {', '.join(available_categories)}")
+
+        # Mapping maken (lowercase -> originele categorie)
+        category_mapping = {cat.lower(): cat for cat in data.keys()}
+
+        # Zet de opgegeven category om naar lowercase
+        lower_category = category.lower()
+
+        if lower_category not in category_mapping:
+            available_categories = ', '.join(data.keys())
+            await ctx.send(f"Ongeldige categorie '{category}'! Beschikbare categorieën: {available_categories}")
             return
         
-        players = [player for player in data.get(category, []) if player.get("matches", 0) >= 18]
+        # Gebruik de juiste (originele) categorie naam uit de mapping
+        actual_category = category_mapping[lower_category]
+
+        players = [player for player in data.get(actual_category, []) if player.get("matches", 0) >= matchesback]
 
         if not players:
-            await ctx.send(f"Geen spelersstatistieken gevonden voor '{category}' met minimaal 18 gespeelde matches!")
+            await ctx.send(f"Geen spelersstatistieken gevonden voor '{actual_category}' met minimaal {matchesback} gespeelde matches!")
             return
 
         # Sorteer spelers op winratio (aflopend)
@@ -149,11 +175,11 @@ async def whoisbest(ctx, category="Casual"):
         top_ahd = sorted(players, key=lambda x: x.get("ahd", 0), reverse=True)[:3]
 
         # Bouw het bericht op
-        message = f"**\U0001F3C6 Top 3 Winratio ({category})**\n"
+        message = f"**\U0001F3C6 Top 3 Winratio ({actual_category})**\n"
         for i, player in enumerate(top_winratio, start=1):
             message += f"{i}. **{player['playername']}** - {player['winratio']:.2f}%\n"
 
-        message += f"\n**\U0001F480 Top 3 AHD ({category})**\n"
+        message += f"\n**\U0001F480 Top 3 AHD ({actual_category})**\n"
         for i, player in enumerate(top_ahd, start=1):
             message += f"{i}. **{player['playername']}** - {player['ahd']:.2f}\n"
 
