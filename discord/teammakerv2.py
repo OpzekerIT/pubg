@@ -194,7 +194,9 @@ async def on_voice_state_update(member, before, after):
     
     if not logging_channel:
         return
-
+    if (before.channel and before.channel.name == "GOD_CHANNEL") or (after.channel and after.channel.name == "GOD_CHANNEL"):
+        return  # Als het God_channel is, doe niks
+    
     if before.channel is None and after.channel is not None:
         # Lid joint een voice channel
         await logging_channel.send(f"🔊 {member.name} is gejoined in voice kanaal: **{after.channel.name}**")
