@@ -199,12 +199,24 @@ async def on_voice_state_update(member, before, after):
     
     if before.channel is None and after.channel is not None:
         # Lid joint een voice channel
-        await logging_channel.send(f"🔊 {member.name} is gejoined in voice kanaal: **{after.channel.name}**")
+        await logging_channel.send(f"🔊 {member.mention} is gejoined in voice kanaal: **{after.channel.name}**")
     elif before.channel is not None and after.channel is None:
         # Lid verlaat een voice channel
-        await logging_channel.send(f"🔇 {member.name} heeft het voice kanaal **{before.channel.name}** verlaten.")
+        await logging_channel.send(f"🔇 {member.mention} heeft het voice kanaal **{before.channel.name}** verlaten.")
     elif before.channel != after.channel:
         # Lid switched van voice kanaal
-        await logging_channel.send(f"🔄 {member.name} is van **{before.channel.name}** naar **{after.channel.name}** gegaan.")
+        await logging_channel.send(f"🔄 {member.mention} is van **{before.channel.name}** naar **{after.channel.name}** gegaan.")
+
+@bot.event
+async def on_member_join(member):
+    logging_channel = discord.utils.get(member.guild.text_channels, name="raadhuisplein")
+    if logging_channel:
+        await logging_channel.send(f"🎉 Welkom {member.mention} op de server! We hopen dat je een leuke tijd hebt!")
+
+@bot.event
+async def on_member_remove(member):
+    logging_channel = discord.utils.get(member.guild.text_channels, name="raadhuisplein")
+    if logging_channel:
+        await logging_channel.send(f"😢 {member.name} heeft de server verlaten. We zullen je missen!")
 
 bot.run(token)
