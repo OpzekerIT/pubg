@@ -101,6 +101,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                         echo "<tr>
                             <th>Player Name</th>
                             <th>humankills</th>
+                            <th>HumanDmg </th>
                             <th>Kills</th>
                             <th>Total Damage</th>
                             <th>Rank</th>
@@ -128,6 +129,7 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($individualPlayerName) . "</td>";
                             echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['humankills']) . "</td>";
+                            echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['HumanDmg']) . "</td>";
                             echo "<td>" . htmlspecialchars($jsonData_individual_player['stats']['kills']) . "</td>";
                             echo "<td>" . htmlspecialchars($damageDealt) . "</td>";
                             echo "<td>" . htmlspecialchars($rank) . "</td>";
@@ -142,7 +144,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             <th>Sort</th>
                             <th>Kills</th>
                             <th>Damage Dealt</th>
-                            <th>Human Damage</th>
                             <th>Time Survived</th>
                             <th>Rank</th>
                             <th>Revs</th>
@@ -159,7 +160,6 @@ $lastMatches = array_slice($allMatches, 0, 8);
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'> Human </a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['damageDealt']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['HumanDmg']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
                                 echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['winPlace']) . "</a></td>";
