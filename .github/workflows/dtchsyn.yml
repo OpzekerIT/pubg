@@ -20,7 +20,7 @@ jobs:
         password: ${{secrets.SYNPASS}}
         port: 22
         uploads: |
-          ./ => ./www/public_html/
+          ./ => ./Lantaeu/dtch_dev
         ignore: |
           *.git
           */**/*git*
