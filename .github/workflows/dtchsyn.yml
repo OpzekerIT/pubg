@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+name: Publish Website
+jobs:
+  web-deploy:
+    name: Deploy based on branch
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set destination path based on branch
+      id: set-destination
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "DESTINATION=/Lantaeu/dtch/" >> $GITHUB_ENV
+        else
+          echo "DESTINATION=/Lantaeu/dtch_dev/" >> $GITHUB_ENV
+        fi
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: SFTP upload
+      uses: Dylan700/sftp-upload-action@latest
+      with:
+        server: ${{secrets.SYNADDR}}
+        username: ${{secrets.SYNUSR}}
+        password: ${{secrets.SYNPASS}}
+        port: 22
+        uploads: |
+          ./ => ${{ env.DESTINATION }}
+        ignore: |
+          *.git
+          */**/*git*
+          *.json
+          config.php
