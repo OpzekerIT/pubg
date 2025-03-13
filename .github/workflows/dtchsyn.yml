@@ -15,9 +15,9 @@ jobs:
     - name: SFTP upload
       uses: Dylan700/sftp-upload-action@latest
       with:
-        server: sftp.server.com
-        username: jason-bourne
-        password: ${{secrets.password}}
+        server: ${{secrets.SYNADDR}}
+        username: ${{secrets.username}}
+        password: ${{secrets.SYNPASS}}
         port: 22
         uploads: |
           ./ => ./www/public_html/
