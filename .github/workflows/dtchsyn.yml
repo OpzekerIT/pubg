@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - dev
+      - main
+name: Publish Website
+jobs:
+  web-deploy:
+    name: Deploy based on branch
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: SFTP upload
+      uses: Dylan700/sftp-upload-action@latest
+      with:
+        server: sftp.server.com
+        username: jason-bourne
+        password: ${{secrets.password}}
+        port: 22
+        uploads: |
+          ./ => ./www/public_html/
+        ignore: |
+          *.git
+          */**/*git*
+          *.json
+          config.php
