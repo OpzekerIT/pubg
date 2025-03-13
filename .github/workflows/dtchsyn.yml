@@ -16,7 +16,7 @@ jobs:
       uses: Dylan700/sftp-upload-action@latest
       with:
         server: ${{secrets.SYNADDR}}
-        username: ${{secrets.username}}
+        username: ${{secrets.SYNUSR}}
         password: ${{secrets.SYNPASS}}
         port: 22
         uploads: |
