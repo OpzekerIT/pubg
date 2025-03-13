@@ -35,6 +35,10 @@ async def on_ready():
     print(f'Bot is ingelogd als {bot.user}')
 
 @bot.command()
+async def test(ctx):
+    await ctx.send("Test geslaagd!")
+
+@bot.command()
 async def teamify(ctx, *args):
     for arg in args:
         if arg.lower() == "help":
