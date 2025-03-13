@@ -3,12 +3,22 @@ on:
     branches:
       - dev
       - main
+
 name: Publish Website
 jobs:
   web-deploy:
     name: Deploy based on branch
     runs-on: ubuntu-latest
     steps:
+    - name: Set destination path based on branch
+      id: set-destination
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "DESTINATION=/Lantaeu/dtch/" >> $GITHUB_ENV
+        else
+          echo "DESTINATION=/Lantaeu/dtch_dev/" >> $GITHUB_ENV
+        fi
+
     - name: Checkout
       uses: actions/checkout@v4
       
@@ -20,7 +30,7 @@ jobs:
         password: ${{secrets.SYNPASS}}
         port: 22
         uploads: |
-          ./ => ./Lantaeu/dtch_dev
+          ./ => ${{ env.DESTINATION }}
         ignore: |
           *.git
           */**/*git*
