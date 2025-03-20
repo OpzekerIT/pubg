@@ -223,4 +223,33 @@ async def on_member_remove(member):
     if logging_channel:
         await logging_channel.send(f"😢 {member.name} heeft de server verlaten. We zullen je missen!")
 
+@bot.command()
+async def moveall(ctx):
+    # Controleer of het commando in het juiste kanaal wordt uitgevoerd
+    if ctx.channel.name != "teamify":
+        await ctx.send("Dit commando kan alleen worden gebruikt in het #teamify tekstkanaal.")
+        return
+    
+    guild = ctx.guild
+    teamify_channel = discord.utils.get(guild.voice_channels, name="teamify")
+    
+    if not teamify_channel:
+        await ctx.send("Het teamify voice-kanaal bestaat niet!")
+        return
+    
+    moved_members = 0
+    for channel in guild.voice_channels:
+        if channel != teamify_channel:
+            for member in channel.members:
+                try:
+                    await member.move_to(teamify_channel)
+                    moved_members += 1
+                except Exception as e:
+                    await ctx.send(f"Kon {member.mention} niet verplaatsen: {e}")
+    
+    if moved_members > 0:
+        await ctx.send(f"{moved_members} speler(s) zijn verplaatst naar het teamify kanaal.")
+    else:
+        await ctx.send("Er waren geen spelers om te verplaatsen.")
+        
 bot.run(token)
