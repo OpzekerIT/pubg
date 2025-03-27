@@ -18,7 +18,8 @@ $ogDescription = "Explore detailed player statistics over the past month includi
             <h2>Player Stats past Quarter</h2>
             <?php
             include './config/config.php';
-
+            $clanmembers = json_decode(file_get_contents('./config/clanmembers.json'), true);
+            $alts = $clanmembers['alts'];
             $players_matches = json_decode(file_get_contents('./data/player_last_stats.json'), true);
 
             foreach ($players_matches as $key => $player_datas) {
@@ -71,7 +72,10 @@ $ogDescription = "Explore detailed player statistics over the past month includi
                     if (!isset($player_data['playername']) || is_null($player_data['playername'])) {
                         continue; // Skip this iteration and move to the next
                     }
-
+                    if (in_array($player_data['playername'], $alts)) {
+                        continue; // Skip alt players
+                    }
+                    
                     if ($key == 'all' && $player_data['matches'] < 25) {
                         continue;
                     }
