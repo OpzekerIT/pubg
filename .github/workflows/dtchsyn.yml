@@ -34,5 +34,5 @@ jobs:
         ignore: |
           *.git
           */**/*git*
-          *.json
           config.php
+          data/**/*.json
