@@ -33,6 +33,5 @@ jobs:
           ./ => ${{ env.DESTINATION }}
         ignore: |
           *.git
-          */**/*git*
           config.php
           data/**/*.json
