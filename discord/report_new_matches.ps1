@@ -72,13 +72,12 @@ $map_map = @{
 }
 
 try { 
-    get-content "$scriptroot/../data/player_matches.json" #debug purposes
     $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100 
 }
 catch {
     Write-Output 'Unable to read file exitin' 
 }
-write-output $player_matches
+Write-Output $player_matches
 Write-Output $new_win_matches
 $new_win_matches = $player_matches[-1].new_win_matches
 
