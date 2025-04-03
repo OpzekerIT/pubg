@@ -1,4 +1,5 @@
-﻿Start-Transcript -Path '/var/log/dtch/report_new_matches.log' -Append
+﻿$logprefix = get-date -Format ddMMyyy_HHmmss
+Start-Transcript -Path "../logs/report_new_matches_$logprefix.log" -Append
 
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
