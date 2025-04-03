@@ -25,7 +25,6 @@ jobs:
     - name: SFTP upload
       uses: Dylan700/sftp-upload-action@latest
       with:
-        debug: true
         dry-run: false
         server: ${{secrets.SYNADDR}}
         username: ${{secrets.SYNUSR}}
