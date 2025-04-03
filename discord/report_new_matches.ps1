@@ -1,4 +1,5 @@
 ﻿$logprefix = get-date -Format ddMMyyy_HHmmss
+#up
 Start-Transcript -Path "../logs/report_new_matches_$logprefix.log" -Append
 
 if ($PSScriptRoot.length -eq 0) {
