@@ -1,15 +1,21 @@
-﻿$logprefix = get-date -Format ddMMyyy_HHmmss
-#up
-Start-Transcript -Path "../logs/report_new_matches_$logprefix.log" -Append
-
+﻿$logprefix = Get-Date -Format "ddMMyyyy_HHmmss"
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
 else {
     $scriptroot = $PSScriptRoot
 }
+$RelativeLogdir = Join-Path -Path $scriptroot -ChildPath "..\logs"
+$logDir = (Resolve-Path -Path $RelativeLogdir).Path
+
+Start-Transcript -Path "$logDir/report_new_matches_$logprefix.log" -Append
 . $scriptroot\..\includes\ps1\lockfile.ps1
 new-lock -by "report_new_matches"
+write-output "Scriptroot: $scriptroot"
+write-output "Scriptname: $($MyInvocation.MyCommand)"
+write-output "Script: $($MyInvocation.MyCommand.Path)"
+write-output "PSScriptroot: $PSScriptRoot"
+write-output "Logdir: $logDir"
 
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
@@ -66,11 +72,14 @@ $map_map = @{
 }
 
 try { 
+    get-content "$scriptroot/../data/player_matches.json" #debug purposes
     $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100 
 }
 catch {
     Write-Output 'Unable to read file exitin' 
 }
+write-output $player_matches
+Write-Output $new_win_matches
 $new_win_matches = $player_matches[-1].new_win_matches
 
 
