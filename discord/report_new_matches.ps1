@@ -1,6 +1,4 @@
-﻿
-
-if ($PSScriptRoot.length -eq 0) {
+﻿if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
 else {
@@ -8,7 +6,6 @@ else {
 }
 
 $logprefix = get-date -Format ddMMyyy_HHmmss
-#up
 Start-Transcript -Path "$scriptroot/../logs/report_new_matches_$logprefix.log" -Append
 
 . $scriptroot\..\includes\ps1\lockfile.ps1
