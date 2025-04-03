@@ -14,9 +14,9 @@ jobs:
       id: set-destination
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-          echo "DESTINATION=/Lantaeu/dtch/" >> $GITHUB_ENV
+          echo "DESTINATION=/LantaeuSSD/dtch/" >> $GITHUB_ENV
         else
-          echo "DESTINATION=/Lantaeu/dtch_dev/" >> $GITHUB_ENV
+          echo "DESTINATION=/LantaeuSSD/dtch_dev/" >> $GITHUB_ENV
         fi
 
     - name: Checkout
