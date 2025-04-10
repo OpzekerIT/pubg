@@ -95,14 +95,14 @@ foreach ($winid in $new_win_matches) {
     $2D_replay_url = $2D_replay_url + "?follow=$($winners[0])"
 
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
-    if($winmatches[0].gameMode -eq 'tdm' ){
+    if ($winmatches[0].gameMode -eq 'tdm' ) {
         continue
     } #skip tdm matches
     if ($winmatches[0].matchType -eq 'custom') {
-        $players_to_report = $match_stats.included.attributes.stats
+        $players_to_report = $match_stats.included.attributes.stats | where-object { $_.playerId -notlike "ai.*" }
     }
     else {
-        $players_to_report = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
+        $players_to_report = $match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 }
     }
     
     if ($new_win_matches.count -le 10) {
