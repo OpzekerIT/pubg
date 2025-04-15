@@ -87,6 +87,15 @@ if (test-path "$scriptroot/../data/player_matches.json") {
         new_win_matches = $new_win_matches
     }
 
+    # Nieuwe verloren matches bepalen
+    $new_loss_ids = ($player_matches.player_matches | Where-Object { $_.stats.winplace -ne 1 }).id
+    $old_loss_ids = ($old_player_data.player_matches | Where-Object { $_.stats.winplace -ne 1 }).id
+    $new_loss_matches = ((Compare-Object -ReferenceObject $old_loss_ids -DifferenceObject $new_loss_ids) | Where-Object { $_.SideIndicator -eq '=>' }).InputObject | Select-Object -Unique
+    $new_loss_matches = $old_player_data.new_loss_matches + $new_loss_matches | Select-Object -Unique
+    $player_matches += [PSCustomObject]@{
+        new_loss_matches = $new_loss_matches
+    }
+
 }
 
 $currentDateTime = Get-Date
