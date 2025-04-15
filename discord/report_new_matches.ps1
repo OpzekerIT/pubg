@@ -1,13 +1,21 @@
-﻿Start-Transcript -Path '/var/log/dtch/report_new_matches.log' -Append
-
+﻿$logprefix = Get-Date -Format "ddMMyyyy_HHmmss"
 if ($PSScriptRoot.length -eq 0) {
     $scriptroot = Get-Location
 }
 else {
     $scriptroot = $PSScriptRoot
 }
+$RelativeLogdir = Join-Path -Path $scriptroot -ChildPath "..\logs"
+$logDir = (Resolve-Path -Path $RelativeLogdir).Path
+
+Start-Transcript -Path "$logDir/report_new_matches_$logprefix.log" -Append
 . $scriptroot\..\includes\ps1\lockfile.ps1
 new-lock -by "report_new_matches"
+write-output "Scriptroot: $scriptroot"
+write-output "Scriptname: $($MyInvocation.MyCommand)"
+write-output "Script: $($MyInvocation.MyCommand.Path)"
+write-output "PSScriptroot: $PSScriptRoot"
+write-output "Logdir: $logDir"
 
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
@@ -85,6 +93,8 @@ try {
 catch {
     Write-Output 'Unable to read file exitin' 
 }
+Write-Output $player_matches
+Write-Output $new_win_matches
 $new_win_matches = $player_matches[-1].new_win_matches
 
 # Gebruik nu de lijst van nieuwe verloren matches uit het JSON-bestand
@@ -119,14 +129,14 @@ foreach ($winid in $new_win_matches) {
     $2D_replay_url = $2D_replay_url + "?follow=$($winners[0])"
 
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
-    if($winmatches[0].gameMode -eq 'tdm' ){
+    if ($winmatches[0].gameMode -eq 'tdm' ) {
         continue
     } #skip tdm matches
     if ($winmatches[0].matchType -eq 'custom') {
-        $players_to_report = $match_stats.included.attributes.stats
+        $players_to_report = $match_stats.included.attributes.stats | where-object { $_.playerId -notlike "ai.*" }
     }
     else {
-        $players_to_report = ($match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 })
+        $players_to_report = $match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 }
     }
     
     if ($new_win_matches.count -le 10) {

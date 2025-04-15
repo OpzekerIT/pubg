@@ -14,9 +14,9 @@ jobs:
       id: set-destination
       run: |
         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-          echo "DESTINATION=/Lantaeu/dtch/" >> $GITHUB_ENV
+          echo "DESTINATION=/LantaeuSSD/dtch/" >> $GITHUB_ENV
         else
-          echo "DESTINATION=/Lantaeu/dtch_dev/" >> $GITHUB_ENV
+          echo "DESTINATION=/LantaeuSSD/dtch_dev/" >> $GITHUB_ENV
         fi
 
     - name: Checkout
@@ -25,6 +25,7 @@ jobs:
     - name: SFTP upload
       uses: Dylan700/sftp-upload-action@latest
       with:
+        dry-run: false
         server: ${{secrets.SYNADDR}}
         username: ${{secrets.SYNUSR}}
         password: ${{secrets.SYNPASS}}
@@ -32,7 +33,6 @@ jobs:
         uploads: |
           ./ => ${{ env.DESTINATION }}
         ignore: |
-          *.git
-          */**/*git*
+          .git
           config.php
           data/**/*.json
