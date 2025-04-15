@@ -336,6 +336,8 @@ k_t     = Team eliminaties
 foreach ($item in $player_matches) {
     if ($item.PSObject.Properties.Name -contains "new_win_matches") {
         $item.new_win_matches = $null
+    }
+    if ($item.PSObject.Properties.Name -contains "new_loss_matches") {
         $item.new_loss_matches = $null
     }
 }
@@ -348,3 +350,4 @@ $newJson | out-file "$scriptroot/../data/player_matches.json"
 
 remove-lock
 Stop-Transcript
+
