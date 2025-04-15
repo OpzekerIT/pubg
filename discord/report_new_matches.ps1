@@ -36,11 +36,17 @@ $headers = @{
 $fileContent = Get-Content -Path "$scriptroot/../discord/config.php" -Raw
 
 # Use regex to match the apiKey value
-if ($fileContent -match "\`$webhookurl\s*=\s*\'([^\']+)\'") {
+if ($fileContent -match "\`$webhookurl\s*=\s*'([^']+)'") {
     $webhookurl = $matches[1]
-}
-else {
+} else {
     Write-Output "No web url found"
+}
+
+# Use regex to match the losers webhook url
+if ($fileContent -match "\`$webhookurl_losers\s*=\s*'([^']+)'") {
+    $webhookurl_losers = $matches[1]
+} else {
+    Write-Output "No losers web url found"
 }
 
 function send-discord {
@@ -54,6 +60,16 @@ function send-discord {
     }
     
     Invoke-RestMethod -Uri $webhookurl -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
+}
+
+function send-discord-losers {
+    param (
+        $content
+    )
+    $payload = [PSCustomObject]@{
+        content = $content
+    }
+    Invoke-RestMethod -Uri $webhookurl_losers -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
 }
 
 $map_map = @{
@@ -81,7 +97,25 @@ Write-Output $player_matches
 Write-Output $new_win_matches
 $new_win_matches = $player_matches[-1].new_win_matches
 
+# Gebruik nu de lijst van nieuwe verloren matches uit het JSON-bestand
+$new_loss_matches = $player_matches[-1].new_loss_matches
 
+# Post verloren matches naar #losers kanaal
+foreach ($lossid in $new_loss_matches) {
+    $lossmatch = $player_matches.player_matches | Where-Object { $_.id -eq $lossid }
+    if ($null -eq $lossmatch) { continue }
+    if ($lossmatch[0].gameMode -eq 'tdm') { continue }
+    $losers = $lossmatch[0].stats.name
+    $map = $map_map[$lossmatch[0].mapName]
+    $place = $lossmatch[0].stats.winPlace
+    $replay_url = $lossmatch[0].telemetry_url -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
+    $replay_url = $replay_url -replace '-telemetry.json', ''
+    $replay_url = $replay_url + "?follow=$losers"
+    $msg = ":skull: **Verloren pot** :skull:`nTeam: $losers`nMap: $map`nPlaats: $place`n[2D replay]($replay_url)`nMeer details: https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)"
+    send-discord-losers -content $msg
+}
+
+ 
 foreach ($winid in $new_win_matches) {
 
     $win_stats = @()
