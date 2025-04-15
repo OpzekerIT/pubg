@@ -211,10 +211,21 @@ foreach ($lossid in $new_loss_matches) {
     $replay_url = $lossmatch[0].telemetry_url -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
     $replay_url = $replay_url -replace '-telemetry.json', ''
     $replay_url = $replay_url + "?follow=$first_player_name" # Follow the first player
-
-    # Modified message construction
-    $msg = ":skull: **Verloren pot** :skull:`nTeam: $losers`nMap: $map`nPlaats: $place`n$content_lossstats`n$content_loss_victims`n[2D replay](<$replay_url>)`nMeer details: [DTCH_STATS](<https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)>)"
-    send-discord-losers -content $msg
+    $match_settings = @"
+    ``````
+    match mode      $($lossmatch[0].gameMode)
+    match type      $($lossmatch[0].matchType)
+    map             $($map_map[$lossmatch[0].mapName])
+    id              $($lossmatch[0].id)
+    ``````
+"@
+    send-discord-losers -content "We hebben een LOSERT! Geen Kip voor jou! :skull::skull:"
+    send-discord-losers -content ":partying_face::partying_face::partying_face: Helaas, $($losers) :partying_face::partying_face::partying_face:"
+    send-discord-losers -content $match_settings
+    send-discord-losers -content $content_lossstats
+    send-discord-losers -content $content_loss_victims
+    send-discord-losers -content "[2D replay](<$replay_url>)"
+    send-discord-losers -content "Meer match details [DTCH_STATS](<https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)>)" 
 }
 
 
