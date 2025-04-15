@@ -105,17 +105,119 @@ foreach ($lossid in $new_loss_matches) {
     $lossmatch = $player_matches.player_matches | Where-Object { $_.id -eq $lossid }
     if ($null -eq $lossmatch) { continue }
     if ($lossmatch[0].gameMode -eq 'tdm') { continue }
-    $losers = $lossmatch[0].stats.name
+
+    # Fetch detailed match stats and telemetry for the loss
+    $loss_match_stats = $null
+    $loss_telemetry = $null
+    try {
+        $loss_match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$lossid" -Method GET -Headers $headers
+        $loss_telemetry = (invoke-webrequest @($lossmatch.telemetry_url)[0]).content | convertfrom-json | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }
+    } catch {
+        $errorMessage = $_.Exception.Message
+        Write-Warning ("Failed to fetch API/telemetry data for loss match {0}: {1}" -f $lossid, $errorMessage)
+    }
+
+    $loss_stats_table = @()
+    $loss_victims = @() # For team damage
+
+    # Iterate through players found in the locally stored match data for this loss
+    foreach ($player_stat in $lossmatch[0].stats) {
+        $player_name = $player_stat.name
+        # Find the corresponding detailed stats from the API response
+        $detailed_player_stats = $null
+        if ($null -ne $loss_match_stats) {
+             $detailed_player_stats = $loss_match_stats.included | Where-Object {$_.type -eq 'participant'} | ForEach-Object {$_.attributes.stats} | Where-Object { $_.name -eq $player_name }
+        }
+
+        if ($null -eq $detailed_player_stats) {
+            Write-Warning "Could not find detailed stats for player $player_name in loss match $lossid. Using basic stats."
+            # Fallback to basic stats if detailed stats are missing
+             $loss_stats_table += [PSCustomObject]@{
+                Name          = $player_name
+                'Human dmg'   = "N/A"
+                'Human Kills' = "N/A"
+                'Dmg'         = "$([math]::Round($player_stat.damageDealt))" # Use basic stat
+                'Kills'       = "$($player_stat.kills)" # Use basic stat
+                'alive'       = "$([math]::Round(($player_stat.timeSurvived / 60)))" # Use basic stat
+            }
+            continue # Skip telemetry processing if detailed stats failed
+        }
+
+        # Calculate stats (similar to win stats calculation)
+        $human_dmg = "N/A"
+        $human_kills = "N/A"
+        if ($null -ne $loss_telemetry) {
+             try {
+                $human_dmg = [math]::Round(($loss_telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player_name -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum)
+                $human_kills = ($loss_telemetry | Where-Object { $_._T -eq 'LOGPLAYERKILLV2' -and $_.killer.name -eq $player_name -and $_.victim.accountId -notlike "ai.*" }).count
+             } catch {
+                 $errorMessage = $_.Exception.Message
+                 Write-Warning ("Error processing telemetry stats for {0} in loss {1}: {2}" -f $player_name, $lossid, $errorMessage)
+             }
+        }
+
+        $loss_stats_table += [PSCustomObject]@{
+            Name          = $player_name
+            'Human dmg'   = "$human_dmg"
+            'Human Kills' = "$human_kills"
+            'Dmg'         = "$([math]::Round($detailed_player_stats.damageDealt))"
+            'Kills'       = "$($detailed_player_stats.kills)"
+            'alive'       = "$([math]::Round(($detailed_player_stats.timeSurvived / 60)))"
+        }
+
+        # Calculate team damage
+         if ($null -ne $loss_telemetry) {
+             try {
+                $teamdmg = $loss_telemetry | Where-Object {
+                    $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and
+                    $_.victim.teamId -eq $_.attacker.teamId -and
+                    $_.victim.accountId -notlike "ai.*" -and
+                    $_.victim.name -ne $_.attacker.name -and
+                    $_.attacker.name -eq $player_name
+                }
+                if ($teamdmg.count -ge 1) {
+                    foreach ($victim_name in ($teamdmg.victim.name | Select-Object -Unique)) {
+                        $loss_victims += [PSCustomObject]@{
+                            attacker = $player_name
+                            victim   = $victim_name
+                            Damage   = "$([math]::Round((($teamdmg | Where-Object { $_.victim.name -eq $victim_name }).damage | Measure-Object -Sum).Sum))"
+                        }
+                    }
+                }
+             } catch {
+                 $errorMessage = $_.Exception.Message
+                 Write-Warning ("Error processing team damage for {0} in loss {1}: {2}" -f $player_name, $lossid, $errorMessage)
+             }
+        }
+    }
+
+    # Format the stats table
+    $content_lossstats = ""
+    if ($loss_stats_table.Count -gt 0) {
+        $content_lossstats = '```' + ($loss_stats_table | Format-Table -AutoSize | Out-String) + '```'
+    }
+
+    # Format team damage table
+    $content_loss_victims = ""
+    if ($loss_victims.Count -gt 0) {
+        $content_loss_victims = ":skull::skull: Team Damage :skull::skull:`n" + '```' + ($loss_victims | Format-Table -AutoSize | Out-String) + '```'
+    }
+
+    # Original message construction variables
+    $losers = $lossmatch[0].stats.name -join ', ' # Join names for display
     $map = $map_map[$lossmatch[0].mapName]
-    $place = $lossmatch[0].stats.winPlace
+    $place = ($lossmatch[0].stats | Select-Object -First 1).winPlace # Get placement from the first player stat
+    $first_player_name = ($lossmatch[0].stats | Select-Object -First 1).name
     $replay_url = $lossmatch[0].telemetry_url -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
     $replay_url = $replay_url -replace '-telemetry.json', ''
-    $replay_url = $replay_url + "?follow=$losers"
-    $msg = ":skull: **Verloren pot** :skull:`nTeam: $losers`nMap: $map`nPlaats: $place`n[2D replay]($replay_url)`nMeer details: https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)"
+    $replay_url = $replay_url + "?follow=$first_player_name" # Follow the first player
+
+    # Modified message construction
+    $msg = ":skull: **Verloren pot** :skull:`nTeam: $losers`nMap: $map`nPlaats: $place`n$content_lossstats`n$content_loss_victims`n[2D replay]($replay_url)`nMeer details: https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)"
     send-discord-losers -content $msg
 }
 
- 
+
 foreach ($winid in $new_win_matches) {
 
     $win_stats = @()
