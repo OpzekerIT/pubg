@@ -1,122 +1,166 @@
 <?php
- 
-$dataPoints = array(
-	array("y" => 25, "label" => "Sunday"),
-	array("y" => 15, "label" => "Monday"),
-	array("y" => 25, "label" => "Tuesday"),
-	array("y" => 5, "label" => "Wednesday"),
-	array("y" => 10, "label" => "Thursday"),
-	array("y" => 0, "label" => "Friday"),
-	array("y" => 20, "label" => "Saturday")
-);
- 
-?>
-<?php
-
+// --- Configuration and Data Processing ---
 $dataPointsPerPlayer = [];
+$chartData = [];
+$encodedChartData = '[]'; // Default to empty JSON array
+$dataError = '';
 $directory = 'data/killstats';
 
 // Check if the directory exists
 if (!is_dir($directory)) {
-    die("The directory $directory does not exist");
-}
+    $dataError = "The directory '$directory' does not exist or is not accessible.";
+} else {
+    // Attempt to open the directory
+    $handle = @opendir($directory); // Use @ to suppress default warning on failure
+    if ($handle === false) {
+        $dataError = "Could not open the directory '$directory'. Check permissions.";
+    } else {
+        // Loop through the directory
+        while (false !== ($entry = readdir($handle))) {
+            // Skip '.' and '..' and non-JSON files
+            if ($entry === '.' || $entry === '..' || pathinfo($entry, PATHINFO_EXTENSION) !== 'json') {
+                continue;
+            }
 
-// Open the directory
-if ($handle = opendir($directory)) {
-    // Loop through the directory
-    while (false !== ($entry = readdir($handle))) {
-        if ($entry !== '.' && $entry !== '..') {
-            // Read each file
             $filepath = $directory . '/' . $entry;
-            $content = file_get_contents($filepath);
-            
+            $content = @file_get_contents($filepath); // Use @ to suppress warning on failure
+
+            if ($content === false) {
+                // Log or handle file read error if necessary, maybe skip the file
+                error_log("Could not read file: " . $filepath);
+                continue;
+            }
+
             // Decode JSON data to PHP array
             $jsonArray = json_decode($content, true);
-            
-            // Extract playername
-            $playername = $jsonArray['stats']['playername'];
-            // Process the date
-            $date = new DateTime($jsonArray['created']);
-            $label = $date->format('m-d'); // Month-Day format
-            
-            // Initialize player array if not existing
-            if (!isset($dataPointsPerPlayer[$playername])) {
-                $dataPointsPerPlayer[$playername] = [];
+
+            // Basic validation of JSON structure
+            if (is_array($jsonArray) && isset($jsonArray['stats']['playername'], $jsonArray['created'], $jsonArray['winplace'])) {
+                $playername = $jsonArray['stats']['playername'];
+                $winplace = $jsonArray['winplace'];
+                $createdTimestamp = $jsonArray['created'];
+
+                // Process the date
+                try {
+                    $date = new DateTime($createdTimestamp);
+                    $label = $date->format('m-d'); // Month-Day format
+
+                    // Initialize player array if not existing
+                    if (!isset($dataPointsPerPlayer[$playername])) {
+                        $dataPointsPerPlayer[$playername] = [];
+                    }
+
+                    // Add to dataPoints for this player
+                    $dataPointsPerPlayer[$playername][] = [
+                        "y" => $winplace,
+                        "label" => $label
+                    ];
+                } catch (Exception $e) {
+                    // Log or handle date parsing error
+                    error_log("Could not parse date '$createdTimestamp' in file: " . $filepath);
+                    continue;
+                }
+            } else {
+                 // Log or handle invalid JSON structure
+                 error_log("Invalid JSON structure or missing keys in file: " . $filepath);
+                 continue;
             }
-            
-            // Add to dataPoints for this player
-            $dataPointsPerPlayer[$playername][] = array(
-                "y" => $jsonArray['winplace'],
-                "label" => $label
-            );
+        }
+        closedir($handle);
+
+        // Prepare data for the chart if processing was successful
+        if (empty($dataError) && !empty($dataPointsPerPlayer)) {
+            foreach ($dataPointsPerPlayer as $player => $dataPoints) {
+                // Sort data points by label (date) for each player
+                usort($dataPoints, function($a, $b) {
+                    return strcmp($a['label'], $b['label']);
+                });
+
+                $chartData[] = [
+                    'type' => 'line',
+                    'showInLegend' => true,
+                    'legendText' => htmlspecialchars($player), // Escape player name for legend
+                    'dataPoints' => $dataPoints
+                ];
+            }
+            // Encode the final chart data
+            $encodedChartData = json_encode($chartData, JSON_NUMERIC_CHECK);
+            if ($encodedChartData === false) {
+                $dataError = "Failed to encode chart data into JSON.";
+                $encodedChartData = '[]'; // Reset to empty array on encoding failure
+            }
+        } elseif (empty($dataError)) {
+             $dataError = "No valid data found in '$directory' to generate chart.";
         }
     }
-    closedir($handle);
 }
 
-// Now, $dataPointsPerPlayer is an array that contains an array of data points for each player
-// You can access the data for a specific player like this:
-// $playerData = $dataPointsPerPlayer['Lanta01'];
-
-// Output the array for debugging purposes
-// At the end of your PHP script, where you previously printed the array
-// Instead, we will encode the $dataPointsPerPlayer array into JSON
-$chartData = [];
-foreach ($dataPointsPerPlayer as $player => $dataPoints) {
-    $chartData[] = [
-        'type' => 'line',
-        'showInLegend' => true,
-        'legendText' => $player,
-        'dataPoints' => $dataPoints
-    ];
-}
-
-// Store the JSON encoded data in a PHP variable
-$encodedChartData = json_encode($chartData, JSON_NUMERIC_CHECK);
-
-// You can then pass this to your JavaScript code like this
-echo "<script>var playerData = $encodedChartData;</script>";
-
-
+// Note: The original $dataPoints array with days of the week was unused, so it's removed.
 ?>
-
-
-
 <!DOCTYPE HTML>
 <html>
 <head>
-<script>
-window.onload = function () {
-
-    var chart = new CanvasJS.Chart("chartContainer", {
-        title: {
-            text: "Win place by Player / per day"
-        },
-        axisY: {
-            title: "Win Place"
-        },
-        legend: {
-            cursor: "pointer",
-            itemclick: function (e) {
-                // Toggle data series visibility on legend item click
-                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else {
-                    e.dataSeries.visible = true;
-                }
-                e.chart.render();
-            }
-        },
-        data: playerData // This will be an array of data series, one per player
-    });
-    chart.render();
-
-}
-</script>
-
+    <meta charset="UTF-8">
+    <title>Player Win Place Over Time</title>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <style>
+        body { font-family: sans-serif; }
+        .chart-container { height: 400px; width: 95%; margin: 20px auto; }
+        .error-message { color: red; text-align: center; margin-top: 20px; }
+    </style>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<?php if ($dataError): ?>
+    <p class="error-message"><?php echo htmlspecialchars($dataError); ?></p>
+<?php else: ?>
+    <div id="chartContainer" class="chart-container"></div>
+    <script>
+        window.onload = function () {
+            // Use the PHP-generated JSON data
+            var playerData = <?php echo $encodedChartData; ?>;
+
+            if (playerData && playerData.length > 0) {
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    theme: "light2", // Optional theme
+                    title: {
+                        text: "Win Place by Player / Per Day"
+                    },
+                    axisY: {
+                        title: "Win Place",
+                        reversed: true, // Lower win place is better
+                        interval: 1 // Show integer ranks
+                    },
+                     axisX: {
+                        title: "Date (MM-DD)",
+                        // Consider adding valueFormatString if labels become too crowded
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        verticalAlign: "center",
+                        horizontalAlign: "right",
+                        dockInsidePlotArea: false,
+                        itemclick: function (e) {
+                            // Toggle data series visibility on legend item click
+                            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                e.dataSeries.visible = false;
+                            } else {
+                                e.dataSeries.visible = true;
+                            }
+                            e.chart.render();
+                        }
+                    },
+                    data: playerData // This will be an array of data series, one per player
+                });
+                chart.render();
+            } else {
+                 // Display a message if no data is available to chart
+                 document.getElementById("chartContainer").innerHTML = '<p style="text-align:center; padding-top: 50px;">No chart data available.</p>';
+            }
+        }
+    </script>
+<?php endif; ?>
+
 </body>
-</html>   
+</html>
