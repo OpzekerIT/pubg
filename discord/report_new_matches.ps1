@@ -212,12 +212,12 @@ foreach ($lossid in $new_loss_matches) {
     $replay_url = $replay_url -replace '-telemetry.json', ''
     $replay_url = $replay_url + "?follow=$first_player_name" # Follow the first player
     $match_settings = @"
-    ``````
-    match mode      $($lossmatch[0].gameMode)
-    match type      $($lossmatch[0].matchType)
-    map             $($map_map[$lossmatch[0].mapName])
-    id              $($lossmatch[0].id)
-    ``````
+``````
+match mode      $($lossmatch[0].gameMode)
+match type      $($lossmatch[0].matchType)
+map             $($map_map[$lossmatch[0].mapName])
+id              $($lossmatch[0].id)
+``````
 "@
     send-discord-losers -content "We hebben een LOSERT! Geen Kip voor jou! :skull::skull:"
     send-discord-losers -content ":partying_face::partying_face::partying_face: Helaas, $($losers) :partying_face::partying_face::partying_face:"
@@ -336,6 +336,7 @@ k_t     = Team eliminaties
 foreach ($item in $player_matches) {
     if ($item.PSObject.Properties.Name -contains "new_win_matches") {
         $item.new_win_matches = $null
+        $item.new_loss_matches = $null
     }
 }
 
