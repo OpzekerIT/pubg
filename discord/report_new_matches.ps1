@@ -213,7 +213,7 @@ foreach ($lossid in $new_loss_matches) {
     $replay_url = $replay_url + "?follow=$first_player_name" # Follow the first player
 
     # Modified message construction
-    $msg = ":skull: **Verloren pot** :skull:`nTeam: $losers`nMap: $map`nPlaats: $place`n$content_lossstats`n$content_loss_victims`n[2D replay]($replay_url)`nMeer details: https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)"
+    $msg = ":skull: **Verloren pot** :skull:`nTeam: $losers`nMap: $map`nPlaats: $place`n$content_lossstats`n$content_loss_victims`n[2D replay](<$replay_url>)`nMeer details: [DTCH_STATS](<https://dtch.online/matchinfo.php?matchid=$($lossmatch[0].id)>)"
     send-discord-losers -content $msg
 }
 
