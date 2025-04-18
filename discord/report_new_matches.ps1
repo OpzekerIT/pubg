@@ -69,7 +69,13 @@ function send-discord-losers {
     $payload = [PSCustomObject]@{
         content = $content
     }
+    if($payload.content -eq "") {
+        $payload = [PSCustomObject]@{
+            content = "Nothing to report"
+        }
+    }
     Invoke-RestMethod -Uri $webhookurl_losers -Method Post -Body ($payload | ConvertTo-Json) -ContentType 'Application/Json'
+
 }
 
 $map_map = @{
