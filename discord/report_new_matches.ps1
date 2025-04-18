@@ -101,10 +101,10 @@ catch {
 }
 write-output $player_matches
 write-output $new_win_matches
-$new_win_matches = $player_matches[-1].new_win_matches
+$new_win_matches = $player_matches.new_win_matches
 
 # Gebruik nu de lijst van nieuwe verloren matches uit het JSON-bestand
-$new_loss_matches = $player_matches[-1].new_loss_matches
+$new_loss_matches = $player_matches.new_loss_matches
 
 # Post verloren matches naar #losers kanaal
 # foreach ($lossid in $new_loss_matches) {
