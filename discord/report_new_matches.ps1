@@ -308,7 +308,7 @@ id              $($winmatches[0].id)
     }
     write-output "New win matches:"
     $new_win_matches
-    if ($new_win_matches.count -le 10) {
+    if ($new_win_matches.count -ge 10) {
         $content_winstats = '```' + ($win_stats | Format-Table | out-string) + '```'
         send-discord -content $content_winstats
 
