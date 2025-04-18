@@ -11,11 +11,11 @@ $logDir = (Resolve-Path -Path $RelativeLogdir).Path
 Start-Transcript -Path "$logDir/report_new_matches_$logprefix.log" -Append
 . $scriptroot\..\includes\ps1\lockfile.ps1
 new-lock -by "report_new_matches"
-Write-Host "Scriptroot: $scriptroot"
-Write-Host "Scriptname: $($MyInvocation.MyCommand)"
-Write-Host "Script: $($MyInvocation.MyCommand.Path)"
-Write-Host "PSScriptroot: $PSScriptRoot"
-Write-Host "Logdir: $logDir"
+write-output "Scriptroot: $scriptroot"
+write-output "Scriptname: $($MyInvocation.MyCommand)"
+write-output "Script: $($MyInvocation.MyCommand.Path)"
+write-output "PSScriptroot: $PSScriptRoot"
+write-output "Logdir: $logDir"
 
 $fileContent = Get-Content -Path "$scriptroot/../config/config.php" -Raw
 
@@ -24,7 +24,7 @@ if ($fileContent -match "\`$apiKey\s*=\s*\'([^\']+)\'") {
     $apiKey = $matches[1]
 }
 else {
-    Write-Host "API Key not found"
+    write-output "API Key not found"
 }
 
 $headers = @{
@@ -39,14 +39,14 @@ $fileContent = Get-Content -Path "$scriptroot/../discord/config.php" -Raw
 if ($fileContent -match "\`$webhookurl\s*=\s*'([^']+)'") {
     $webhookurl = $matches[1]
 } else {
-    Write-Host "No web url found"
+    write-output "No web url found"
 }
 
 # Use regex to match the losers webhook url
 if ($fileContent -match "\`$webhookurl_losers\s*=\s*'([^']+)'") {
     $webhookurl_losers = $matches[1]
 } else {
-    Write-Host "No losers web url found"
+    write-output "No losers web url found"
 }
 
 function send-discord {
@@ -97,10 +97,10 @@ try {
     $player_matches = get-content "$scriptroot/../data/player_matches.json" | convertfrom-json -Depth 100 
 }
 catch {
-    Write-Host 'Unable to read file exitin' 
+    write-output 'Unable to read file exitin' 
 }
-Write-Host $player_matches
-Write-Host $new_win_matches
+write-output $player_matches
+write-output $new_win_matches
 $new_win_matches = $player_matches[-1].new_win_matches
 
 # Gebruik nu de lijst van nieuwe verloren matches uit het JSON-bestand
@@ -273,11 +273,11 @@ id              $($winmatches[0].id)
         send-discord -content $match_settings
     }
     else {
-        Write-Host "Something went wrong (more then 10 matches to report)"
+        write-output "Something went wrong (more then 10 matches to report)"
     }
     foreach ($player in $players_to_report.name) {
         if ($null -eq $player) { continue }
-        Write-Host "creating table for player $player"
+        write-output "creating table for player $player"
         $win_stats += [PSCustomObject]@{ 
             Name          = $player
             'Human dmg'   = "$([math]::Round(($telemetry | Where-Object { $_._T -eq 'LOGPLAYERTAKEDAMAGE' -and $_.attacker.name -eq $player -and $_.victim.accountId -notlike "ai.*" -and $_.victim.teamId -ne $_.attacker.teamId } | Measure-Object -Property damage -Sum).Sum))"
@@ -306,7 +306,7 @@ id              $($winmatches[0].id)
         }
 
     }
-    Write-Host "New win matches:"
+    write-output "New win matches:"
     $new_win_matches
     if ($new_win_matches.count -le 10) {
         $content_winstats = '```' + ($win_stats | Format-Table | out-string) + '```'
@@ -322,7 +322,7 @@ id              $($winmatches[0].id)
         send-discord -content "More match details [DTCH_STATS](<https://dtch.online/matchinfo.php?matchid=$($winmatches[0].id)>)"
     }
     else {
-        Write-Host "Something went wrong (more then 10 matches to report)"
+        write-output "Something went wrong (more then 10 matches to report)"
     }
     $legenda = '
 ```
