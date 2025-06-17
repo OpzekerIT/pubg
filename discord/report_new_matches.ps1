@@ -38,14 +38,16 @@ $fileContent = Get-Content -Path "$scriptroot/../discord/config.php" -Raw
 # Use regex to match the apiKey value
 if ($fileContent -match "\`$webhookurl\s*=\s*'([^']+)'") {
     $webhookurl = $matches[1]
-} else {
+}
+else {
     write-output "No web url found"
 }
 
 # Use regex to match the losers webhook url
 if ($fileContent -match "\`$webhookurl_losers\s*=\s*'([^']+)'") {
     $webhookurl_losers = $matches[1]
-} else {
+}
+else {
     write-output "No losers web url found"
 }
 
@@ -69,7 +71,7 @@ function send-discord-losers {
     $payload = [PSCustomObject]@{
         content = $content
     }
-    if($payload.content -eq "") {
+    if ($payload.content -eq "") {
         $payload = [PSCustomObject]@{
             content = "Nothing to report"
         }
@@ -243,10 +245,10 @@ foreach ($winid in $new_win_matches) {
     $winmatches = $player_matches.player_matches | Where-Object { $_.id -eq $winid }
     $telemetry = (invoke-webrequest @($winmatches.telemetry_url)[0]).content | convertfrom-json | where-object { ($_._T -eq 'LOGPLAYERTAKEDAMAGE') -or ($_._T -eq 'LOGPLAYERKILLV2') }
     $winners = @(($winmatches | where-object { $_.stats.winPlace -eq 1 }).stats.name)
-    $2D_replay_url = @($winmatches.telemetry_url)[0] -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
-    $2D_replay_url = $2D_replay_url -replace '-telemetry.json', ''
-    $2D_replay_url = $2D_replay_url + "?follow=$($winners[0])"
-
+    #    $2D_replay_url = @($winmatches.telemetry_url)[0] -replace 'https://telemetry-cdn.pubg.com/bluehole-pubg', 'https://chickendinner.gg'
+    #    $2D_replay_url = $2D_replay_url -replace '-telemetry.json', ''
+    #    $2D_replay_url = $2D_replay_url + "?follow=$($winners[0])"
+    $2D_replay_url = 'https://chickendinner.gg/' + $winid
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     if ($winmatches[0].gameMode -eq 'tdm' ) {
         continue
@@ -257,7 +259,7 @@ foreach ($winid in $new_win_matches) {
     else {
         $players_to_report = $match_stats.included.attributes.stats | where-object { $_.winplace -eq 1 }
     }
-    
+    $2D_replay_url = 'https://chickendinner.gg/' + $winid + "/" + $players_to_report[0].name
     if ($new_win_matches.count -le 10) {
         #fail safe
         send-discord -content ":chicken: :chicken: **WINNER WINNER CHICKEN DINNER!!** :chicken: :chicken:"
