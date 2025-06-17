@@ -240,3 +240,25 @@ td, th {
     background-color: #0f0f0f;
     color: #e69109;
 }
+
+/* Videos page styles */
+.videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 1rem;
+}
+.video-item {
+    flex: 1 1 300px;
+    max-width: 100%;
+}
+.video-item video {
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}

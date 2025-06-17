@@ -82,3 +82,22 @@ section h2 {
     margin-top: 10px;
    
 }
+/* Videos page responsive adjustments */
+.videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 1rem;
+}
+.video-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+.video-item video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
