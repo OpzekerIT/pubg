@@ -101,3 +101,11 @@ section h2 {
     display: block;
     margin: 0 auto;
 }
+/* Share and theatre button mobile styles */
+.video-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    gap: 0.5rem;
+}

@@ -43,6 +43,10 @@ usort($videoData, function($a, $b) {
                             </video>
                             <p><?php echo pathinfo($video['filename'], PATHINFO_FILENAME); ?></p>
                             <p><?php echo date('d-m-Y H:i', $video['ctime']); ?></p>
+                            <div class="video-controls">
+                                <button class="btn share-btn">Delen</button>
+                                <button class="btn theatre-btn">Theatermodus</button>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -54,5 +58,51 @@ usort($videoData, function($a, $b) {
     </main>
 
     <?php include './includes/footer.php'; ?>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.share-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var videoItem = btn.closest('.video-item');
+                var src = videoItem.querySelector('video source').src;
+                if (navigator.share) {
+                    navigator.share({ title: videoItem.querySelector('p').innerText, url: src })
+                    .catch(function(error) { console.error('Error sharing', error); });
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(src).then(function() {
+                        alert('Videolink gekopieerd naar klembord');
+                    }, function(err) {
+                        alert('Kon link niet kopiëren: ' + err);
+                    });
+                } else {
+                    prompt('Kopieer deze link:', src);
+                }
+            });
+        });
+
+        document.querySelectorAll('.theatre-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var videoItem = btn.closest('.video-item');
+                if (!document.fullscreenElement) {
+                    if (videoItem.requestFullscreen) {
+                        videoItem.requestFullscreen();
+                    } else if (videoItem.webkitRequestFullscreen) {
+                        videoItem.webkitRequestFullscreen();
+                    } else if (videoItem.msRequestFullscreen) {
+                        videoItem.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
