@@ -41,7 +41,7 @@ usort($videoData, function($a, $b) {
                                 <source src="media/videos/<?php echo htmlspecialchars($video['filename']); ?>" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <p><?php echo pathinfo($video['filename'], PATHINFO_FILENAME); ?></p>
+                            <p class="video-title"><?php echo pathinfo($video['filename'], PATHINFO_FILENAME); ?></p>
                             <div class="video-controls">
                                 <button class="btn share-btn">Delen</button>
                                 <button class="btn theatre-btn">Theatermodus</button>

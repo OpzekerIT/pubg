@@ -282,3 +282,11 @@ td, th {
     height: auto;
     max-height: none;
 }
+
+.video-title {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

@@ -119,3 +119,10 @@ section h2 {
     margin-top: 0.5rem;
     gap: 0.5rem;
 }
+.video-title {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
