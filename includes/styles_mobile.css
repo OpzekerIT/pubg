@@ -5,6 +5,16 @@ table {
 td, th {
     padding: 8px;
 }
+/* Theatre mode mobile styles */
+.video-item.theatre-mode {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+.video-item.theatre-mode video {
+    width: 100%;
+    height: auto;
+    max-height: none;
+}
 
 .topnav {
     overflow: hidden;

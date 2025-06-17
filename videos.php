@@ -42,7 +42,6 @@ usort($videoData, function($a, $b) {
                                 Your browser does not support the video tag.
                             </video>
                             <p><?php echo pathinfo($video['filename'], PATHINFO_FILENAME); ?></p>
-                            <p><?php echo date('d-m-Y H:i', $video['ctime']); ?></p>
                             <div class="video-controls">
                                 <button class="btn share-btn">Delen</button>
                                 <button class="btn theatre-btn">Theatermodus</button>
@@ -83,23 +82,8 @@ usort($videoData, function($a, $b) {
         document.querySelectorAll('.theatre-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var videoItem = btn.closest('.video-item');
-                if (!document.fullscreenElement) {
-                    if (videoItem.requestFullscreen) {
-                        videoItem.requestFullscreen();
-                    } else if (videoItem.webkitRequestFullscreen) {
-                        videoItem.webkitRequestFullscreen();
-                    } else if (videoItem.msRequestFullscreen) {
-                        videoItem.msRequestFullscreen();
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    }
-                }
+                var isActive = videoItem.classList.toggle('theatre-mode');
+                btn.innerText = isActive ? 'Sluit theatermodus' : 'Theatermodus';
             });
         });
     });

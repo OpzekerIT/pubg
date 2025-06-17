@@ -271,3 +271,14 @@ td, th {
     margin-top: 0.5rem;
     gap: 0.5rem;
 }
+
+/* Theatre mode styles */
+.video-item.theatre-mode {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+.video-item.theatre-mode video {
+    width: 100%;
+    height: auto;
+    max-height: none;
+}
