@@ -126,3 +126,15 @@ section h2 {
     margin-top: 8px;
     margin-bottom: 8px;
 }
+.video-item.theatre-mode {
+    padding: 10px;
+}
+
+.video-item.theatre-mode video {
+    max-width: 100%;
+    max-height: 70vh;
+}
+
+.video-item.theatre-mode .video-controls {
+    margin-top: 10px;
+}
