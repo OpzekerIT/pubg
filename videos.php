@@ -7,6 +7,19 @@ $allFiles = scandir($videosDir);
 $videoFiles = array_filter($allFiles, function($file) use ($videosDir) {
     return is_file($videosDir . '/' . $file) && strtolower(pathinfo($file, PATHINFO_EXTENSION)) === 'mp4';
 });
+
+// Build array with creation time and sort by creation date descending
+$videoData = [];
+foreach ($videoFiles as $file) {
+    $path = $videosDir . '/' . $file;
+    $videoData[] = [
+        'filename' => $file,
+        'ctime' => filectime($path)
+    ];
+}
+usort($videoData, function($a, $b) {
+    return $b['ctime'] - $a['ctime'];
+});
 ?>
 
 <!DOCTYPE html>
@@ -20,15 +33,16 @@ $videoFiles = array_filter($allFiles, function($file) use ($videosDir) {
         <section>
             <h2>Videos</h2>
 
-            <?php if (!empty($videoFiles)): ?>
+            <?php if (!empty($videoData)): ?>
                 <div class="videos-container">
-                    <?php foreach ($videoFiles as $video): ?>
+                    <?php foreach ($videoData as $video): ?>
                         <div class="video-item">
                             <video controls>
-                                <source src="media/videos/<?php echo htmlspecialchars($video); ?>" type="video/mp4">
+                                <source src="media/videos/<?php echo htmlspecialchars($video['filename']); ?>" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <p><?php echo htmlspecialchars($video); ?></p>
+                            <p><?php echo pathinfo($video['filename'], PATHINFO_FILENAME); ?></p>
+                            <p><?php echo date('d-m-Y H:i', $video['ctime']); ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
