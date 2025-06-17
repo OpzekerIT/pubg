@@ -12,7 +12,8 @@ if ($host == 'dev.dtch.online') {
         <a href="last_stats.php">Last quarter %</a>
         <a href="latestmatches.php">Last Matches</a>
         <a href="topstats.php">Top20</a>
-        <a href="user_stats.php">User Stats</a>       
+        <a href="user_stats.php">User Stats</a>
+        <a href="videos.php">Videos</a>
     </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
