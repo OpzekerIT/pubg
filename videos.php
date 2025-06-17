@@ -81,8 +81,18 @@ usort($videoData, function($a, $b) {
 
         document.querySelectorAll('.theatre-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                var videoItem = btn.closest('.video-item');
-                var isActive = videoItem.classList.toggle('theatre-mode');
+                var clickedVideoItem = btn.closest('.video-item');
+
+                // Remove theatre mode from all other videos
+                document.querySelectorAll('.video-item.theatre-mode').forEach(function(item) {
+                    if (item !== clickedVideoItem) {
+                        item.classList.remove('theatre-mode');
+                        item.querySelector('.theatre-btn').innerText = 'Theatermodus';
+                    }
+                });
+
+                // Toggle theatre mode for the clicked video
+                var isActive = clickedVideoItem.classList.toggle('theatre-mode');
                 btn.innerText = isActive ? 'Sluit theatermodus' : 'Theatermodus';
             });
         });
