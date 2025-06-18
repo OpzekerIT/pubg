@@ -157,15 +157,15 @@ $lastMatches = array_slice($allMatches, 0, 8);
                             if (substr($playerStats['playerId'], 0, 2) !== 'ai') {
                                 // Create links for each stat
                                 echo "<tr>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'> Human </a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['HumanDmg']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['winPlace']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['revives']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['DBNOs']) . "</a></td>";
-                                echo "<td><a href='https://pubg.op.gg/user/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['assists']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['name']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'> Human </a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['kills']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['HumanDmg']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['timeSurvived']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['winPlace']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['revives']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['DBNOs']) . "</a></td>";
+                                echo "<td><a href='https://www.pubg-meta.com/player-stats/steam/" . urlencode($playerStats['name']) . "' target='_blank'>" . htmlspecialchars($playerStats['assists']) . "</a></td>";
                                 echo "</tr>";
                             } else {
                                 // Display without link
