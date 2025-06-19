@@ -262,8 +262,12 @@ foreach ($winid in $new_win_matches) {
     $2D_replay_url = 'https://chickendinner.gg/' + $winid + "/" + $players_to_report[0].name
     if ($new_win_matches.count -le 10) {
         #fail safe
+        $winnerswithurl = @()
+        foreach($winner in $winners){
+            $winnerswithurl += "[$winner](<https://dtch.online/latestmatches.php?selected_player=$($winner)>)"
+        }
         send-discord -content ":chicken: :chicken: **WINNER WINNER CHICKEN DINNER!!** :chicken: :chicken:"
-        send-discord -content ":partying_face::partying_face::partying_face: Gefeliciteerd   $($winners -join ', ') :partying_face::partying_face::partying_face:"
+        send-discord -content ":partying_face::partying_face::partying_face: Gefeliciteerd   $($winnerswithurl -join ', ') :partying_face::partying_face::partying_face:"
         $match_settings = @"
 ``````
 match mode      $($winmatches[0].gameMode)
