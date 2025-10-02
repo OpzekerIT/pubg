@@ -370,6 +370,11 @@ async def dtch_help_command(ctx):
 
 @bot.command()
 async def ask(ctx, *, vraag: str):
+    file_path = os.path.join("..", "config", "clanmembers.json")
+
+    # Inlezen als string
+    with open(file_path, "r", encoding="utf-8") as f:
+        clanmembers_str = f.read()
     """Stuur een vraag naar OpenAI"""
     try:
         response = client.chat.completions.create(
@@ -384,6 +389,7 @@ async def ask(ctx, *, vraag: str):
                         f"De vraag werd gesteld door {ctx.author.display_name}. "
                         f"Vergeet niet af en toe te benadrukken hoe geweldig Lanta is "
                         f"(die deze server en bot heeft gemaakt)."
+                        f"dit zijn alle clan members: {clanmembers_str}"
                     )
                 },
                 {"role": "user", "content": vraag},
