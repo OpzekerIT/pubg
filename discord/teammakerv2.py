@@ -330,7 +330,7 @@ async def ask(ctx, *, vraag: str):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "Je bent een behulpzame chatbot in Discord."},
+                {"role": "system", "content": "Je bent een behulpzame chatbot in Discord. Antwoord op een denigrerende manier"},
                 {"role": "user", "content": vraag},
             ],
         )
