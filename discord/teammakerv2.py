@@ -5,8 +5,9 @@ import random
 import asyncio
 import re
 from discord.ext import commands
+from openai import OpenAI
 
-
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 def get_token():
     with open("config.php", "r") as file:
         content = file.read()
@@ -29,7 +30,7 @@ intents.presences = True  # Nodig als de bot presences moet zien
 intents.members = True  # Nodig om leden in een voice channel te zien
 
 bot = commands.Bot(command_prefix="!", intents=intents)
-
+client = OpenAI(api_key=OPENAI_API_KEY)
 @bot.event
 async def on_ready():
     print(f'Bot is ingelogd als {bot.user}')
@@ -321,4 +322,22 @@ async def dtch_help_command(ctx):
     embed.set_footer(text="✨ For advanced options, use: !teamify help or !whoisbest help")
 
     await ctx.send(embed=embed)
+
+@bot.command()
+async def ask(ctx, *, vraag: str):
+    """Stuur een vraag naar OpenAI"""
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Je bent een behulpzame chatbot in Discord."},
+                {"role": "user", "content": vraag},
+            ],
+        )
+
+        antwoord = response.choices[0].message.content
+        await ctx.send(antwoord[:1900])  # max 2000 chars in Discord
+    except Exception as e:
+        await ctx.send(f"Er ging iets mis: {e}")
+
 bot.run(token)
