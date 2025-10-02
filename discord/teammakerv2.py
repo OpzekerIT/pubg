@@ -220,6 +220,7 @@ async def on_member_join(member):
             "👋 We're glad to have you here.\n"
             "👉 Want to jump right in? Type `!iamgamer` in the chat and you'll get the **Tourists** role.\n"
             "With that role you can join the fun and games with everyone else. 🎮\n\n"
+            "Use !dtch_help for more info"
             "Enjoy your stay and have a great time! 🚀"
         )
         await logging_channel.send(welcome_message)
