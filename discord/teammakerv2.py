@@ -204,7 +204,12 @@ async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
         1) Titel met category en korte snedige ondertitel.
         2) **🏆 Top {top} Winratio** en **💀 Top {top}  AHD** (exact die koppen).
         3) Per regel: 🥇/🥈/🥉 + **naam** + waarde (winratio met %).
-        4) Sluit af met 1 of 2 regels analyse van de stats, gebruik humor.
+        4) De rest van de regels doe je zonder medaille gewoon een cijfer
+        5) Sluit af met 1 of 2 regels analyse van de stats, gebruik humor.
+        - Opgegeven parameters:
+        Categorie: {category}
+        Minimaal aantal matches: {matchesback}
+        Top: {top}
         - Max ~1800 tekens.
         """).strip()
         user_prompt = dedent(f"""
