@@ -211,7 +211,7 @@ async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
         Minimaal aantal matches: {matchesback}
         Top: {top}
         - verdere info
-         1) Als de aantal matches laag is (onder de 15) dat zijn cijfers niet echt meer representatief. Meld dat dan ook.
+         1) Als de aantal matches laag is (onder de 15) dan zijn cijfers niet echt meer representatief. Meld dat dan ook.
         - Max ~1800 tekens.
         """).strip()
         user_prompt = dedent(f"""
