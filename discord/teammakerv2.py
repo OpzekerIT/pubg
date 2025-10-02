@@ -215,7 +215,14 @@ async def on_voice_state_update(member, before, after):
 async def on_member_join(member):
     logging_channel = discord.utils.get(member.guild.text_channels, name="raadhuisplein")
     if logging_channel:
-        await logging_channel.send(f"🎉 Welkom {member.mention} op de server! We hopen dat je een leuke tijd hebt!")
+        welcome_message = (
+            f"🎉 Welcome {member.mention} to **{member.guild.name}**!\n\n"
+            "👋 We're glad to have you here.\n"
+            "👉 Want to jump right in? Type `!iamgamer` in the chat and you'll get the **Tourists** role.\n"
+            "With that role you can join the fun and games with everyone else. 🎮\n\n"
+            "Enjoy your stay and have a great time! 🚀"
+        )
+        await logging_channel.send(welcome_message)
 
 @bot.event
 async def on_member_remove(member):
@@ -263,4 +270,51 @@ async def iamgamer(ctx):
         await ctx.send(f"✅ {ctx.author.mention}, je bent nu een **Tourist**! Veel plezier! 🎮")
     except Exception as e:
         await ctx.send(f"Er is iets misgegaan bij het toekennen van de rol: {e}")
+@bot.command(name="help", aliases=["commands"])
+async def help_command(ctx):
+    embed = discord.Embed(
+        title="📖 Bot Command Help",
+        description="Here’s a list of all available commands and how to use them:",
+        color=discord.Color.blue()
+    )
+
+    embed.add_field(
+        name="👉 !teamify",
+        value=(
+            "`!teamify` - Split players into random teams of max 4.\n"
+            "`!teamify <number_of_teams>` - Split players into a given number of teams.\n"
+            "`!teamify <number_of_teams> move` - Split & move players into temporary voice channels.\n"
+            "`!teamify move` - Auto split & move players.\n"
+            "🔹 Works only in the **#teamify** channel."
+        ),
+        inline=False
+    )
+
+    embed.add_field(
+        name="👉 !moveall",
+        value="`!moveall` - Moves all players from other voice channels into the **teamify** channel.",
+        inline=False
+    )
+
+    embed.add_field(
+        name="👉 !whoisbest",
+        value=(
+            "`!whoisbest [category] [matchesback]`\n"
+            "Shows the top 3 players based on win ratio and average damage.\n"
+            "`category` = e.g. Casual, Ranked\n"
+            "`matchesback` = minimum matches required (default: 18)\n"
+            "Example: `!whoisbest Casual 18`"
+        ),
+        inline=False
+    )
+
+    embed.add_field(
+        name="👉 !iamgamer",
+        value="`!iamgamer` - Gives you the **Tourists** role 🎮 so you can join games and unlock more fun.",
+        inline=False
+    )
+
+    embed.set_footer(text="✨ For advanced options, use: !teamify help or !whoisbest help")
+
+    await ctx.send(embed=embed)
 bot.run(token)
