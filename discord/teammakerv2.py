@@ -233,10 +233,6 @@ async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
 
 ##AIEND
 
-    #     await ctx.send(message)
-
-    # except Exception as e:
-    #     await ctx.send(f"Fout bij het laden van de statistieken: {str(e)}")
 
 @bot.event        
 async def on_voice_state_update(member, before, after):
