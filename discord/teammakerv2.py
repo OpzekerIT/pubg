@@ -33,8 +33,9 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready(ctx):
     print(f'Bot is ingelogd als {bot.user}')
-    await ctx.send("Ben er weer!")
-    return
+    channel = bot.get_channel(759006368832159745)  # vervang door je channel ID
+    if channel:
+        await channel.send("Ben er weer!")
 
 @bot.command()
 async def test(ctx):
