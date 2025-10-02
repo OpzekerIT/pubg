@@ -270,10 +270,10 @@ async def iamgamer(ctx):
         await ctx.send(f"✅ {ctx.author.mention}, je bent nu een **Tourist**! Veel plezier! 🎮")
     except Exception as e:
         await ctx.send(f"Er is iets misgegaan bij het toekennen van de rol: {e}")
-@bot.command(name="help", aliases=["commands"])
-async def help_command(ctx):
+@bot.command(name="dtch_help", aliases=["commands"])
+async def dtch_help_command(ctx):
     embed = discord.Embed(
-        title="📖 Bot Command Help",
+        title="📖 DTCH Bot Command Help",
         description="Here’s a list of all available commands and how to use them:",
         color=discord.Color.blue()
     )
