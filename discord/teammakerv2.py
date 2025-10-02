@@ -370,18 +370,27 @@ async def dtch_help_command(ctx):
 
 @bot.command()
 async def ask(ctx, *, vraag: str):
+    ## CLAN MEMBERS
     file_path = os.path.join("..", "config", "clanmembers.json")
     # Inlezen als string
     with open(file_path, "r", encoding="utf-8") as f:
         clanmembers_str = f.read()
-    # Bestandspad
-    file_path_lifetimestats = os.path.join("..", "data", "player_lifetime_data.json")
 
-     # JSON-bestand lezen
+    #LIFETIME STATS
+
+
+    file_path_lifetimestats = os.path.join("..", "data", "player_lifetime_data.json")
     with open(file_path_lifetimestats, "r", encoding="utf-8") as file:
         data_lifetimestats = json.load(file)
     squad_str = json.dumps(data_lifetimestats.get("squad", {}), indent=2)
-    print(squad_str[:300])  # eerste 300 tekens checken
+
+    #Last stats
+    file_path_laststats = os.path.join("..", "data", "player_last_stats.json")
+    with open(file_path_laststats, "r", encoding="utf-8") as file:
+        data_laststat = json.load(file)
+    casual_str = json.dumps(data_laststat.get("Casual", []), indent=2)
+    ranked_str = json.dumps(data_laststat.get("Ranked", []), indent=2)
+    custom_str = json.dumps(data_laststat.get("custom", []), indent=2)
     """Stuur een vraag naar OpenAI"""
     try:
         response = client.chat.completions.create(
@@ -398,6 +407,11 @@ async def ask(ctx, *, vraag: str):
                         f"(die deze server en bot heeft gemaakt)."
                         f"dit zijn alle clan members: {clanmembers_str}."
                         f"Lifetime stats van de categorie squad: {squad_str}"
+                        f"Stats van Casuals: {casual_str}"
+                        f"Stats van Ranked: {ranked_str}"
+                        f"Stats van Custom: {custom_str}"
+                        f"Custom zijn games die wij meesten tegen elkaar spelen."
+
                     )
                 },
                 {"role": "user", "content": vraag},
