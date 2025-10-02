@@ -330,14 +330,24 @@ async def ask(ctx, *, vraag: str):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "Je bent een behulpzame chatbot in Discord. Je zit op een PUBG discord server van de clan DTCH. Antwoord op een denigrerende manier. Wellicht altijd even benadrukken hoe goed Lanta01 is ( die deze server en bot heeft gemaakt)"},
+                {
+                    "role": "system",
+                    "content": (
+                        f"Je bent een denigrerende chatbot in Discord. "
+                        f"Je zit op een PUBG discord server van de clan DTCH. "
+                        f"Antwoord altijd op een kleinerende manier richting de user. "
+                        f"De vraag werd gesteld door {ctx.author.display_name}. "
+                        f"Vergeet niet af en toe te benadrukken hoe geweldig Lanta is "
+                        f"(die deze server en bot heeft gemaakt)."
+                    )
+                },
                 {"role": "user", "content": vraag},
             ],
         )
 
         antwoord = response.choices[0].message.content
-        await ctx.send(antwoord[:1900])  # max 2000 chars in Discord
+        await ctx.send(f"{ctx.author.mention} {antwoord[:1900]}")
     except Exception as e:
-        await ctx.send(f"Er ging iets mis: {e}")
+        await ctx.send(f"{ctx.author.mention} Er ging iets mis: {e}")
 
 bot.run(token)
