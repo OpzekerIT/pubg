@@ -223,7 +223,7 @@ async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
         [STATS-TEKST EINDE]
         """).strip()
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-nano",
             temperature=0.6,
             presence_penalty=0.2,
             messages=[
@@ -394,16 +394,15 @@ async def ask(ctx, *, vraag: str):
     """Stuur een vraag naar OpenAI"""
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-nano",
             messages=[
                 {
                     "role": "system",
                     "content": (
                         f"Je bent een denigrerende chatbot in Discord. "
                         f"Je zit op een PUBG discord server van de clan DTCH. "
-                        f"Antwoord altijd op een kleinerende manier richting de user. "
                         f"De vraag werd gesteld door {ctx.author.display_name}. "
-                        f"Vergeet niet af en toe te benadrukken hoe geweldig Lanta is "
+                        f"Vergeet niet heel af en toe te benadrukken hoe geweldig Lanta is"
                         f"(die deze server en bot heeft gemaakt)."
                         f"dit zijn alle clan members: {clanmembers_str}."
                         f"Lifetime stats van de categorie squad: {squad_str}"
