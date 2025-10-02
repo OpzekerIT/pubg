@@ -223,7 +223,7 @@ async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
         [STATS-TEKST EINDE]
         """).strip()
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-nano",
             temperature=0.6,
             presence_penalty=0.2,
             messages=[
@@ -394,7 +394,7 @@ async def ask(ctx, *, vraag: str):
     """Stuur een vraag naar OpenAI"""
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-nano",
             messages=[
                 {
                     "role": "system",
