@@ -251,5 +251,16 @@ async def moveall(ctx):
         await ctx.send(f"{moved_members} speler(s) zijn verplaatst naar het teamify kanaal.")
     else:
         await ctx.send("Er waren geen spelers om te verplaatsen.")
-        
+@bot.command()
+async def iamgamer(ctx):
+    role = discord.utils.get(ctx.guild.roles, name="Tourists")
+    if role is None:
+        await ctx.send("De rol **Tourists** bestaat niet!")
+        return
+    
+    try:
+        await ctx.author.add_roles(role)
+        await ctx.send(f"✅ {ctx.author.mention}, je bent nu een **Tourist**! Veel plezier! 🎮")
+    except Exception as e:
+        await ctx.send(f"Er is iets misgegaan bij het toekennen van de rol: {e}")
 bot.run(token)
