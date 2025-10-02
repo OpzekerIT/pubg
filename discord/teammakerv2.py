@@ -391,13 +391,13 @@ async def ask(ctx, *, vraag: str):
     ranked_str = json.dumps(data_laststat.get("Ranked", []), indent=2)
     custom_str = json.dumps(data_laststat.get("custom", []), indent=2)
     # Online members
-    online_members = [
+    voice_members = [
         member.display_name
-        for member in ctx.guild.members
-        if member.status == discord.Status.online
+        for vc in ctx.guild.voice_channels
+        for member in vc.members
     ]
 
-    online_str = ", ".join(online_members) if online_members else "Niemand is online"
+    voice_str = ", ".join(voice_members) if voice_members else "Niemand zit in een voice kanaal"
 
     """Stuur een vraag naar OpenAI"""
     try:
@@ -412,7 +412,7 @@ async def ask(ctx, *, vraag: str):
                             f"Je zit op een PUBG discord server van de clan DTCH. "
                             f"De vraag werd gesteld door {ctx.author.display_name}. "
                             f"dit zijn alle clan members: {clanmembers_str}."
-                            f"Op dit moment online: {online_str}. "
+                            f"Op dit moment online: {voice_str}. "
                             f"Lifetime stats van de categorie squad: {squad_str}"
                             f"Stats van Casuals: {casual_str}"
                             f"Stats van Ranked: {ranked_str}"
