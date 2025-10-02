@@ -378,7 +378,6 @@ async def ask(ctx, *, vraag: str):
 
     #LIFETIME STATS
 
-
     file_path_lifetimestats = os.path.join("..", "data", "player_lifetime_data.json")
     with open(file_path_lifetimestats, "r", encoding="utf-8") as file:
         data_lifetimestats = json.load(file)
@@ -391,6 +390,10 @@ async def ask(ctx, *, vraag: str):
     casual_str = json.dumps(data_laststat.get("Casual", []), indent=2)
     ranked_str = json.dumps(data_laststat.get("Ranked", []), indent=2)
     custom_str = json.dumps(data_laststat.get("custom", []), indent=2)
+    # Online members
+    online_members = [m.display_name for m in ctx.guild.members if m.status != discord.Status.offline]
+    online_str = ", ".join(online_members) if online_members else "Niemand is online"
+
     """Stuur een vraag naar OpenAI"""
     try:
         async with ctx.typing():
@@ -404,11 +407,12 @@ async def ask(ctx, *, vraag: str):
                             f"Je zit op een PUBG discord server van de clan DTCH. "
                             f"De vraag werd gesteld door {ctx.author.display_name}. "
                             f"dit zijn alle clan members: {clanmembers_str}."
+                            f"Op dit moment online: {online_str}. "
                             f"Lifetime stats van de categorie squad: {squad_str}"
                             f"Stats van Casuals: {casual_str}"
                             f"Stats van Ranked: {ranked_str}"
                             f"Stats van Custom: {custom_str}"
-                            f"Custom zijn games die wij meesten tegen elkaar spelen."
+                            f"Custom zijn games die wij meestel tegen elkaar spelen."
                             f"Maximaal 1800 karakters"
                             f"Als je stats output doe dat dan in discord markdown"
 
