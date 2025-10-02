@@ -203,7 +203,7 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
         1) Titel met category en korte snedige ondertitel.
         2) **🏆 Top 3 Winratio** en **💀 Top 3 AHD** (exact die koppen).
         3) Per regel: 🥇/🥈/🥉 + **naam** + waarde (winratio met %).
-        4) Afsluiten met 1 zin over dat Lanta01 sowieso beter is.
+        4) Sluit af met 1 of 2 regels analyse van de stats, gebruik humor.
         - Max ~1800 tekens.
         """).strip()
         user_prompt = dedent(f"""
