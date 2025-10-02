@@ -391,12 +391,13 @@ async def ask(ctx, *, vraag: str):
     ranked_str = json.dumps(data_laststat.get("Ranked", []), indent=2)
     custom_str = json.dumps(data_laststat.get("custom", []), indent=2)
     # Online members
-    online_clan = []
-    for member in ctx.guild.members:
-        if member.display_name in clanmembers and member.status == discord.Status.online:
-            online_clan.append(member.display_name)
+    online_members = [
+        member.display_name
+        for member in ctx.guild.members
+        if member.status == discord.Status.online
+    ]
 
-    online_str = ", ".join(online_clan) if online_clan else "Geen clanmembers online"
+    online_str = ", ".join(online_members) if online_members else "Niemand is online"
 
     """Stuur een vraag naar OpenAI"""
     try:
