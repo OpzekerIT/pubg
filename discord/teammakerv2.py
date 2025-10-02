@@ -34,7 +34,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready(ctx):
     print(f'Bot is ingelogd als {bot.user}')
     await ctx.send("Ben er weer!")
-
+    return
 
 @bot.command()
 async def test(ctx):
