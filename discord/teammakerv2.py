@@ -130,19 +130,19 @@ async def teamify(ctx, *args):
                         await ctx.send(f"Kanaal {channel.name} is opgeruimd omdat het leeg was!")
 
 @bot.command()
-async def whoisbest(ctx, category="Casual", matchesback=18):
+async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
 
 
     if category.lower() == "help":
         help_message = (
             "**Gebruik van het commando `whoisbest`:**\n"
-            "`!whoisbest [category] [matchesback]`\n\n"
+            "`!whoisbest [category] [matchesback] [top]`\n\n"
             "**Parameters:**\n"
             "`category` - De categorie van de stats, bijv. 'Casual' of 'Ranked'. Niet hoofdlettergevoelig.\n"
             "`matchesback` - Het minimum aantal matches dat een speler gespeeld moet hebben om mee te tellen (standaard 18).\n\n"
             "**Voorbeeld:**\n"
             "`!whoisbest Casual 18`\n"
-            "Laat de top 3 spelers zien op basis van winratio en gemiddelde damage in de Casual categorie met minimaal 18 matches.\n\n"
+            "Laat de top 3 spelers zien op basis van winratio en gemiddelde damage in de Casual categorie met minimaal 18 matches.\n"
             "Typ `!whoisbest help` om deze uitleg opnieuw te zien."
         )
         await ctx.send(help_message)
@@ -178,10 +178,10 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
             return
 
         # Sorteer spelers op winratio (aflopend)
-        top_winratio = sorted(players, key=lambda x: x.get("winratio", 0), reverse=True)[:3]
+        top_winratio = sorted(players, key=lambda x: x.get("winratio", 0), reverse=True)[:top]
 
         # Sorteer spelers op gemiddelde damage (aflopend)
-        top_ahd = sorted(players, key=lambda x: x.get("ahd", 0), reverse=True)[:3]
+        top_ahd = sorted(players, key=lambda x: x.get("ahd", 0), reverse=True)[:top]
 
         # Bouw het bericht op
         message = f"**\U0001F3C6 Top 3 Winratio ({actual_category})**\n"
@@ -193,16 +193,16 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
             message += f"{i}. **{player['playername']}** - {player['ahd']:.2f}\n"
 ##AI
 
-        system_prompt = dedent("""
+        system_prompt = dedent(f"""
         Je bent een Discord announcer-bot op de PUBG-server van DTCH.
         Stijl: brutaal/competitief, licht denigrerend maar leesbaar.
-        AHD = Avarage Human Damage
+        AHD = Average Human Damage
         Regels:
         - Gebruik uitsluitend de meegeleverde stats-tekst.
         - Output ALLEEN Discord-markdown (geen JSON, geen codeblokken).
         - Structuur:
         1) Titel met category en korte snedige ondertitel.
-        2) **🏆 Top 3 Winratio** en **💀 Top 3 AHD** (exact die koppen).
+        2) **🏆 Top {top} Winratio** en **💀 Top {top}  AHD** (exact die koppen).
         3) Per regel: 🥇/🥈/🥉 + **naam** + waarde (winratio met %).
         4) Sluit af met 1 of 2 regels analyse van de stats, gebruik humor.
         - Max ~1800 tekens.
@@ -233,10 +233,6 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
 
 ##AIEND
 
-    #     await ctx.send(message)
-
-    # except Exception as e:
-    #     await ctx.send(f"Fout bij het laden van de statistieken: {str(e)}")
 
 @bot.event        
 async def on_voice_state_update(member, before, after):
