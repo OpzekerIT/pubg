@@ -31,9 +31,9 @@ intents.members = True  # Nodig om leden in een voice channel te zien
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
-async def on_ready(ctx):
+async def on_ready():
     print(f'Bot is ingelogd als {bot.user}')
-    channel = bot.get_channel(759006368832159745)  # vervang door je channel ID
+    channel = bot.get_channel(759006368832159745)
     if channel:
         await channel.send("Ben er weer!")
 
