@@ -31,8 +31,10 @@ intents.members = True  # Nodig om leden in een voice channel te zien
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
-async def on_ready():
+async def on_ready(ctx):
     print(f'Bot is ingelogd als {bot.user}')
+    await ctx.send("Ben er weer!")
+
 
 @bot.command()
 async def test(ctx):
@@ -219,7 +221,8 @@ async def on_member_join(member):
             f"🎉 Welcome {member.mention} to **{member.guild.name}**!\n\n"
             "👋 We're glad to have you here.\n"
             "👉 Want to jump right in? Type `!iamgamer` in the chat and you'll get the **Tourists** role.\n"
-            "With that role you can join the fun and games with everyone else. 🎮\n\n"
+            "With that role you can join the fun and games with everyone else. 🎮\n"
+            "Use !dtch_help for more info\n\n"
             "Enjoy your stay and have a great time! 🚀"
         )
         await logging_channel.send(welcome_message)
