@@ -410,6 +410,8 @@ async def ask(ctx, *, vraag: str):
                         f"Stats van Ranked: {ranked_str}"
                         f"Stats van Custom: {custom_str}"
                         f"Custom zijn games die wij meesten tegen elkaar spelen."
+                        f"Maximaal 1800 karakters"
+                        f"Als je stats output doe dat dan in discord markdown"
 
                     )
                 },
