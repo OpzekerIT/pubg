@@ -381,6 +381,7 @@ async def ask(ctx, *, vraag: str):
     with open(file_path_lifetimestats, "r", encoding="utf-8") as file:
         data_lifetimestats = json.load(file)
     squad_str = json.dumps(data_lifetimestats.get("squad", {}), indent=2)
+    print(squad_str[:300])  # eerste 300 tekens checken
     """Stuur een vraag naar OpenAI"""
     try:
         response = client.chat.completions.create(
