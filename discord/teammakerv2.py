@@ -4,6 +4,7 @@ import discord
 import random
 import asyncio
 import re
+from textwrap import dedent
 from discord.ext import commands
 from openai import OpenAI
 
@@ -190,11 +191,51 @@ async def whoisbest(ctx, category="Casual", matchesback=18):
         message += f"\n**\U0001F480 Top 3 AHD ({actual_category})**\n"
         for i, player in enumerate(top_ahd, start=1):
             message += f"{i}. **{player['playername']}** - {player['ahd']:.2f}\n"
+##AI
 
-        await ctx.send(message)
+        system_prompt = dedent("""
+        Je bent een Discord announcer-bot op de PUBG-server van DTCH.
+        Stijl: brutaal/competitief, licht denigrerend maar leesbaar.
+        Regels:
+        - Gebruik uitsluitend de meegeleverde stats-tekst.
+        - Output ALLEEN Discord-markdown (geen JSON, geen codeblokken).
+        - Structuur:
+        1) Titel met category en korte snedige ondertitel.
+        2) **🏆 Top 3 Winratio** en **💀 Top 3 AHD** (exact die koppen).
+        3) Per regel: 🥇/🥈/🥉 + **naam** + waarde (winratio met %).
+        4) Afsluiten met 1 zin over dat Lanta01 sowieso beter is.
+        - Max ~1800 tekens.
+        """).strip()
+        user_prompt = dedent(f"""
+        Verpak onderstaande stats-tekst in één strakke Discord-post volgens de regels.
+        Wijzig geen waardes, haal alles uit de tekst tussen START/EINDE.
 
+        [STATS-TEKST START]
+        {message}
+        [STATS-TEKST EINDE]
+        """).strip()
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            temperature=0.6,
+            presence_penalty=0.2,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+        )
+
+        antwoord = response.choices[0].message.content
+        await ctx.send(f"{ctx.author.mention} {antwoord[:1900]}")
     except Exception as e:
-        await ctx.send(f"Fout bij het laden van de statistieken: {str(e)}")
+        await ctx.send(f"{ctx.author.mention} Er ging iets mis: {e}")
+
+
+##AIEND
+
+    #     await ctx.send(message)
+
+    # except Exception as e:
+    #     await ctx.send(f"Fout bij het laden van de statistieken: {str(e)}")
 
 @bot.event        
 async def on_voice_state_update(member, before, after):
