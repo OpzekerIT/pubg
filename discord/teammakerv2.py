@@ -225,7 +225,7 @@ async def whoisbest(ctx, category="Casual", matchesback=18, top=3):
         response = client.chat.completions.create(
             model="gpt-5-nano",
             #temperature=0.6,
-            presence_penalty=0.2,
+            #presence_penalty=0.2,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
