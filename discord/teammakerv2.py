@@ -369,6 +369,7 @@ async def dtch_help_command(ctx):
     await ctx.send(embed=embed)
 
 @bot.command()
+@commands.cooldown(1, 15, commands.BucketType.user)
 async def ask(ctx, *, vraag: str):
     ## CLAN MEMBERS
     file_path = os.path.join("..", "config", "clanmembers.json")
@@ -431,5 +432,11 @@ async def ask(ctx, *, vraag: str):
         await ctx.send(f"{ctx.author.mention} {antwoord[:1900]}")
     except Exception as e:
         await ctx.send(f"{ctx.author.mention} Er ging iets mis: {e}")
-
+@ask.error
+async def ask_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        retry_after = int(error.retry_after + 0.999)
+        await ctx.reply(f"Rustig {ctx.author.display_name}, probeer het over {retry_after}s nog eens.")
+    else:
+        raise error
 bot.run(token)
