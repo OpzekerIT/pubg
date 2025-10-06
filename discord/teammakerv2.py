@@ -422,6 +422,7 @@ async def ask(ctx, *, vraag: str):
 
                             # Richtlijnen voor antwoord
                             "Houd je antwoorden kort en bondig, met maximaal 1600 tekens. "
+                            "Kill Death Human (KD_H) en winrato zijn de belangrijkste stats omdat bots heel makkelijk te killen zijn vinden de Human Kill death het belangrijkste"
                             "Gebruik Discord markdown (``` of **vetgedrukt**) wanneer je stats of tabellen toont. "
                             "Wees een beetje sarcastisch, maar wel begrijpelijk. "
                             "Stel geen vragen want je hebt geen context bij de volgende prompt."
