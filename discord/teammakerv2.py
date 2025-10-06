@@ -416,14 +416,15 @@ async def ask(ctx, *, vraag: str):
                             f"Clanleden: {clanmembers_str}. "
                             f"Momenteel in voice: {voice_str}. "
                             f"Lifetime stats (squad): {squad_str}. "
-                            f"Casual stats: {casual_str}. "
+                            f"Casual (spelen we toch wel het vaakst met elkaar, belangrijke stat dus) stats: {casual_str}. "
                             f"Ranked stats: {ranked_str}. "
-                            f"Custom stats (clan games tegen elkaar): {custom_str}. "
+                            f"Custom stats (clan games meestal tegen elkaar): {custom_str}. "
 
                             # Richtlijnen voor antwoord
-                            "Houd je antwoorden kort en bondig, met maximaal 1800 tekens. "
+                            "Houd je antwoorden kort en bondig, met maximaal 1600 tekens. "
                             "Gebruik Discord markdown (``` of **vetgedrukt**) wanneer je stats of tabellen toont. "
                             "Wees een beetje sarcastisch, maar wel begrijpelijk. "
+                            "Stel geen vragen want je hebt geen context bij de volgende prompt."
 
                         )
                     },
