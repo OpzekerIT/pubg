@@ -48,7 +48,7 @@ foreach ($player in $player_data) {
             $stats.included = $sortedStats
             $stats | ConvertTo-Json -Depth 100 | Out-File "$scriptroot/../data/matches/$match.json"
         }
-        if($stats.data.attributes.matchtype -eq 'event'){
+        if($stats.data.attributes.matchtype -eq 'event' -or $stats.data.attributes.gameMode -eq 'tdm'){
             write-output 'Skipping because of event'
             continue
         }
