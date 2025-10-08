@@ -161,6 +161,10 @@ $groupedGuids_clan_matches_gt_3 = $guids | Group-Object | Where-Object { $_.Coun
 $last_month = (get-date).AddMonths($monthsback)
 foreach ($file in $matchfiles) {
     $json = get-content $file | ConvertFrom-Json
+    if($json.stats.matchType -eq 'event'){
+        write-output 'match is event skipping'
+        continue
+    }
     if ($json.created -gt $last_month) {
         $killstats += $json
         if ($groupedGuids_clan_matches_gt_1.Name -contains $json.matchid) {
