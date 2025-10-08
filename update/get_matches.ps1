@@ -48,7 +48,10 @@ foreach ($player in $player_data) {
             $stats.included = $sortedStats
             $stats | ConvertTo-Json -Depth 100 | Out-File "$scriptroot/../data/matches/$match.json"
         }
-        
+        if($stats.data.attributes.matchtype -eq 'event'){
+            write-output 'Skipping because of event'
+            continue
+        }
         $playermatches += [PSCustomObject]@{ 
             stats         = $stats.included.ATTRIBUTES.stats  | where-object { $_.name -eq $player.attributes.name }
             matchType     = $stats.data.attributes.matchtype
