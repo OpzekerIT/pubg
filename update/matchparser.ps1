@@ -162,8 +162,11 @@ $last_month = (get-date).AddMonths($monthsback)
 foreach ($file in $matchfiles) {
     $json = get-content $file | ConvertFrom-Json
 
-    if($json.stats.matchType -eq 'event' -or $json.stats.gameMode -eq 'tdm'){
-        write-output 'match is event or tdm skipping'
+    if (
+        ($stats.data.attributes.matchtype -eq 'event' -and $stats.data.attributes.gameMode -ne 'ibr') -or
+        ($stats.data.attributes.gameMode -eq 'tdm')
+    ) {
+        Write-Output 'Skipping because of event or tdm'
         continue
     }
     if ($json.created -gt $last_month) {
