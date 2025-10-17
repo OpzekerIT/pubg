@@ -252,6 +252,13 @@ foreach ($winid in $new_win_matches) {
     $match_stats = Invoke-RestMethod -Uri "https://api.pubg.com/shards/steam/matches/$winid" -Method GET -Headers $headers
     if ($winmatches[0].gameMode -eq 'tdm' ) {
         continue
+    }
+    if (
+        ($winmatches[0].matchtype -eq 'event' -and $winmatches[0].gameMode -ne 'ibr') -or
+        ($winmatches[0].gameMode -eq 'tdm')
+    ) {
+        Write-Output 'Skipping because of event or tdm'
+        continue
     } #skip tdm matches
     if ($winmatches[0].matchType -eq 'custom') {
         $players_to_report = $match_stats.included.attributes.stats | where-object { $_.playerId -notlike "ai.*" }
@@ -263,7 +270,7 @@ foreach ($winid in $new_win_matches) {
     if ($new_win_matches.count -le 10) {
         #fail safe
         $winnerswithurl = @()
-        foreach($winner in $winners){
+        foreach ($winner in $winners) {
             $winnerswithurl += "[$winner](<https://dtch.online/latestmatches.php?selected_player=$($winner)>)"
         }
         send-discord -content ":chicken: :chicken: **WINNER WINNER CHICKEN DINNER!!** :chicken: :chicken:"
