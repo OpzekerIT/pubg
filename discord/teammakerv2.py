@@ -437,6 +437,54 @@ async def ask(ctx, *, vraag: str):
         await ctx.send(f"{ctx.author.mention} {antwoord[:1900]}")
     except Exception as e:
         await ctx.send(f"{ctx.author.mention} Er ging iets mis: {e}")
+@bot.command()
+async def loterij(ctx, *members: discord.Member):
+    """
+    Gebruik:
+      !loterij @naam1 @naam2 @naam3
+    """
+    # Alleen in #teamify? -> uncomment als je dat ook wilt
+    # if ctx.channel.name != "teamify":
+    #     await ctx.send("Dit commando kan alleen worden gebruikt in het #teamify kanaal.")
+    #     return
+
+    if not members or len(members) < 2:
+        await ctx.send("Gebruik: `!loterij @naam1 @naam2 ...` (minimaal 2 mensen, anders is het wel héél zielig).")
+        return
+
+    # Uniek maken (als iemand 2x getagd wordt telt 'ie maar 1x mee)
+    unique_members = []
+    seen_ids = set()
+    for m in members:
+        if m.id not in seen_ids:
+            unique_members.append(m)
+            seen_ids.add(m.id)
+
+    # Tekst “tussen A, B en C” netjes bouwen
+    mentions = [m.mention for m in unique_members]
+    if len(mentions) == 2:
+        between_text = f"{mentions[0]} en {mentions[1]}"
+    else:
+        between_text = f"{', '.join(mentions[:-1])} en {mentions[-1]}"
+
+    winnaar = random.choice(unique_members)
+
+    await ctx.send(f"En de loterij gaat tussen {between_text}.")
+
+    # Countdown
+    await asyncio.sleep(1)
+    await ctx.send("in 3")
+    await asyncio.sleep(1)
+    await ctx.send("2")
+    await asyncio.sleep(1)
+    await ctx.send("1")
+    await asyncio.sleep(1)
+
+    await ctx.send("trom gerofel 🥁")
+    await asyncio.sleep(1)
+
+    await ctx.send(f"De winnaar is {winnaar.mention} 🎆🎇")
+
 @ask.error
 async def ask_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
