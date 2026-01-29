@@ -437,6 +437,15 @@ async def ask(ctx, *, vraag: str):
         await ctx.send(f"{ctx.author.mention} {antwoord[:1900]}")
     except Exception as e:
         await ctx.send(f"{ctx.author.mention} Er ging iets mis: {e}")
+
+@ask.error
+async def ask_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        retry_after = int(error.retry_after + 0.999)
+        await ctx.reply(f"Rustig {ctx.author.display_name}, probeer het over {retry_after}s nog eens.")
+    else:
+        raise error
+    
 @bot.command()
 async def loterij(ctx, *members: discord.Member):
     """
@@ -485,11 +494,17 @@ async def loterij(ctx, *members: discord.Member):
 
     await ctx.send(f"De winnaar is {winnaar.mention} 🎆🎇")
 
-@ask.error
-async def ask_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        retry_after = int(error.retry_after + 0.999)
-        await ctx.reply(f"Rustig {ctx.author.display_name}, probeer het over {retry_after}s nog eens.")
+@loterij.error
+async def loterij_error(ctx, error):
+    if isinstance(error, commands.BadArgument):
+        await ctx.send(
+            "Ik snap er niks van 🤨\n"
+            "Gebruik het zo:\n"
+            "`!loterij @naam1 @naam2 @naam3`\n"
+            "Zorg dat je **echte Discord-mentions** gebruikt."
+        )
     else:
         raise error
+    
+
 bot.run(token)
